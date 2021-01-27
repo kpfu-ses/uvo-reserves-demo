@@ -4,7 +4,8 @@ from werkzeug.urls import url_parse
 
 from app.models import User
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, ProjectForm
+from app.services import save_project, add_user
 
 
 @app.route('/')
@@ -31,10 +32,17 @@ def login():
     return render_template('login.html', title='Log In', form=form)
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', title='Profile')
+    form = ProjectForm()
+    if form.validate_on_submit():
+        save_project(form.name.data)
+        return redirect(url_for('profile'))
+    user = User.query.filter_by(username=current_user.username).first()
+    projects = user.projects()
+    k = 1
+    return render_template('profile.html', title='Profile', form=form, projects=projects)
 
 
 @app.route('/logout')
@@ -49,10 +57,6 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        add_user(form)
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
