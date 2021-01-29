@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <h1>{{ project.name }}!</h1>
+    <form action="" method="post"  novalidate enctype=multipart/form-data>
+    <p>Rename your project</p>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.coords_file.label }}<br>
+            {{ form.coords_file }}<br>
+        </p>
+        <p>
+            {{ form.core_file.label }}<br>
+            {{ form.core_file }}<br>
+        </p>
+         <p>
+            {{ form.logs_file.label }}<br>
+            {{ form.logs_file }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
+{% endblock %}

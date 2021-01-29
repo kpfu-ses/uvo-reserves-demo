@@ -50,6 +50,26 @@ class Project(db.Model):
                             secondary=projects_users,
                             backref=db.backref('projects_users', lazy='dynamic'), lazy='dynamic'
                             )
-
+    # def coords(self):
+    #     return Coords.query.join()
     def __repr__(self):
         return 'Project {}'.format(self.name)
+
+
+class Coords(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    filepath = db.Column(db.String(128))
+
+
+class Core(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    filepath = db.Column(db.String(128))
+
+
+class Logs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    filepath = db.Column(db.String(128))
+

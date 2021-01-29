@@ -2,10 +2,10 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
-from app.models import User
+from app.models import User, Project
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ProjectForm
-from app.services import save_project, add_user
+from app.forms import LoginForm, RegistrationForm, ProjectForm, ProjectEditForm
+from app.services import save_project, add_user, edit_project
 
 
 @app.route('/')
@@ -41,7 +41,6 @@ def profile():
         return redirect(url_for('profile'))
     user = User.query.filter_by(username=current_user.username).first()
     projects = user.projects()
-    k = 1
     return render_template('profile.html', title='Profile', form=form, projects=projects)
 
 
@@ -60,3 +59,15 @@ def register():
         add_user(form)
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/project/<name>', methods=['GET', 'POST'])
+@login_required
+def work_project(name):
+    form = ProjectEditForm()
+    project = Project.query.filter_by(name=name).first()
+    if form.validate_on_submit():
+        edit_project(form, project)
+        return redirect(url_for('profile'))
+    return render_template('project.html', project=project, form=form)
+
