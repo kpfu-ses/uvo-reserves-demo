@@ -25,24 +25,27 @@ def save_project(project_name):
 def edit_project(form, project):
     if form.name.data != '':
         project.name = form.name.data
-    if form.coords_file.data.filename != '':
-        file = form.coords_file.data
-        filename = str(project.id) + '_coords_' + file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        coords = Coords(project_id=project.id, filepath=filename)
-        db.session.add(coords)
-    if form.core_file.data.filename != '':
-        file = form.core_file.data
-        filename = str(project.id) + '_core_' + file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        core = Core(project_id=project.id, filepath=filename)
-        db.session.add(core)
-    if form.logs_file.data.filename != '':
-        file = form.logs_file.data
-        filename = str(project.id) + '_logs_' + file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        logs = Logs(project_id=project.id, filepath=filename)
-        db.session.add(logs)
+    for coords_file in form.coords_file.data:
+        if coords_file.filename != '':
+            file = coords_file
+            filename = str(project.id) + '_coords_' + file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            coords = Coords(project_id=project.id, filepath=filename)
+            db.session.add(coords)
+    for core_file in form.core_file.data:
+        if core_file.filename != '':
+            file = core_file
+            filename = str(project.id) + '_core_' + file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            core = Core(project_id=project.id, filepath=filename)
+            db.session.add(core)
+    for logs_file in form.logs_file.data:
+        if logs_file.filename != '':
+            file = logs_file
+            filename = str(project.id) + '_logs_' + file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            logs = Logs(project_id=project.id, filepath=filename)
+            db.session.add(logs)
     db.session.commit()
 
 

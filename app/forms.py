@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, MultipleFileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -37,7 +37,7 @@ class ProjectForm(FlaskForm):
 
 class ProjectEditForm(FlaskForm):
     name = StringField('New name')
-    coords_file = FileField('Coords File')
-    core_file = FileField('Core File')
-    logs_file = FileField('Logs File')
+    coords_file = MultipleFileField('Coords File')
+    core_file = MultipleFileField('Core File')
+    logs_file = MultipleFileField('Logs File')
     submit = SubmitField('Edit project')
