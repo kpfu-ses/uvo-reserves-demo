@@ -6,6 +6,7 @@ from app.models import User, Project
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, ProjectForm, ProjectEditForm
 from app.services import save_project, add_user, edit_project
+from app.dto import ProjectFiles
 
 
 @app.route('/')
@@ -69,5 +70,5 @@ def work_project(name):
     if form.validate_on_submit():
         edit_project(form, project)
         return redirect(url_for('profile'))
-    return render_template('project.html', project=project, form=form)
+    return render_template('project.html', project=project, form=form, project_files=ProjectFiles(project))
 

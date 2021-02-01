@@ -50,26 +50,84 @@ class Project(db.Model):
                             secondary=projects_users,
                             backref=db.backref('projects_users', lazy='dynamic'), lazy='dynamic'
                             )
-    # def coords(self):
-    #     return Coords.query.join()
+
+    def coords(self):
+        return Coords.query.filter_by(project_id=self.id)
+
+    def core(self):
+        return Core.query.filter_by(project_id=self.id)
+
+    def logs(self):
+        return Logs.query.filter_by(project_id=self.id)
+
     def __repr__(self):
         return 'Project {}'.format(self.name)
 
 
+class Well(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+
+
+# координаты
 class Coords(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    x = db.Column(db.Float)
+    y = db.Column(db.Float)
+    rkb = db.Column(db.Float)
     filepath = db.Column(db.String(128))
 
 
+# керн
 class Core(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    # интервал отбора керна
+    interval_start = db.Column(db.Float)
+    interval_end = db.Column(db.Float)
+    # пористость
+    porosity = db.Column(db.Float)
+    # насыщение
+    saturation = db.Column(db.Float)
+    # место взятия образца по керну
+    original_location = db.Column(db.Float)
+    # битумонасыщенность весовая
+    oil_saturation_weight = db.Column(db.Float)
+    # битумонасыщенность объемная
+    oil_saturation_volumetric = db.Column(db.Float)
+    # плотность объемная
+    bulk_density = db.Column(db.Float)
+    # литотип
+    litho_type = db.Column(db.Float)
     filepath = db.Column(db.String(128))
 
 
+# las
 class Logs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     filepath = db.Column(db.String(128))
 
+
+# кривая
+class Curve(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    name = db.Column(db.String(128))
+    data = db.Column(db.Binary)
+    top = db.Column(db.Float)
+    bottom = db.Column(db.Float)
+
+
+# стратиграфия
+class Stratigraphy(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    lingula_top = db.Column(db.Float)
+    lingula_bot = db.Column(db.Float)
+    p2ss2_bot = db.Column(db.Float)
