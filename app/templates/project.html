@@ -15,24 +15,24 @@
         <p>
             {{ form.coords_file.label }}<br>
             {{ form.coords_file }}<br>
-            {% for coords in project_files.coords_list %}
-                <p><span>{{ coords.filepath }}</span></p>
-            {% endfor %}
-        </p>
+            <h6>Uploaded files</h6>
+            <ul>{% for coords in project_files.coords_list %}
+                <li><span>{{ coords.filepath }}</span></li>
+            {% endfor %}</ul>
         <p>
             {{ form.core_file.label }}<br>
             {{ form.core_file }}<br>
-            {% for core in project_files.core_list %}
-                <p><span>{{ core.filepath }}</span></p>
-            {% endfor %}
-        </p>
-         <p>
+            <h6>Uploaded files</h6>
+            <ul>{% for core in project_files.core_list %}
+                <li><span>{{ core.filepath }}</span></li>
+            {% endfor %}</ul>
+        <p>
             {{ form.logs_file.label }}<br>
             {{ form.logs_file }}<br>
-             {% for logs in project_files.logs_list %}
-                <p><span>{{ logs.filepath }}</span></p>
-            {% endfor %}
-        </p>
+            <h6>Uploaded files</h6>
+             <ul>{% for logs in project_files.logs_list %}
+                <li><span>{{ logs.filepath }}</span></li>
+            {% endfor %}</ul>
         <p>{{ form.submit() }}</p>
     </form>
 
