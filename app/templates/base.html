@@ -1,50 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-            crossorigin="anonymous"></script>
+{% extends 'bootstrap/base.html' %}
+{% block title %}
    {% if title %}
-      <title>{{ title }}</title>
-      {% else %}
+      {{ title }}
+   {% else %}
       <title>Welcome to Flask app</title>
-      {% endif %}
-    </head>
-    <body>
-       <div class="container h-100">
-          <div class="row h-100 justify-content-center align-items-center">
-            <div class="col-12">
-            <div class="card-deck" style="margin: 2%; vertical-align: top">
-                <a href="{{ url_for('index') }}">Home</a>
-                {% if current_user.is_anonymous %}
-                <a href="{{ url_for('login') }}">Login</a>
-                {% else %}
-                <a href="{{ url_for('profile') }}">Profile</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
-                {% endif %}
-            </div>
-            <hr>
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
-            {% block content %}{% endblock %}
-            </div>
-           </div>
-        </div>
-    </body>
-</html>
+   {% endif %}
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default">
+    <a href="{{ url_for('index') }}">Home</a>
+    {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}">Login</a>
+    {% else %}
+    <a href="{{ url_for('profile') }}">Profile</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+</nav>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+           {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
