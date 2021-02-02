@@ -30,6 +30,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
 class ProjectForm(FlaskForm):
     name = StringField('Project name', validators=[DataRequired()])
     submit = SubmitField('Add project')
@@ -41,3 +46,10 @@ class ProjectEditForm(FlaskForm):
     core_file = MultipleFileField('Core File')
     logs_file = MultipleFileField('Logs File')
     submit = SubmitField('Edit project')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')
