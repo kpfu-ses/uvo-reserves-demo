@@ -4,8 +4,7 @@ from flask_login import current_user
 from flask import flash
 
 from app.models import projects_users
-
-import os
+from app.util import save_file
 
 
 def save_project(project_name):
@@ -29,21 +28,21 @@ def edit_project(form, project):
         if coords_file.filename != '':
             file = coords_file
             filename = str(project.id) + '_coords_' + file.filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            save_file(file, filename, app)
             coords = Coords(project_id=project.id, filepath=filename)
             db.session.add(coords)
     for core_file in form.core_file.data:
         if core_file.filename != '':
             file = core_file
             filename = str(project.id) + '_core_' + file.filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            save_file(file, filename, app)
             core = Core(project_id=project.id, filepath=filename)
             db.session.add(core)
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':
             file = logs_file
             filename = str(project.id) + '_logs_' + file.filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            save_file(file, filename, app)
             logs = Logs(project_id=project.id, filepath=filename)
             db.session.add(logs)
     db.session.commit()
