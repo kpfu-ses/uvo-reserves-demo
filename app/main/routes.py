@@ -6,7 +6,7 @@ from app import db
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm
-from app.helper.services import save_project, edit_project
+from app.helpers.services import save_project, edit_project
 
 
 @bp.route('/')

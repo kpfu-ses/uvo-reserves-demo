@@ -4,8 +4,8 @@ from flask_login import current_user
 from flask import flash, current_app
 
 from app.models import projects_users
-from app.helper.util import save_file
-from app.helper.parser import read_coords
+from app.helpers.util import save_file
+from app.helpers.parser import read_coords
 
 from datetime import datetime
 
