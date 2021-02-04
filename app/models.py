@@ -99,7 +99,6 @@ class Well(db.Model):
         return Logs.query.filter_by(well_id=self.id)
 
 
-
 # координаты
 class Coords(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -109,6 +108,9 @@ class Coords(db.Model):
     y = db.Column(db.Float)
     rkb = db.Column(db.Float)
     filepath = db.Column(db.String(128))
+
+    def well(self):
+        return Well.query.filter_by(id=self.well_id).first()
 
 
 # керн
