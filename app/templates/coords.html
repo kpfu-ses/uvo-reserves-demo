@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block app_content %}
+     <h1>Coords</h1>
+    <table class="table table-hover">
+    <tr>
+        <th>X</th>
+        <th>Y</th>
+        <th>RKB</th>
+    </tr>
+    <tr>
+        <td>{{ coords.x }}</td>
+        <td>{{ coords.y }}</td>
+        <td>{{ coords.rkb }}</td>
+    </tr>
+</table>
+{% endblock %}

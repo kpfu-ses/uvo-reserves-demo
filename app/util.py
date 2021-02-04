@@ -8,4 +8,6 @@ def save_async_file(file, filename, app):
 
 
 def save_file(file, filename, app):
-    Thread(target=save_async_file, args=(file, filename, app)).start()
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    # Thread(target=save_async_file, args=(file, filename, app)).start()

@@ -15,22 +15,33 @@
         <p>
             {{ form.coords_file.label }}<br>
             {{ form.coords_file }}<br>
-            <h6>Uploaded files</h6>
-            <ul>{% for coords in project_files.coords_list %}
+            <h5>Загруженные файлы</h5>
+            <ul>{% for coords in  project.coords() %}
                 <li><span>{{ coords.filepath }}</span></li>
             {% endfor %}</ul>
+
+            <h5>Данные по скважинам</h5>
+            <ul>{% for well in project.wells() %}
+                <li><span>{{ well.name }}</span></li>
+                <ul>{% for coords in well.coords() %}
+                    <li>
+                        <a href="{{ url_for('coords', coords_id=coords.id) }}">{{ coords.id }}</a>
+                    </li>
+                {% endfor %}</ul>
+            {% endfor %}</ul>
+
         <p>
             {{ form.core_file.label }}<br>
             {{ form.core_file }}<br>
-            <h6>Uploaded files</h6>
-            <ul>{% for core in project_files.core_list %}
+            <h5>Загруженные файлы</h5>
+            <ul>{% for core in project.core() %}
                 <li><span>{{ core.filepath }}</span></li>
             {% endfor %}</ul>
         <p>
             {{ form.logs_file.label }}<br>
             {{ form.logs_file }}<br>
-            <h6>Uploaded files</h6>
-             <ul>{% for logs in project_files.logs_list %}
+            <h5>Загруженные файлы</h5>
+             <ul>{% for logs in project.logs() %}
                 <li><span>{{ logs.filepath }}</span></li>
             {% endfor %}</ul>
         <p>{{ form.submit() }}</p>

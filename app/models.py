@@ -77,6 +77,9 @@ class Project(db.Model):
     def logs(self):
         return Logs.query.filter_by(project_id=self.id)
 
+    def wells(self):
+        return Well.query.filter_by(project_id=self.id)
+
     def __repr__(self):
         return 'Project {}'.format(self.name)
 
@@ -84,6 +87,17 @@ class Project(db.Model):
 class Well(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+
+    def coords(self):
+        return Coords.query.filter_by(well_id=self.id)
+
+    def core(self):
+        return Core.query.filter_by(well_id=self.id)
+
+    def logs(self):
+        return Logs.query.filter_by(well_id=self.id)
+
 
 
 # координаты

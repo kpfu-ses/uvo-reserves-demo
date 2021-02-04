@@ -1,10 +1,11 @@
-from app.models import User, Project, Coords, Core, Logs
+from app.models import User, Project, Coords, Core, Logs, Well
 from app import app, db
 from flask_login import current_user
 from flask import flash
 
 from app.models import projects_users
 from app.util import save_file
+from app.parser import read_coords
 
 
 def save_project(project_name):
@@ -29,7 +30,7 @@ def edit_project(form, project):
             file = coords_file
             filename = str(project.id) + '_coords_' + file.filename
             save_file(file, filename, app)
-            coords = Coords(project_id=project.id, filepath=filename)
+            coords = add_coords(filename, project.id)
             db.session.add(coords)
     for core_file in form.core_file.data:
         if core_file.filename != '':
@@ -54,3 +55,19 @@ def add_user(form):
     db.session.add(user)
     db.session.commit()
     flash('Congratulations, you are now a registered user!')
+
+
+def add_coords(filepath, project_id):
+    data = read_coords(filepath)
+    check_well(data['Well'], project_id)
+
+    coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
+                    y=data['Y'], rkb=data['RKB'], well_id=Well.query.filter_by(name=data['Well']).first().id)
+    check_well(data['Well'], project_id)
+    return coords
+
+
+def check_well(well_id, project_id):
+    if Well.query.filter_by(name=well_id).first() is None:
+        db.session.add(Well(name=well_id, project_id=project_id))
+        db.session.commit()
