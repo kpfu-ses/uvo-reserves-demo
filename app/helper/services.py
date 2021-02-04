@@ -1,11 +1,13 @@
 from app.models import User, Project, Coords, Core, Logs, Well
-from app import app, db
+from app import db
 from flask_login import current_user
-from flask import flash
+from flask import flash, current_app
 
 from app.models import projects_users
-from app.util import save_file
-from app.parser import read_coords
+from app.helper.util import save_file
+from app.helper.parser import read_coords
+
+from datetime import datetime
 
 
 def save_project(project_name):
@@ -28,22 +30,22 @@ def edit_project(form, project):
     for coords_file in form.coords_file.data:
         if coords_file.filename != '':
             file = coords_file
-            filename = str(project.id) + '_coords_' + file.filename
-            save_file(file, filename, app)
+            filename = str(project.id) + '_coords_' + str(datetime.now()) + file.filename
+            save_file(file, filename, current_app)
             coords = add_coords(filename, project.id)
             db.session.add(coords)
     for core_file in form.core_file.data:
         if core_file.filename != '':
             file = core_file
-            filename = str(project.id) + '_core_' + file.filename
-            save_file(file, filename, app)
+            filename = str(project.id) + '_core_' + str(datetime.now()) + file.filename
+            save_file(file, filename, current_app)
             core = Core(project_id=project.id, filepath=filename)
             db.session.add(core)
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':
             file = logs_file
-            filename = str(project.id) + '_logs_' + file.filename
-            save_file(file, filename, app)
+            filename = str(project.id) + '_logs_' + str(datetime.now()) + file.filename
+            save_file(file, filename, current_app)
             logs = Logs(project_id=project.id, filepath=filename)
             db.session.add(logs)
     db.session.commit()

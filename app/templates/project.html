@@ -29,13 +29,13 @@
             {% endfor %}
             </div>
             <div class="list-group"
-             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+             style="display: inline-block; margin-left: 2%; height: 40rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
                 <div><span>{{ well.name }}</span></div>
                 <ul>{% for coords in well.coords() %}
                     <li>
-                        <a href="{{ url_for('coords', coords_id=coords.id) }}">{{ coords.id }}</a>
+                        <a href="{{ url_for('main.coords', coords_id=coords.id) }}">{{ coords.id }}</a>
                     </li>
                 {% endfor %}</ul>
             {% endfor %}
@@ -53,13 +53,13 @@
             {% endfor %}
             </div>
             <div class="list-group"
-             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+             style="display: inline-block; margin-left: 2%; height: 40rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
                 <div><span>{{ well.name }}</span></div>
                 <ul>{% for core in well.core() %}
                     <li>
-                        <a href="{{ url_for('coords', coords_id=core.id) }}">{{ core.id }}</a>
+                        <a href="{{ url_for('main.coords', coords_id=core.id) }}">{{ core.id }}</a>
                     </li>
                 {% endfor %}</ul>
             {% endfor %}
@@ -76,13 +76,13 @@
             {% endfor %}
             </div>
             <div class="list-group"
-             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+             style="display: inline-block; margin-left: 2%; height: 40rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
                 <div><span>{{ well.name }}</span></div>
                 <ul>{% for logs in well.curves() %}
                     <li>
-                        <a href="{{ url_for('coords', coords_id=logs.id) }}">{{ logs.id }}</a>
+                        <a href="{{ url_for('main.coords', coords_id=logs.id) }}">{{ logs.id }}</a>
                     </li>
                 {% endfor %}</ul>
             {% endfor %}
