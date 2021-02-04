@@ -95,8 +95,8 @@ class Well(db.Model):
     def core(self):
         return Core.query.filter_by(well_id=self.id)
 
-    def logs(self):
-        return Logs.query.filter_by(well_id=self.id)
+    def curves(self):
+        return Curve.query.filter_by(well_id=self.id)
 
 
 # координаты

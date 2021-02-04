@@ -41,7 +41,7 @@ class ProjectForm(FlaskForm):
 
 
 class ProjectEditForm(FlaskForm):
-    name = StringField('New name')
+    name = StringField('Rename your project')
     coords_file = MultipleFileField('Coords File')
     core_file = MultipleFileField('Core File')
     logs_file = MultipleFileField('Logs File')
