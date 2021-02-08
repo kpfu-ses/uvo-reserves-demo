@@ -4,6 +4,17 @@
     <h1 class="text-center">{{ project.name }}</h1>
     <br>
     <br>
+    <div class="col-sm-15">
+        <h2>Runs</h2>
+        {% for run in project.runs()%}
+            <a href="{{ url_for('main.run', run_id=run.id) }}">{{ run.id }}</a>
+        {% endfor %}
+    </div>
+    <form action="{{ url_for('main.create_run', project_id=project.id) }}" method="post" novalidate>
+            {{ form2.hidden_tag() }}
+
+        <p>{{ form2.submit(class_='btn btn-default') }}</p>
+    </form>
     <form action="" method="post"  novalidate enctype=multipart/form-data>
         {{ form.hidden_tag() }}
         <p>

@@ -7,6 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from time import time
 import jwt
+from enum import Enum, auto
 
 Base = declarative_base()
 
@@ -15,6 +16,10 @@ projects_users = db.Table("projects_users",
                           db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True),
                           db.Column('access', db.String(128))
                           )
+
+run_well = db.Table("run_well",
+                    db.Column('well_id', db.Integer, db.ForeignKey('well.id'), primary_key=True),
+                    db.Column('run_id', db.Integer, db.ForeignKey('run.id'), primary_key=True))
 
 
 class User(UserMixin, db.Model):
@@ -80,6 +85,9 @@ class Project(db.Model):
     def wells(self):
         return Well.query.filter_by(project_id=self.id)
 
+    def runs(self):
+        return Run.query.filter_by(project_id=self.id)
+
     def __repr__(self):
         return 'Project {}'.format(self.name)
 
@@ -91,6 +99,9 @@ class Well(db.Model):
 
     def coords(self):
         return Coords.query.filter_by(well_id=self.id)
+
+    def logs(self):
+        return Logs.query.filter_by(well_id=self.id)
 
     def core(self):
         return Core.query.filter_by(well_id=self.id)
@@ -104,6 +115,7 @@ class Coords(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     x = db.Column(db.Float)
     y = db.Column(db.Float)
     rkb = db.Column(db.Float)
@@ -118,6 +130,7 @@ class Core(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    num = db.Column(db.Integer)
     # интервал отбора керна
     interval_start = db.Column(db.Float)
     interval_end = db.Column(db.Float)
@@ -142,6 +155,7 @@ class Core(db.Model):
 class Logs(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
     filepath = db.Column(db.String(128))
 
 
@@ -150,6 +164,7 @@ class Curve(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     name = db.Column(db.String(128))
     data = db.Column(db.Binary)
     top = db.Column(db.Float)
@@ -161,6 +176,28 @@ class Stratigraphy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     lingula_top = db.Column(db.Float)
     lingula_bot = db.Column(db.Float)
     p2ss2_bot = db.Column(db.Float)
+
+
+# прогон микросервисов
+class Run(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    date = db.Column(db.DateTime)
+
+    def exist(self):
+        stmt = db.select([run_well]).where(run_well.c.run_id == self.id)
+        if db.session.execute(stmt):
+            return True
+        return False
+
+class Service(Enum):
+    FIRST = 1
+    SECOND = 2
+    THIRD = 3
+
+
+

@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, MultipleFileField
+from wtforms import StringField, SubmitField, MultipleFileField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User
-
+from app.models import User, Well
 
 
 class ProjectForm(FlaskForm):
@@ -16,7 +15,6 @@ class ProjectEditForm(FlaskForm):
     core_file = MultipleFileField('Core File')
     logs_file = MultipleFileField('Logs File')
     submit = SubmitField('Edit project')
-
 
 
 class EditProfileForm(FlaskForm):
@@ -34,3 +32,12 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+
+class ProjectRunForm(FlaskForm):
+    wells = SelectMultipleField('Wells', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Choose')
+
+
+class RunForm(FlaskForm):
+    submit = SubmitField('New run')
