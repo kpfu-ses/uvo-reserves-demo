@@ -1,17 +1,17 @@
-from app.models import User, Project, Coords, Core, Logs, Well, Run
+from app.models import User, Project, Coords, Core, Logs, Well, Run, Stratigraphy
 from app import db
 from flask_login import current_user
 from flask import flash, current_app
 
 from app.models import projects_users, run_well
 from app.helpers.util import save_file
-from app.helpers.parser import read_coords
+from app.helpers.parser import read_coords, read_strat
 
 from datetime import datetime
 import shutil
 import os
-import subprocess
 from pathlib import Path
+
 
 def save_project(project_name):
     user = User.query.filter_by(username=current_user.username).first()
@@ -106,13 +106,27 @@ def run_services(wells_ids, services, run_id):
         for well in wells:
             for coords in well.coords():
                 # os.system("mkdir ../modules/1/input_data/coords/" + well.name)
-                Path("app/modules/1/input_data/coords/" + well.name).mkdir(parents=True, exist_ok=True)
+                Path(current_app.config['SERVICES_PATH'] + "1/input_data/coords/" + well.name).mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(os.path.join(current_app.config['UPLOAD_FOLDER'], coords.filepath),
-                                'app/modules/1/input_data/coords/' + well.name + '/' + coords.filepath)
+                                current_app.config['SERVICES_PATH'] + '1/input_data/coords/' + well.name + '/' + coords.filepath)
             for logs in well.logs():
-                Path("app/modules/1/input_data/wellLogs/" + well.name).mkdir(parents=True, exist_ok=True)
+                Path(current_app.config['SERVICES_PATH'] + "1/input_data/wellLogs/" + well.name).mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(os.path.join(current_app.config['UPLOAD_FOLDER'], logs.filepath),
-                                'app/modules/1/input_data/wellLogs/' + well.name + '/' + logs.filepath)
+                                current_app.config['SERVICES_PATH'] + '1/input_data/wellLogs/' + well.name + '/' + logs.filepath)
 
     # subprocess.call("python3 app/modules/1/Strat_P2ss2.py 1", shell=True)
     os.system("python3 app/modules/1/Strat_P2ss2.py")
+    save_strat(wells, run_id)
+
+
+def save_strat(wells, run_id):
+    for well in wells:
+        filepath = current_app.config['SERVICES_PATH'] + \
+                   "1/output_data/" + well.name + "/stratigraphy.json"
+        strat_data = read_strat(filepath)
+        strat = Stratigraphy(run_id=run_id, project_id=well.project_id, well_id=well.id,
+                             lingula_top=strat_data['Lingula_top'], p2ss2_top=strat_data['P2ss2_top'],
+                             p2ss2_bot=strat_data['P2ss2_bot'])
+        db.session.add(strat)
+        db.session.commit()
+

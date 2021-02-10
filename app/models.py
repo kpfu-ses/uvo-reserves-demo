@@ -178,8 +178,11 @@ class Stratigraphy(db.Model):
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     lingula_top = db.Column(db.Float)
-    lingula_bot = db.Column(db.Float)
+    p2ss2_top = db.Column(db.Float)
     p2ss2_bot = db.Column(db.Float)
+
+    def well(self):
+        return Well.query.filter_by(id=self.well_id).first()
 
 
 # прогон микросервисов
@@ -190,9 +193,8 @@ class Run(db.Model):
 
     def exist(self):
         stmt = db.select([run_well]).where(run_well.c.run_id == self.id)
-        if db.session.execute(stmt):
-            return True
-        return False
+        return len(db.session.execute(stmt).fetchall()) > 0
+
 
 class Service(Enum):
     FIRST = 1

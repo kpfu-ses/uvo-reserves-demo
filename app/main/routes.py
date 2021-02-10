@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
-from app.models import User, Project, Coords, Run
+from app.models import User, Project, Coords, Run, Stratigraphy
 from app import db
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
@@ -65,15 +65,19 @@ def coords(coords_id):
 @bp.route('/runs/<run_id>', methods=['GET', 'POST'])
 @login_required
 def run(run_id):
+    strats = []
     form = ProjectRunForm()
     run = Run.query.filter_by(id=run_id).first()
     wells = run_wells(run, [1])
     if request.method == 'GET':
-        form.wells.choices = [(well.id, well.name) for well in wells]
+        if run.exist():
+            strats = list(Stratigraphy.query.filter_by(run_id = run.id))
+        else:
+            form.wells.choices = [(well.id, well.name) for well in wells]
     else:
         run_services(form.wells.data, [1], run_id)
         return redirect(url_for('main.profile'))
-    return render_template('run.html', title='Run', run=run, form=form)
+    return render_template('run.html', title='Run', strats=strats, form=form)
 
 
 @bp.route('/project/<project_id>/new_run', methods=['GET', 'POST'])

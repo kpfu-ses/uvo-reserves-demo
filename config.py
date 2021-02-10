@@ -12,4 +12,5 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'sumbel.enikeeva@gmail.com'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or '7Cc056266;'
     ADMINS = ['sumbel.enikeeva@gmail.com']
+    SERVICES_PATH = 'app/modules/'
 
