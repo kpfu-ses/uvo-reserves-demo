@@ -5,16 +5,16 @@ from app.models import User, Well
 
 
 class ProjectForm(FlaskForm):
-    name = StringField('Project name', validators=[DataRequired()])
-    submit = SubmitField('Add project')
+    name = StringField('Название проекта', validators=[DataRequired()])
+    submit = SubmitField('Добавить проект')
 
 
 class ProjectEditForm(FlaskForm):
-    name = StringField('Rename your project')
-    coords_file = MultipleFileField('Coords File')
-    core_file = MultipleFileField('Core File')
-    logs_file = MultipleFileField('Logs File')
-    submit = SubmitField('Edit project')
+    name = StringField('Новое название проекта')
+    coords_file = MultipleFileField('Загрузить координаты')
+    core_file = MultipleFileField('Загрузить керн')
+    logs_file = MultipleFileField('Загрузить кривые')
+    submit = SubmitField('Редактировать проект')
 
 
 class EditProfileForm(FlaskForm):
@@ -35,9 +35,9 @@ class EditProfileForm(FlaskForm):
 
 
 class ProjectRunForm(FlaskForm):
-    wells = SelectMultipleField('Wells', coerce=int, validators=[DataRequired()])
+    wells = SelectMultipleField('Список доступных скважин', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Choose')
 
 
 class RunForm(FlaskForm):
-    submit = SubmitField('New run')
+    submit = SubmitField('Новый запуск')
