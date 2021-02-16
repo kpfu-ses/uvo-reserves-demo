@@ -1,12 +1,13 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
 
+from app.microservices.main import run_services
 from app.models import User, Project, Coords, Run, Stratigraphy
 from app import db
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm, ProjectRunForm, RunForm
-from app.helpers.services import save_project, edit_project, run_wells, save_run, run_services
+from app.helpers.services import save_project, edit_project, run_wells, save_run
 
 
 @bp.route('/')
