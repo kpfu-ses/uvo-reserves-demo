@@ -13,6 +13,8 @@ from app.helpers.services import save_project, edit_project, run_wells, save_run
 @bp.route('/')
 @bp.route('/index')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
     return render_template('index.html')
 
 
