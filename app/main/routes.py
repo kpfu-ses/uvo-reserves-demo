@@ -72,6 +72,8 @@ def run(run_id):
     form = ProjectRunForm()
     run = Run.query.filter_by(id=run_id).first()
     wells = run_wells(run, [1])
+    if run.exist():
+        return redirect(url_for('main.run_view', run_id=run.id))
     if request.method == 'GET':
         if run.exist():
             strats = list(Stratigraphy.query.filter_by(run_id = run.id))
@@ -79,7 +81,7 @@ def run(run_id):
             form.wells.choices = [(well.id, well.name) for well in wells]
     else:
         run_services(form.wells.data, [1], run_id)
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('main.run', run_id=run.id))
     return render_template('run.html', title='Run', strats=strats, form=form)
 
 
@@ -91,3 +93,11 @@ def create_run(project_id):
         run = save_run(project_id=project_id)
         return redirect(url_for('main.run', run_id=run.id))
     return redirect(url_for('main.work_project', name=project_name))
+
+
+@bp.route('/run_view/<run_id>', methods=['GET'])
+@login_required
+def run_view(run_id):
+    run = Run.query.filter_by(id=run_id).first()
+    strats = list(Stratigraphy.query.filter_by(run_id = run.id))
+    return render_template('run_view.html', title='Run', strats=strats)

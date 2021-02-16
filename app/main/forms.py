@@ -36,6 +36,9 @@ class EditProfileForm(FlaskForm):
 
 class ProjectRunForm(FlaskForm):
     wells = SelectMultipleField('Список доступных скважин', coerce=int, validators=[DataRequired()])
+    services = SelectMultipleField('Выберите програмнные модули для запуска',
+                                   choices=[(1, "1 СВН ОТБИВКИ"), (2, "2 СВН УВЯЗКА"), (3, "3 ИНТЕРПОЛЯЦИЯ КЕРНА")],
+                                   coerce=int, validators=[DataRequired()])
     submit = SubmitField('Choose')
 
 
