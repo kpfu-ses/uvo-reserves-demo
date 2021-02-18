@@ -20,23 +20,24 @@ def get_wells_list(services_str, run_id):
     run = Run.query.filter_by(id=run_id).first()
     result = []
     services = services_str.split(',')
-    if '2' in services:
+    if '1' in services:
+        result = db.session.query(Well, Logs, Coords) \
+            .filter(Well.project_id == run.project_id) \
+            .filter(Logs.well_id == Well.id) \
+            .filter(Coords.well_id == Well.id).distinct(Well.id).all()
+        result = [well for well, log, coords in result]
+    elif '2' in services:
         result = db.session.query(Well, Logs, Core, Stratigraphy) \
             .filter(Well.project_id == run.project_id) \
             .filter(Logs.well_id == Well.id) \
             .filter(Core.well_id == Well.id) \
             .filter(Stratigraphy.well_id == Well.id).distinct(Well.id).all()
         result = [well for well, log, core, strat in result]
-    if ('1' in services) or ('3' in services):
-        result2 = db.session.query(Well, Logs, Coords) \
+    elif '3' in services:
+        result = db.session.query(Well, Logs, Coords) \
             .filter(Well.project_id == run.project_id) \
             .filter(Logs.well_id == Well.id) \
             .filter(Coords.well_id == Well.id).distinct(Well.id).all()
-        result2 = [well for well, log, coords in result2]
-    else:
-        result2 = result
-    if '2' not in services:
-        result = result2
-    result_wells = list(set(result2).intersection(result))
-    result_wells = [(well.id, well.name) for well in result_wells]
+        result = [well for well, log, coords in result]
+    result_wells = [(well.id, well.name) for well in result]
     return result_wells

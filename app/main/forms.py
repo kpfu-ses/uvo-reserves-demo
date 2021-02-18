@@ -34,19 +34,5 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 
-class ChooseServicesForm(FlaskForm):
-    services = SelectMultipleField('Выберите програмнные модули для запуска',
-                                   choices=[(1, "1 СВН ОТБИВКИ"), (2, "2 СВН УВЯЗКА"), (3, "3 ИНТЕРПОЛЯЦИЯ КЕРНА")],
-                                   coerce=int, validators=[DataRequired()])
-    default_wells = SelectMultipleField('Список доступных скважин', choices=[])
-    wells = SelectMultipleField('Список доступных скважин', coerce=int, validators=[DataRequired()])
-    submit = SubmitField('Choose')
-
-
-class ChooseWellsForm(FlaskForm):
-    wells = SelectMultipleField('Список доступных скважин', coerce=int, validators=[DataRequired()])
-    submit = SubmitField('Choose')
-
-
 class RunForm(FlaskForm):
     submit = SubmitField('Новый запуск')

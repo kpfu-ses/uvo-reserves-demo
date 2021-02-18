@@ -1,13 +1,13 @@
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 
-from app.microservices.main import run_services, get_wells_list
-from app.models import User, Project, Coords, Run, Stratigraphy
 from app import db
+from app.helpers.services import save_project, edit_project, save_run
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
-    EditProfileForm, ChooseServicesForm, RunForm, ChooseWellsForm
-from app.helpers.services import save_project, edit_project, run_wells, save_run
+    EditProfileForm, RunForm
+from app.microservices.main import run_services, get_wells_list
+from app.models import User, Project, Coords, Run, Stratigraphy
 
 
 @bp.route('/')
@@ -79,7 +79,7 @@ def run(run_id):
     this_run = Run.query.filter_by(id=run_id).first()
     if this_run.exist():
         return redirect(url_for('main.run_view', run_id=this_run.id))
-    return render_template('run.html', title='Run', form=ChooseServicesForm(), form2=ChooseWellsForm(), run=this_run)
+    return render_template('run.html', title='Run', run=this_run)
 
 
 @bp.route('/runs/wells', methods=['POST'])
