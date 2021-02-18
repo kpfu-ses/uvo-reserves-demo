@@ -14,7 +14,6 @@
 
     <form action="{{ url_for('main.create_run', project_id=project.id) }}" method="post" novalidate>
             {{ form2.hidden_tag() }}
-
         <p>{{ form2.submit(class_='btn btn-default') }}</p>
     </form>
      </div>

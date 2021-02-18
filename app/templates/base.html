@@ -31,3 +31,63 @@
            {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+    function getWells(select, run_id, destElem) {
+      var result = [];
+      var options = select && select.options;
+      var opt;
+      for (var i=0, iLen=options.length; i<iLen; i++) {
+        opt = options[i];
+        if (opt.selected) {
+          result.push(opt.value || opt.text);
+        }
+      }
+      $.post('/runs/services', {
+          run_id: run_id,
+          services: result.toString()
+      }).done(function (response) {
+          wells = response['wells']
+          var wells_select = $(destElem)
+          $.each(response, function (i, well) {
+            for (var i in well) {
+                wells_select.append($('<option/>', {'value': well[i][0], 'text': well[i][1]}));
+            }
+          });
+      }).fail(function() {
+          alert('error');
+      });
+    }
+
+    function runModulus(select, run_id, select2) {
+      var result = [];
+      var options = select && select.options;
+      var opt;
+      for (var i=0, iLen=options.length; i<iLen; i++) {
+        opt = options[i];
+        if (opt.selected) {
+          result.push(opt.value || opt.text);
+        }
+      }
+      var result2 = [];
+      options = select2 && select2.options;
+      for (var i=0, iLen=options.length; i<iLen; i++) {
+        opt = options[i];
+        if (opt.selected) {
+          result2.push(opt.value || opt.text);
+        }
+      }
+      $.post('/runs/wells', {
+          run_id: run_id,
+          services: result2.toString(),
+          wells: result.toString()
+      }).done(function (response) {
+         alert('well done!')
+      }).fail(function() {
+          alert('error');
+      });
+    }
+    </script>
+{% endblock %}

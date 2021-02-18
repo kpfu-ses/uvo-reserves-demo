@@ -1,12 +1,12 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 
-from app.microservices.main import run_services
+from app.microservices.main import run_services, get_wells_list
 from app.models import User, Project, Coords, Run, Stratigraphy
 from app import db
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
-    EditProfileForm, ProjectRunForm, RunForm
+    EditProfileForm, ChooseServicesForm, RunForm, ChooseWellsForm
 from app.helpers.services import save_project, edit_project, run_wells, save_run
 
 
@@ -65,24 +65,28 @@ def coords(coords_id):
     return render_template('coords.html', title='Coords', coords=coords)
 
 
+@bp.route('/runs/services', methods=['POST'])
+@login_required
+def choose_services():
+    if 'wells' in request.form:
+        run_services(request.form['wells'], request.form['services'], request.form['run_id'])
+    return jsonify({'wells': get_wells_list(request.form['services'], request.form['run_id'])})
+
+
 @bp.route('/runs/<run_id>', methods=['GET', 'POST'])
 @login_required
 def run(run_id):
-    strats = []
-    form = ProjectRunForm()
     this_run = Run.query.filter_by(id=run_id).first()
-    wells = run_wells(this_run, [1])
     if this_run.exist():
         return redirect(url_for('main.run_view', run_id=this_run.id))
-    if request.method == 'GET':
-        if this_run.exist():
-            strats = list(Stratigraphy.query.filter_by(run_id = this_run.id))
-        else:
-            form.wells.choices = [(well.id, well.name) for well in wells]
-    else:
-        run_services(form.wells.data, [1], run_id)
-        return redirect(url_for('main.run', run_id=this_run.id))
-    return render_template('run.html', title='Run', strats=strats, form=form)
+    return render_template('run.html', title='Run', form=ChooseServicesForm(), form2=ChooseWellsForm(), run=this_run)
+
+
+@bp.route('/runs/wells', methods=['POST'])
+@login_required
+def services_run():
+    run_services(request.form['wells'], request.form['services'], request.form['run_id'])
+    return jsonify({'okay': 'okay'})
 
 
 @bp.route('/project/<project_id>/new_run', methods=['GET', 'POST'])
