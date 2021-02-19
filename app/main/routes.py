@@ -7,7 +7,7 @@ from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm, RunForm
 from app.microservices.main import run_services, get_wells_list
-from app.models import User, Project, Coords, Run, Stratigraphy
+from app.models import User, Project, Coords, Run, Stratigraphy, Core
 
 
 @bp.route('/')
@@ -54,7 +54,7 @@ def work_project(name):
     project = Project.query.filter_by(name=name).first()
     if form.validate_on_submit():
         edit_project(form, project)
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('main.work_project', name=name))
     return render_template('project.html', title='Edit Project', project=project, form=form, form2=RunForm())
 
 
@@ -104,4 +104,5 @@ def create_run(project_id):
 def run_view(run_id):
     this_run = Run.query.filter_by(id=run_id).first()
     strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
-    return render_template('run_view.html', title='Run', strats=strats)
+    core_res = list(Core.query.filter_by(run_id=this_run.id))
+    return render_template('run_view.html', title='Run', strats=strats, core_res=core_res)

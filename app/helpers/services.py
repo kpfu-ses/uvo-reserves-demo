@@ -39,7 +39,7 @@ def edit_project(form, project):
             file = core_file
             filename = str(project.id) + '_core_' + str(datetime.now()) + file.filename
             save_file(file, filename, current_app)
-            core = Core(project_id=project.id, filepath=filename)
+            core = Core(project_id=project.id, filepath=filename, well_data_id=file.filename.split('.')[0])
             db.session.add(core)
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':

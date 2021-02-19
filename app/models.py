@@ -133,6 +133,8 @@ class Core(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    well_data_id = db.Column(db.String(128))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     num = db.Column(db.Integer)
     # интервал отбора керна
     interval_start = db.Column(db.Float)
@@ -152,6 +154,8 @@ class Core(db.Model):
     # литотип
     litho_type = db.Column(db.Float)
     filepath = db.Column(db.String(128))
+
+    res_filepath = db.Column(db.String(255))
 
 
 # las

@@ -42,7 +42,6 @@ def run_first(wells, run_id):
     Path(current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/Report.txt').touch(exist_ok=True)
     create_coords_files(wells, run_id)
     for well in wells:
-
         for logs in well.logs():
             Path(current_app.config['SERVICES_PATH'] + 'first/' + str(
                 run_id) + '/input_data/wellLogs/' + well.name).mkdir(parents=True, exist_ok=True)
