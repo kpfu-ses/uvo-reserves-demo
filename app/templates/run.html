@@ -2,33 +2,29 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <div class="container">
      <h1>Запуск программных модулей</h1>
         <div class="row">
-            <div class="col-md-4">
-             <label>
-                 <span>Выберите модуль</span>
-                 <select multiple>
-                  <option value="1">1 СВН ОТБИВКИ
-                  <option value="2">2 СВН УВЯЗКА
-                  <option value="3">3 ИНТЕРПОЛЯЦИЯ КЕРНА
-                </select>
-             </label>
-             <button onclick="
+            <div class="col-sm">
+             <label for="select1-id">Выберите модуль</label>
+             <select multiple id="select1-id" class="col-md-12">
+              <option value="1">1 СВН ОТБИВКИ
+              <option value="2">2 СВН УВЯЗКА
+              <option value="3">3 ИНТЕРПОЛЯЦИЯ КЕРНА
+             </select>
+             <p><button class='btn btn-default' onclick="
               var el = document.getElementsByTagName('select')[0];
-              getWells(el, {{ run.id }}, 'select#wells-list-id');">Перейти к выбору скважин</button>
-            <div >
-                <span>Выберите скважины</span>
-                <label>
-                    <select multiple id="wells-list-id" class="">
-                    </select>
-                </label>
-                <button onclick="
+              getWells(el, {{ run.id }}, 'select#wells-list-id');">Перейти к выбору скважин</button></p>
+            </div>
+            <div class="col-sm">
+                 <label for="wells-list-id">Выберите скважины</label>
+
+                <select multiple id="wells-list-id" class="col-md-12">
+                </select>
+                <p><button class='btn btn-default' onclick="
               var el = document.getElementsByTagName('select')[1];
               var el2 = document.getElementsByTagName('select')[0];
-              runModulus(el, {{ run.id }}, el2);">Запустить программные модули</button>
+              runModulus(el, {{ run.id }}, el2, 'div#time-spinner');">Запустить программные модули</button></p>
             </div>
-            </div>
+        <div id="time-spinner"></div>
         </div>
-  </div>
 {% endblock %}

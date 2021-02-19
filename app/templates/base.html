@@ -61,7 +61,7 @@
       });
     }
 
-    function runModulus(select, run_id, select2) {
+    function runModulus(select, run_id, select2, ts) {
       var result = [];
       var options = select && select.options;
       var opt;
@@ -79,6 +79,7 @@
           result2.push(opt.value || opt.text);
         }
       }
+      $(ts).html('<img src="{{ url_for('static', filename='loading.gif') }}">');
       $.post('/runs/wells', {
           run_id: run_id,
           services: result2.toString(),

@@ -109,6 +109,9 @@ class Well(db.Model):
     def curves(self):
         return Curve.query.filter_by(well_id=self.id)
 
+    def strats(self):
+        return Stratigraphy.query.filter_by(well_id=self.id)
+
 
 # координаты
 class Coords(db.Model):
