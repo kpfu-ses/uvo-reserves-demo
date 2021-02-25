@@ -9,13 +9,37 @@
 
 {% block navbar %}
 <nav class="navbar navbar-default">
-    <a href="{{ url_for('main.index') }}">Home</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('auth.login') }}">Login</a>
-    {% else %}
-    <a href="{{ url_for('main.profile') }}">Profile</a>
-    <a href="{{ url_for('auth.logout') }}">Logout</a>
-    {% endif %}
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">Home</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_anonymous %}
+            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+            {% else %}
+            <li>
+                <a href="{{ url_for('main.profile') }}">Done
+                    {% set new_runs = current_user.new_runs() %}
+                    <span id="run_count" class="badge"
+                          style="visibility: {% if new_runs %}visible
+                                             {% else %}hidden{% endif %};">
+                        {{ new_runs }}
+                    </span>
+                </a>
+            </li>
+            <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            {% endif %}
+         </ul>
+        </div>
+    </div>
 </nav>
 {% endblock %}
 {% block content %}
@@ -35,6 +59,26 @@
 {% block scripts %}
     {{ super() }}
     <script>
+    function set_run_count(n) {
+            $('#run_count').text(n);
+            $('#run_count').css('visibility', n ? 'visible' : 'hidden');
+    }
+    {% if current_user.is_authenticated %}
+        $(function() {
+            var since = 0;
+            setInterval(function() {
+                $.ajax('{{ url_for('main.notifications') }}?since=' + since).done(
+                    function(notifications) {
+                        for (var i = 0; i < notifications.length; i++) {
+                            if (notifications[i].name === 'done')
+                                set_run_count(notifications[i].data);
+                            since = notifications[i].timestamp;
+                        }
+                    }
+                );
+            }, 10000);
+        });
+        {% endif %}
     function getWells(select, run_id, destElem) {
       var result = [];
       var options = select && select.options;
@@ -51,6 +95,7 @@
       }).done(function (response) {
           wells = response['wells']
           var wells_select = $(destElem)
+          wells_select.empty();
           $.each(response, function (i, well) {
             for (var i in well) {
                 wells_select.append($('<option/>', {'value': well[i][0], 'text': well[i][1]}));
@@ -85,7 +130,7 @@
           services: result2.toString(),
           wells: result.toString()
       }).done(function (response) {
-         alert('well done!')
+         {#alert('well done!')#}
       }).fail(function() {
           alert('error');
       });

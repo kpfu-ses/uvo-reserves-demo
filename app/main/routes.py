@@ -1,5 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
+from datetime import datetime
 
 from app import db
 from app.helpers.services import save_project, edit_project, save_run
@@ -7,7 +8,7 @@ from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm, RunForm
 from app.microservices.main import run_services, get_wells_list
-from app.models import User, Project, Coords, Run, Stratigraphy, Core
+from app.models import User, Project, Coords, Run, Stratigraphy, Core, Notification
 
 
 @bp.route('/')
@@ -21,6 +22,8 @@ def index():
 @bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    current_user.last_run_see_time = datetime.now()
+    db.session.commit()
     form = ProjectForm()
     if form.validate_on_submit():
         save_project(form.name.data)
@@ -50,6 +53,7 @@ def edit_profile():
 @bp.route('/project/<name>', methods=['GET', 'POST'])
 @login_required
 def work_project(name):
+
     form = ProjectEditForm()
     project = Project.query.filter_by(name=name).first()
     if form.validate_on_submit():
@@ -106,3 +110,16 @@ def run_view(run_id):
     strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
     core_res = list(Core.query.filter_by(run_id=this_run.id))
     return render_template('run_view.html', title='Run', strats=strats, core_res=core_res)
+
+
+@bp.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.notifications.filter(
+        Notification.timestamp > since).order_by(Notification.timestamp.asc())
+    return jsonify([{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])
