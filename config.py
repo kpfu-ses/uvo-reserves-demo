@@ -13,4 +13,5 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or '7Cc056266;'
     ADMINS = ['sumbel.enikeeva@gmail.com']
     SERVICES_PATH = 'app/modules/'
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
 

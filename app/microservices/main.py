@@ -1,13 +1,12 @@
 from app import db
 from app.microservices.first import run_first
 from app.microservices.second import run_second
-from app.models import Well, Logs, Coords, Run, Stratigraphy, Core
+from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User
 from app.models import run_well
-from flask_login import current_user
 from datetime import datetime
 
 
-def run_services(wells_ids_str, services, run_id):
+def run_services(user_id, wells_ids_str, services, run_id):
     wells_ids = wells_ids_str.split(',')
     wells = Well.query.filter(Well.id.in_(wells_ids)).all()
     for well_id in wells_ids:
@@ -21,7 +20,10 @@ def run_services(wells_ids_str, services, run_id):
     if '2' in services:
         run_second(wells, run_id)
 
-    current_user.add_notification('done', current_user.new_runs())
+    user = User.query.get(user_id)
+    user.add_notification('done', user.new_runs())
+    db.session.commit()
+
     run = Run.query.filter_by(id=run_id).first()
     run.date = datetime.now()
     db.session.commit()

@@ -9,6 +9,8 @@ from logging.handlers import RotatingFileHandler
 import os
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from redis import Redis
+import rq
 
 
 # db
@@ -66,6 +68,10 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info('uvo-reserves')
 
+        app.redis = Redis.from_url(app.config['REDIS_URL'])
+        app.task_queue = rq.Queue('microservices-tasks', connection=app.redis)
+
         return app
+
 
 from app import models

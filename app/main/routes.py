@@ -7,18 +7,11 @@ from app.helpers.services import save_project, edit_project, save_run
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm, RunForm
-from app.microservices.main import run_services, get_wells_list
+from app.microservices.main import get_wells_list
 from app.models import User, Project, Coords, Run, Stratigraphy, Core, Notification
 
 
 @bp.route('/')
-@bp.route('/index')
-def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.profile'))
-    return render_template('index.html')
-
-
 @bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -50,37 +43,33 @@ def edit_profile():
                            form=form)
 
 
-@bp.route('/project/<name>', methods=['GET', 'POST'])
+@bp.route('/project/<project_id>', methods=['GET', 'POST'])
 @login_required
-def work_project(name):
-
+def work_project(project_id):
     form = ProjectEditForm()
-    project = Project.query.filter_by(name=name).first()
+    project = Project.query.get(project_id)
     if form.validate_on_submit():
         edit_project(form, project)
-        return redirect(url_for('main.work_project', name=name))
-    return render_template('project.html', title='Edit Project', project=project, form=form, form2=RunForm())
+        return redirect(url_for('main.work_project', project_id=project_id))
+    return render_template('project.html', title='Edit Project', project=project, form=form)
 
 
 @bp.route('/coords/<coords_id>', methods=['GET'])
 @login_required
 def coords(coords_id):
-    coords = Coords.query.filter_by(id=coords_id).first()
-    return render_template('coords.html', title='Coords', coords=coords)
+    return render_template('coords.html', title='Coords', coords=Coords.query.get(coords_id))
 
 
 @bp.route('/runs/services', methods=['POST'])
 @login_required
 def choose_services():
-    if 'wells' in request.form:
-        run_services(request.form['wells'], request.form['services'], request.form['run_id'])
     return jsonify({'wells': get_wells_list(request.form['services'], request.form['run_id'])})
 
 
 @bp.route('/runs/<run_id>', methods=['GET', 'POST'])
 @login_required
 def run(run_id):
-    this_run = Run.query.filter_by(id=run_id).first()
+    this_run = Run.query.get(run_id)
     if this_run.exist():
         return redirect(url_for('main.run_view', run_id=this_run.id))
     return render_template('run.html', title='Run', run=this_run)
@@ -89,18 +78,13 @@ def run(run_id):
 @bp.route('/runs/wells', methods=['POST'])
 @login_required
 def services_run():
-    run_services(request.form['wells'], request.form['services'], request.form['run_id'])
+    if current_user.get_task_in_progress('run_services'):
+        flash('An export task is currently in progress')
+    else:
+        current_user.launch_task('run_services_task', 'Running services...', current_user.id, request.form['wells'],
+                                 request.form['services'], request.form['run_id'])
+        db.session.commit()
     return jsonify({'okay': 'okay'})
-
-
-@bp.route('/project/<project_id>/new_run', methods=['GET', 'POST'])
-def create_run(project_id):
-    form = RunForm()
-    project_name = Project.query.filter_by(id=project_id).first().name
-    if form.validate_on_submit():
-        run = save_run(project_id=project_id)
-        return redirect(url_for('main.run', run_id=run.id))
-    return redirect(url_for('main.work_project', name=project_name))
 
 
 @bp.route('/run_view/<run_id>', methods=['GET'])
@@ -110,6 +94,17 @@ def run_view(run_id):
     strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
     core_res = list(Core.query.filter_by(run_id=this_run.id))
     return render_template('run_view.html', title='Run', strats=strats, core_res=core_res)
+
+
+@bp.route('/<project_id>/runs', methods=['GET', 'POST'])
+@login_required
+def runs(project_id):
+    form = RunForm()
+    project_runs = Project.query.get(project_id).runs()
+    if form.validate_on_submit():
+        this_run = save_run(project_id=project_id)
+        return redirect(url_for('main.run', run_id=this_run.id))
+    return render_template('runs.html', title='Runs', form=form, project_runs=project_runs)
 
 
 @bp.route('/notifications')

@@ -86,7 +86,7 @@ def run_wells(run, services):
 
 
 def save_run(project_id):
-    run = Run(project_id=project_id, date=datetime.now())
+    run = Run(project_id=project_id, date=datetime(1900, 1, 1))
     db.session.add(run)
     db.session.commit()
     return run

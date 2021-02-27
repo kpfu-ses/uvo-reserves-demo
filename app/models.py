@@ -74,13 +74,23 @@ class User(UserMixin, db.Model):
     def new_runs(self):
         last_read_time = self.last_run_see_time or datetime(1900, 1, 1)
         project_ids = [project.id for project in self.projects()]
-        runs = db.session.query(Run)\
-            .filter(Run.project_id.in_(project_ids), Run.date > last_read_time)\
-            .count()
-        i = 0
         return db.session.query(Run)\
             .filter(Run.project_id.in_(project_ids), Run.date > last_read_time)\
             .count()
+
+    def launch_task(self, name, description, *args, **kwargs):
+        rq_job = current_app.task_queue.enqueue('app.tasks.' + name, *args, **kwargs)
+        task = Task(id=rq_job.get_id(), name=name, description=description,
+                    user_id=self.id)
+        db.session.add(task)
+        return task
+
+    def get_tasks_in_progress(self):
+        return Task.query.filter_by(user_id=self.id, complete=False).all()
+
+    def get_task_in_progress(self, name):
+        return Task.query.filter_by(name=name, user_id=self.id,
+                                    complete=False).first()
 
     def __repr__(self):
         return 'User {}'.format(self.username)
