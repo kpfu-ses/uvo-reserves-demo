@@ -76,7 +76,7 @@ class User(UserMixin, db.Model):
         project_ids = [project.id for project in self.projects()]
         return db.session.query(Run)\
             .filter(Run.project_id.in_(project_ids), Run.date > last_read_time)\
-            .count()
+            .all()
 
     def launch_task(self, name, description, *args, **kwargs):
         rq_job = current_app.task_queue.enqueue('app.tasks.' + name, *args, **kwargs)

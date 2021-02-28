@@ -21,7 +21,7 @@ def run_services(user_id, wells_ids_str, services, run_id):
         run_second(wells, run_id)
 
     user = User.query.get(user_id)
-    user.add_notification('done', user.new_runs())
+    user.add_notification('done', len(user.new_runs()))
     db.session.commit()
 
     run = Run.query.filter_by(id=run_id).first()

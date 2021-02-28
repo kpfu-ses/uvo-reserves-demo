@@ -12,6 +12,13 @@ from app.models import User, Project, Coords, Run, Stratigraphy, Core, Notificat
 
 
 @bp.route('/')
+@bp.route('/index')
+def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
+    return render_template('index.html')
+
+
 @bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
@@ -98,13 +105,20 @@ def run_view(run_id):
 
 @bp.route('/<project_id>/runs', methods=['GET', 'POST'])
 @login_required
-def runs(project_id):
+def runs(project_id, done=False):
     form = RunForm()
     project_runs = Project.query.get(project_id).runs()
     if form.validate_on_submit():
         this_run = save_run(project_id=project_id)
         return redirect(url_for('main.run', run_id=this_run.id))
     return render_template('runs.html', title='Runs', form=form, project_runs=project_runs)
+
+
+@bp.route('/runs/done', methods=['GET'])
+@login_required
+def done_runs():
+    done_runs_list = current_user.new_runs()
+    return render_template('done_runs.html', title='Done runs', runs=done_runs_list)
 
 
 @bp.route('/notifications')
