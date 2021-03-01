@@ -25,7 +25,7 @@
             <li><a href="{{ url_for('auth.login') }}">Login</a></li>
             {% else %}
             <li>
-                <a href="{{ url_for('main.done_runs') }}">Done
+                <a href="{{ url_for('run.done_runs') }}">Done
                     {% set new_runs = current_user.new_runs()|length %}
                     <span id="run_count" class="badge"
                           style="visibility: {% if new_runs %}visible

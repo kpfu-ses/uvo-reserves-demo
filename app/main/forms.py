@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, MultipleFileField, SelectMultipleField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User, Well
+from wtforms import StringField, SubmitField, MultipleFileField
+from wtforms.validators import ValidationError, DataRequired, Email
+
+from app.models import User
 
 
 class ProjectForm(FlaskForm):
@@ -34,5 +35,3 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 
-class RunForm(FlaskForm):
-    submit = SubmitField('Новый запуск')
