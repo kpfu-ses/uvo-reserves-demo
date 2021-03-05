@@ -52,8 +52,10 @@ def work_project(project_id):
     form = ProjectEditForm()
     project = Project.query.get(project_id)
     if form.validate_on_submit():
-        edit_project(form, project)
-        return redirect(url_for('main.work_project', project_id=project_id))
+        errors = edit_project(form, project)
+        if len(errors) > 0:
+            return render_template('load_errors.html', title='Load Problems',
+                                   errors=errors, project_id=project_id)
     return render_template('project.html', title='Edit Project', project=project, form=form)
 
 

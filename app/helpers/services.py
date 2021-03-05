@@ -25,6 +25,7 @@ def save_project(project_name):
 
 
 def edit_project(form, project):
+    errors = []
     if form.name.data != '':
         project.name = form.name.data
     for coords_file in form.coords_file.data:
@@ -33,7 +34,11 @@ def edit_project(form, project):
             filename = str(project.id) + '_coords_' + str(datetime.now()) + file.filename
             save_file(file, filename, current_app)
             coords = add_coords(filename, project.id)
-            db.session.add(coords)
+            if coords is None:
+                errors.append("Не удалось обработать файл с координатами с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(coords)
     for core_file in form.core_file.data:
         if core_file.filename != '':
             file = core_file
@@ -49,6 +54,7 @@ def edit_project(form, project):
             logs = Logs(project_id=project.id, filepath=filename)
             db.session.add(logs)
     db.session.commit()
+    return errors
 
 
 def add_user(form):
@@ -60,16 +66,25 @@ def add_user(form):
 
 
 def add_coords(filepath, project_id):
-    data = read_coords(filepath)
+    try:
+        data = read_coords(filepath)
+    except:
+        return None
     check_well(data['Well'], project_id)
-
+    well_id = db.session.query(Well) \
+        .filter(Well.name == data['Well']) \
+        .filter(Well.project_id == project_id) \
+        .first().id
     coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
-                    y=data['Y'], rkb=data['RKB'], well_id=Well.query.filter_by(name=data['Well']).first().id)
+                    y=data['Y'], rkb=data['RKB'], well_id=well_id)
     return coords
 
 
 def check_well(well_id, project_id):
-    if Well.query.filter_by(name=well_id).first() is None:
+    if db.session.query(Well) \
+            .filter(Well.name == well_id) \
+            .filter(Well.project_id == project_id) \
+            .first() is None:
         db.session.add(Well(name=well_id, project_id=project_id))
         db.session.commit()
 
@@ -77,9 +92,9 @@ def check_well(well_id, project_id):
 def run_wells(run, services):
     result = []
     if 1 in services:
-        result = db.session.query(Well, Logs, Coords)\
-            .filter(Well.project_id == run.project_id)\
-            .filter(Logs.well_id == Well.id)\
+        result = db.session.query(Well, Logs, Coords) \
+            .filter(Well.project_id == run.project_id) \
+            .filter(Logs.well_id == Well.id) \
             .filter(Coords.well_id == Well.id).distinct(Well.id).all()
 
     return [well for well, log, coords in result]
@@ -90,5 +105,3 @@ def save_run(project_id):
     db.session.add(run)
     db.session.commit()
     return run
-
-
