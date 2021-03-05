@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 
@@ -22,8 +20,6 @@ def index():
 @bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    current_user.last_run_see_time = datetime.now()
-    db.session.commit()
     form = ProjectForm()
     if form.validate_on_submit():
         save_project(form.name.data)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 
@@ -60,4 +62,6 @@ def runs(project_id):
 @login_required
 def done_runs():
     done_runs_list = current_user.new_runs()
+    current_user.last_run_see_time = datetime.now()
+    db.session.commit()
     return render_template('run/done_runs.html', title='Done runs', runs=done_runs_list)
