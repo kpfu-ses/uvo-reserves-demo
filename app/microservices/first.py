@@ -7,7 +7,7 @@ from flask import current_app
 
 from app import db
 from app.helpers.parser import read_strat
-from app.models import Stratigraphy
+from app.models import Stratigraphy, Run
 from app.modules.first.Strat_P2ss2 import get_strat
 
 
@@ -33,8 +33,13 @@ def save_strat(wells, run_id):
                              lingula_top=strat_data['Lingula_top'], p2ss2_top=strat_data['P2ss2_top'],
                              p2ss2_bot=strat_data['P2ss2_bot'])
         db.session.add(strat)
-        db.session.commit()
 
+    report_filepath = current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/Report.txt'
+    new_report_filepath = 'report_1_{}_Report.txt'.format(run_id)
+    shutil.copyfile(report_filepath, new_report_filepath)
+    run = Run.query.get(run_id)
+    run.report_1 = new_report_filepath
+    db.session.commit()
 
 def run_first(wells, run_id):
     Path(current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/').mkdir(parents=True,

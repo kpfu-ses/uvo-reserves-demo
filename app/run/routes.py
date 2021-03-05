@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
+from flask import send_file
 
 from app import db
 from app.helpers.services import save_run
@@ -44,7 +45,12 @@ def run_view(run_id):
     this_run = Run.query.filter_by(id=run_id).first()
     strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
     core_res = list(Core.query.filter_by(run_id=this_run.id))
-    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res)
+    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res, run=this_run)
+
+
+@bp.route('/download/<filename>')
+def download_file(filename):
+    return send_file(filename, as_attachment=True)
 
 
 @bp.route('/<project_id>/runs', methods=['GET', 'POST'])

@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 from app import db
 from flask import current_app
-from app.models import Core
+from app.models import Core, Run
 from app.modules.second.core_shift import get_linking
 
 regWellName = r"[^0-9]"
@@ -37,6 +37,12 @@ def save_results(wells, run_id):
         shutil.copyfile(filepath, 'app/static/' + core.res_filepath)
         db.session.add(core)
         db.session.commit()
+    report_filepath = current_app.config['SERVICES_PATH'] + 'second/' + str(run_id) + '/output_data/Report.txt'
+    new_report_filepath = 'report_2_{}_Report.txt'.format(run_id)
+    shutil.copyfile(report_filepath, new_report_filepath)
+    run = Run.query.get(run_id)
+    run.report_2 = new_report_filepath
+    db.session.commit()
 
 
 def run_second(wells, run_id):

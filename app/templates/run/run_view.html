@@ -20,6 +20,8 @@
         </tr>
         </table>
         {% endfor %}
+        <br>
+        <p><div><a href="{{ url_for('static', filename=run.report_2) }}">Отчет</a></div>
     {% endif %}
     {% if core_res|length > 0 %}
         <h3>Результаты увязки</h3>
@@ -27,5 +29,7 @@
         <img src="{{url_for('static', filename =core.res_filepath) }}" alt="{{ core.well_data_id }}" width="350"
    height="250">
         {% endfor %}
+        <br>
+        <p><div><a href="{{ url_for('static', filename=run.report_1)}} }}">Отчет</a></div>
     {% endif %}
 {% endblock %}
