@@ -3,6 +3,8 @@
 
 {% block app_content %}
      <h1>Запуск программных модулей</h1>
+    <br>
+    <p><div><a href="{{ url_for('static', filename=run.report_1) }}">Отчет</a></div>
     {% if strats|length > 0 %}
         <h3>Результаты поиска стратиграфий</h3>
         {% for strat in strats %}
@@ -21,7 +23,6 @@
         </table>
         {% endfor %}
         <br>
-        <p><div><a href="{{ url_for('static', filename=run.report_2) }}">Отчет</a></div>
     {% endif %}
     {% if core_res|length > 0 %}
         <h3>Результаты увязки</h3>
@@ -30,6 +31,15 @@
    height="250">
         {% endfor %}
         <br>
-        <p><div><a href="{{ url_for('static', filename=run.report_1)}} }}">Отчет</a></div>
+{#        <p><div><a href="{{ url_for('static', filename=run.report_2) }}">Отчет</a></div>#}
+    {% endif %}
+    {% if logs_res|length > 0 %}
+        <h3>Результаты увязки</h3>
+        {% for log in logs_res %}
+        <img src="{{url_for('static', filename =log.res_filepath) }}" alt="{{ log.well_id }}" width="350"
+   height="250">
+        {% endfor %}
+        <br>
+{#        <p><div><a href="{{ url_for('static', filename=run.report_3) }}">Отчет</a></div>#}
     {% endif %}
 {% endblock %}

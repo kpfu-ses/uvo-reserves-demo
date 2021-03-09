@@ -200,6 +200,9 @@ class Logs(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
     filepath = db.Column(db.String(128))
+    res_filepath = db.Column(db.String(255))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
+
 
 
 # кривая

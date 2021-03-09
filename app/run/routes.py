@@ -9,7 +9,7 @@ from app.helpers.services import save_run
 from app.run import bp
 from app.run.forms import RunForm
 from app.microservices.main import get_wells_list
-from app.models import Project, Run, Stratigraphy, Core
+from app.models import Project, Run, Stratigraphy, Core, Logs
 
 
 @bp.route('/runs/services', methods=['POST'])
@@ -45,7 +45,8 @@ def run_view(run_id):
     this_run = Run.query.filter_by(id=run_id).first()
     strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
     core_res = list(Core.query.filter_by(run_id=this_run.id))
-    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res, run=this_run)
+    logs_res = list(Logs.query.filter_by(run_id=this_run.id))
+    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res, logs_res=logs_res, run=this_run)
 
 
 @bp.route('/download/<filename>')

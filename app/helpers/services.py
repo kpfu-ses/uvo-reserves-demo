@@ -11,7 +11,7 @@ from app.models import projects_users
 
 
 def save_project(project_name):
-    user = User.query.filter_by(username=current_user.username).first()
+    user = User.query.get(current_user.id)
     project = Project(name=project_name)
     db.session.add(project)
     db.session.commit()

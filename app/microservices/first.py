@@ -1,7 +1,6 @@
 import os
 import shutil
 from pathlib import Path
-import json
 
 from flask import current_app
 
@@ -9,19 +8,7 @@ from app import db
 from app.helpers.parser import read_strat
 from app.models import Stratigraphy, Run
 from app.modules.first.Strat_P2ss2 import get_strat
-
-
-def create_coords_files(wells, run_id):
-    for well in wells:
-        for coords in well.coords():
-            Path(
-                current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/input_data/coords/' + well.name).mkdir(
-                parents=True, exist_ok=True)
-            coords_json = {"Well": coords.well_id, "X": coords.x, "Y": coords.y, "RKB": coords.rkb}
-            filename = current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + \
-                       '/input_data/coords/' + well.name + '/' + coords.filepath
-            with open(filename, 'w') as f:
-                json.dump(coords_json, f, indent=4)
+from app.microservices.util import create_coords_files
 
 
 def save_strat(wells, run_id):
@@ -36,7 +23,7 @@ def save_strat(wells, run_id):
 
     report_filepath = current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/Report.txt'
     new_report_filepath = 'report_1_{}_Report.txt'.format(run_id)
-    shutil.copyfile(report_filepath, new_report_filepath)
+    shutil.copyfile(report_filepath, "app/static/" + new_report_filepath)
     run = Run.query.get(run_id)
     run.report_1 = new_report_filepath
     db.session.commit()
@@ -45,7 +32,7 @@ def run_first(wells, run_id):
     Path(current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/').mkdir(parents=True,
                                                                                                exist_ok=True)
     Path(current_app.config['SERVICES_PATH'] + 'first/' + str(run_id) + '/output_data/Report.txt').touch(exist_ok=True)
-    create_coords_files(wells, run_id)
+    create_coords_files(wells, run_id, 'first')
     for well in wells:
         for logs in well.logs():
             Path(current_app.config['SERVICES_PATH'] + 'first/' + str(

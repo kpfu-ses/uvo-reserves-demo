@@ -24,7 +24,7 @@ def profile():
     if form.validate_on_submit():
         save_project(form.name.data)
         return redirect(url_for('main.profile'))
-    user = User.query.filter_by(username=current_user.username).first()
+    user = User.query.get(current_user.id)
     projects = user.projects()
     return render_template('profile.html', title='Profile', form=form, projects=projects)
 
