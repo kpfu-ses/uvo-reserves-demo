@@ -5,6 +5,7 @@ import numpy as np
 from flask import current_app
 from app.helpers.util import guess_enc
 
+
 def read_coords(filepath):
     with open(os.path.join(current_app.config['UPLOAD_FOLDER'], filepath), 'r') as f:
         data = f.read().replace('\n', '')
@@ -32,7 +33,6 @@ def read_lasio(filepath):
     W_i = lasio.read(path_lasio, encoding=enc)
     wname = str(W_i.well["WELL"].value)
     well_info['name'] = wname
-    print(W_i.curves.keys())
     for name_crv in W_i.curves.keys():
         if str(name_crv).lower() in GK_names:
             well_info.update({"GK": np.array(W_i.curves[name_crv].data)})
