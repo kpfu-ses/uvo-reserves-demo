@@ -204,7 +204,6 @@ class Logs(db.Model):
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
 
 
-
 # кривая
 class Curve(db.Model):
     id = db.Column(db.Integer, primary_key=True)

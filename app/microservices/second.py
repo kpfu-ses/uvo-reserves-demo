@@ -50,27 +50,26 @@ def save_results(wells, run_id):
 
 
 def run_second(wells, run_id):
-    Path(current_app.config['SERVICES_PATH'] + 'second/' + str(run_id) + '/output_data/').mkdir(parents=True,
+    Path(f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/output_data/").mkdir(parents=True,
                                                                                                exist_ok=True)
-    Path(current_app.config['SERVICES_PATH'] + 'second/' + str(run_id) + '/output_data/Report.txt').touch(exist_ok=True)
+    Path(f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/output_data/Report.txt").touch(exist_ok=True)
     create_strat_files(wells, run_id, 'second')
     wells_list = []
     for well in wells:
         for logs in well.logs():
             well_id = well.core()[0].well_data_id
-            Path(current_app.config['SERVICES_PATH'] + 'second/' + str(
-                run_id) + '/input_data/wellLogs/' + well_id).mkdir(parents=True, exist_ok=True)
+            Path(f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/input_data/wellLogs/{well_id}").mkdir(parents=True, exist_ok=True)
             shutil.copyfile(os.path.join(current_app.config['UPLOAD_FOLDER'], logs.filepath),
-                            current_app.config['SERVICES_PATH'] + 'second/' + str(
-                                run_id) + '/input_data/wellLogs/' + well_id + '/' + logs.filepath)
+                            f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}"
+                            f"/input_data/wellLogs/{well_id}/{logs.filepath}")
 
         for core in well.core():
             wells_list.append(core.well_data_id)
-            Path(current_app.config['SERVICES_PATH'] + 'second/' + str(
-                run_id) + '/input_data/wellCore/' + core.well_data_id).mkdir(parents=True, exist_ok=True)
+            Path(f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/input_data/wellCore/{core.well_data_id}")\
+                .mkdir(parents=True, exist_ok=True)
             shutil.copyfile(os.path.join(current_app.config['UPLOAD_FOLDER'], core.filepath),
-                            current_app.config['SERVICES_PATH'] + 'second/' + str(
-                                run_id) + '/input_data/wellCore/' + core.well_data_id + '/' + core.well_data_id + '.json')
+                            f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}"
+                            f"/input_data/wellCore/{core.well_data_id}/{core.well_data_id}.json")
 
     get_linking(run_id, wells_list)
     return save_results(wells, run_id)

@@ -1,12 +1,13 @@
 from datetime import datetime
+import numpy as np
 
 from flask import flash, current_app
 from flask_login import current_user
 
 from app import db
-from app.helpers.parser import read_coords
+from app.helpers.parser import read_coords, read_lasio
 from app.helpers.util import save_file
-from app.models import User, Project, Coords, Core, Logs, Well, Run
+from app.models import User, Project, Coords, Core, Logs, Well, Run, Curve
 from app.models import projects_users
 
 
@@ -14,9 +15,8 @@ def save_project(project_name):
     user = User.query.get(current_user.id)
     project = Project(name=project_name)
     db.session.add(project)
-    db.session.commit()
+    db.session.flush()
 
-    project = Project.query.filter_by(name=project_name).first()
     statement = projects_users.insert().values(user_id=user.id,
                                                project_id=project.id,
                                                access='r')
@@ -51,8 +51,12 @@ def edit_project(form, project):
             file = logs_file
             filename = str(project.id) + '_logs_' + str(datetime.now()) + file.filename
             save_file(file, filename, current_app)
-            logs = Logs(project_id=project.id, filepath=filename)
-            db.session.add(logs)
+            log = add_log(filename, project.id)
+            if log is None:
+                errors.append("Не удалось обработать las-файл с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(log)
     db.session.commit()
     return errors
 
@@ -70,34 +74,42 @@ def add_coords(filepath, project_id):
         data = read_coords(filepath)
     except:
         return None
-    check_well(data['Well'], project_id)
-    well_id = db.session.query(Well) \
-        .filter(Well.name == data['Well']) \
-        .filter(Well.project_id == project_id) \
-        .first().id
+    well = check_well(data['Well'], project_id)
     coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
-                    y=data['Y'], rkb=data['RKB'], well_id=well_id)
+                    y=data['Y'], rkb=data['RKB'], well_id=well.id)
     return coords
 
 
+def add_log(filepath, project_id):
+    # try:
+    data = read_lasio(filepath)
+    # except:
+    #     return None
+    well = check_well(data['name'], project_id)
+
+    for crv_name in data.keys():
+        if crv_name == 'name':
+            continue
+        else:
+            bottom = np.nanmin(data[crv_name])
+            top = np.nanmax(data[crv_name])
+            crv = Curve(project_id=project_id, well_id=well.id, name=crv_name, data=data[crv_name],
+                        top=top, bottom=bottom)
+            db.session.add(crv)
+    log = Logs(project_id=project_id, filepath=filepath, well_id=well.id)
+    return log
+
+
 def check_well(well_id, project_id):
-    if db.session.query(Well) \
+    well = db.session.query(Well) \
             .filter(Well.name == well_id) \
             .filter(Well.project_id == project_id) \
-            .first() is None:
-        db.session.add(Well(name=well_id, project_id=project_id))
+            .first()
+    if well is None:
+        well = Well(name=well_id, project_id=project_id)
+        db.session.add(well)
         db.session.commit()
-
-
-def run_wells(run, services):
-    result = []
-    if 1 in services:
-        result = db.session.query(Well, Logs, Coords) \
-            .filter(Well.project_id == run.project_id) \
-            .filter(Logs.well_id == Well.id) \
-            .filter(Coords.well_id == Well.id).distinct(Well.id).all()
-
-    return [well for well, log, coords in result]
+    return well
 
 
 def save_run(project_id):

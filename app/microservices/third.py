@@ -33,11 +33,9 @@ def save_results(wells, run_id):
 
             # change las-path
             las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"
-            # shutil.move(filepath + ".las", las_path)
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
             db.session.add(log)
-            # db.session.commit()
 
     # save report file
     report_filepath = f"{current_app.config['SERVICES_PATH']}third/{str(run_id)}/output_data/Report.txt"
@@ -51,9 +49,9 @@ def save_results(wells, run_id):
 
 
 def run_third(wells, run_id):
-    Path(current_app.config['SERVICES_PATH'] + 'third/' + str(run_id) + '/output_data/').mkdir(parents=True,
+    Path(f"{current_app.config['SERVICES_PATH']}third/{str(run_id)}/output_data/").mkdir(parents=True,
                                                                                                exist_ok=True)
-    Path(current_app.config['SERVICES_PATH'] + 'third/' + str(run_id) + '/output_data/Report.txt').touch(exist_ok=True)
+    Path(f"{current_app.config['SERVICES_PATH']}third/{str(run_id)}/output_data/Report.txt").touch(exist_ok=True)
     create_coords_files(wells, run_id, 'third', well_id_name=True)
     create_strat_files(wells, run_id, 'third')
     for well in wells:

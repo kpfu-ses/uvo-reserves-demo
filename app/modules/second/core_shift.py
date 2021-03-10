@@ -463,7 +463,7 @@ def get_linking(run_id, wells_list):
                             except Exception as exc:
                                 print(index, wellName)
                                 print(exc)
-                            pass
+                                pass
                             newCurve = newMesh(lasInfoObject.las[curveName], localDept, dept)
                             curves[newCurveName] = newCurve
                             try:
