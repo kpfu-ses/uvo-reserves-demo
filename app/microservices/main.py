@@ -19,7 +19,7 @@ def run_services(user_id, wells_ids_str, services, run_id):
     db.session.commit()
     rep_serv = ''
     if '1' in services:
-        run_first(wells, run_id)
+        wells = run_first(wells, run_id)
         rep_serv = 'first/'
 
     if '2' in services:
@@ -36,8 +36,11 @@ def run_services(user_id, wells_ids_str, services, run_id):
     user.add_notification('done', len(user.new_runs()))
     db.session.commit()
 
+    # updating run time for notifications
     run = Run.query.filter_by(id=run_id).first()
     run.date = datetime.now()
+
+    # saving report_file
     report_filepath = current_app.config['SERVICES_PATH'] + rep_serv + str(run_id) + '/output_data/Report.txt'
     new_report_filepath = 'report_1_{}_Report.txt'.format(run_id)
     shutil.copyfile(report_filepath, "app/static/" + new_report_filepath)

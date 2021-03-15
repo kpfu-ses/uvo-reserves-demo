@@ -130,7 +130,8 @@ class Project(db.Model):
 
 class Well(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
+    well_id = db.Column(db.String(128), index=True)
+    name = db.Column(db.String(128), index=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 
     def coords(self):
@@ -147,6 +148,8 @@ class Well(db.Model):
 
     def strats(self):
         return Stratigraphy.query.filter_by(well_id=self.id)
+
+
 
 
 # координаты
@@ -211,7 +214,7 @@ class Curve(db.Model):
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     name = db.Column(db.String(128))
-    data = db.Column(db.Binary)
+    data = db.Column(db.PickleType)
     top = db.Column(db.Float)
     bottom = db.Column(db.Float)
 

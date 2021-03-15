@@ -81,10 +81,10 @@ def add_coords(filepath, project_id):
 
 
 def add_log(filepath, project_id):
-    # try:
-    data = read_lasio(filepath)
-    # except:
-    #     return None
+    try:
+        data = read_lasio(filepath)
+    except:
+        return None
     well = check_well(data['name'], project_id)
 
     for crv_name in data.keys():

@@ -91,7 +91,7 @@
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
                 <div><span>{{ well.name }}</span></div>
-                <ul>{% for logs in well.curves() %}
+                <ul>{% for logs in well.logs() %}
                     <li>
                         <a href="{{ url_for('main.coords', coords_id=logs.id) }}">{{ logs.id }}</a>
                     </li>

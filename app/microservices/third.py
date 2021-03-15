@@ -36,14 +36,6 @@ def save_results(wells, run_id):
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
             db.session.add(log)
-
-    # save report file
-    report_filepath = f"{current_app.config['SERVICES_PATH']}third/{str(run_id)}/output_data/Report.txt"
-    new_report_filepath = 'report_3_{}_Report.txt'.format(run_id)
-    shutil.copyfile(report_filepath, "app/static/" + new_report_filepath)
-    run = Run.query.get(run_id)
-    run.report_3 = new_report_filepath
-
     db.session.commit()
     return wells_done
 
