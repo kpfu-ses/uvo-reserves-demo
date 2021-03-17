@@ -8,6 +8,7 @@ from flask import current_app
 from app.models import Core, Run, Logs
 from app.modules.second.core_shift import get_linking
 from app.microservices.util import create_strat_files, create_log_files
+from app.helpers.services import add_log
 
 regWellName = r"[^0-9]"
 
@@ -23,16 +24,16 @@ def save_results(wells, run_id):
         filepath = f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/output_data/{well_id}/{well_name}"
         if Path(filepath + ".png").is_file():
             wells_done.append(well)
-            core_from = Core.query.filter_by(well_id=well.id, ).first()
+            core_from = Core.query.filter_by(well_id=well.id).first()
             core = Core(well_id=core_from.well_id, run_id=run_id, res_filepath=core_from.filepath.split('.')[0] + '.png',
                         well_data_id=core_from.well_data_id, project_id=core_from.project_id, filepath=core_from.filepath)
             shutil.copyfile(filepath + ".png", 'app/static/' + core.res_filepath)
             db.session.add(core)
 
             # change las-path
+            add_log(filepath + ".las", project_id=run.project_id)
             log = Logs.query.filter_by(well_id=core_from.well_id, project_id=run.project_id).first()
             las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"
-            # shutil.move(filepath + ".las", las_path)
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
     db.session.commit()
@@ -47,7 +48,6 @@ def run_second(wells, run_id):
     create_log_files(wells, run_id, 'second', well_id_name=True)
     wells_list = []
     for well in wells:
-
         for core in well.core():
             wells_list.append(core.well_data_id)
             Path(f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/input_data/wellCore/{core.well_data_id}")\

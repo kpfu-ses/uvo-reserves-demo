@@ -3,7 +3,7 @@ import os
 import lasio
 import numpy as np
 from flask import current_app
-from app.helpers.util import guess_enc
+from app.helpers.util import guess_enc, well_name_re
 
 
 def read_coords(filepath):
@@ -19,7 +19,8 @@ def read_strat(filepath):
 
 
 def read_lasio(filepath):
-    path_lasio = os.path.join(current_app.config['UPLOAD_FOLDER'], filepath)
+    # path_lasio = os.path.join(current_app.config['UPLOAD_FOLDER'], filepath)
+    path_lasio = filepath
     Z_names = ["tvdss", "tvd", "z"]
     GK_names = ["gkv", "gr", "gk", "gk1", "гк", "gk:1", "гк  ", "_гк", "= gk$"]
     IK_names = ["ik", "ild", "ик", "ik1", "ik:1", "ик  ", "иk", "зонд ик", "rik", "ик$", "ик_n"]
@@ -31,7 +32,7 @@ def read_lasio(filepath):
     well_info = {}
     enc = guess_enc(path_lasio)
     W_i = lasio.read(path_lasio, encoding=enc)
-    wname = str(W_i.well["WELL"].value)
+    wname = well_name_re(str(W_i.well["WELL"].value))
     well_info['name'] = wname
     for name_crv in W_i.curves.keys():
         if str(name_crv).lower() in GK_names:
@@ -57,5 +58,6 @@ def read_lasio(filepath):
         if str(name_crv).lower() in Z_names:
             well_info.update({"Z": np.array(W_i.curves[name_crv].data)})
             continue
+        well_info.update({name_crv: np.array(W_i.curves[name_crv].data)})
 
     return well_info

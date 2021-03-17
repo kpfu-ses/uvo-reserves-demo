@@ -54,3 +54,8 @@ def guess_enc(file):
         except BaseException as exc:
             pass
     return enc if enc is not 'None' else maybeEnc
+
+
+def well_name_re(well_name):
+    reg_well_name = r"[^0-9]"
+    return re.sub(reg_well_name, '', well_name.replace(' ', ''))

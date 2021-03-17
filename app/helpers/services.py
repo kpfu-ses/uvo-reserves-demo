@@ -1,12 +1,13 @@
 from datetime import datetime
 import numpy as np
+import os
 
 from flask import flash, current_app
 from flask_login import current_user
 
 from app import db
 from app.helpers.parser import read_coords, read_lasio
-from app.helpers.util import save_file
+from app.helpers.util import save_file, well_name_re
 from app.models import User, Project, Coords, Core, Logs, Well, Run, Curve
 from app.models import projects_users
 
@@ -51,7 +52,7 @@ def edit_project(form, project):
             file = logs_file
             filename = str(project.id) + '_logs_' + str(datetime.now()) + file.filename
             save_file(file, filename, current_app)
-            log = add_log(filename, project.id)
+            log = add_log(os.path.join(current_app.config['UPLOAD_FOLDER'], filename), project.id)
             if log is None:
                 errors.append("Не удалось обработать las-файл с таким названием: {}"
                               .format(file.filename))
@@ -74,7 +75,8 @@ def add_coords(filepath, project_id):
         data = read_coords(filepath)
     except:
         return None
-    well = check_well(data['Well'], project_id)
+    well_name = well_name_re(data['Well'])
+    well = check_well(well_name, project_id)
     coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
                     y=data['Y'], rkb=data['RKB'], well_id=well.id)
     return coords
@@ -82,7 +84,7 @@ def add_coords(filepath, project_id):
 
 def add_log(filepath, project_id):
     try:
-        data = read_lasio(filepath)
+     data = read_lasio(filepath)
     except:
         return None
     well = check_well(data['name'], project_id)
@@ -93,9 +95,18 @@ def add_log(filepath, project_id):
         else:
             bottom = np.nanmin(data[crv_name])
             top = np.nanmax(data[crv_name])
-            crv = Curve(project_id=project_id, well_id=well.id, name=crv_name, data=data[crv_name],
-                        top=top, bottom=bottom)
+            crv = db.session.query(Curve)\
+                .filter(Curve.well_id == well.id)\
+                .filter(Curve.name == crv_name)\
+                .first()
+            if crv is None:
+                crv = Curve(project_id=project_id, well_id=well.id, name=crv_name,
+                        top=top, bottom=bottom, data=data[crv_name])
+            crv.data = data[crv_name]
             db.session.add(crv)
+
+    db.session.commit()
+
     log = Logs(project_id=project_id, filepath=filepath, well_id=well.id)
     return log
 

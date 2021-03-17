@@ -239,8 +239,6 @@ class Run(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     date = db.Column(db.DateTime)
     report_1 = db.Column(db.String(255))
-    report_2 = db.Column(db.String(255))
-    report_3 = db.Column(db.String(255))
 
     def exist(self):
         stmt = db.select([run_well]).where(run_well.c.run_id == self.id)
