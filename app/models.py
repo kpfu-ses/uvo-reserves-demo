@@ -118,11 +118,26 @@ class Project(db.Model):
     def logs(self):
         return Logs.query.filter_by(project_id=self.id)
 
+    def strats(self):
+        return Stratigraphy.query.filter_by(project_id=self.id)
+
     def wells(self):
         return Well.query.filter_by(project_id=self.id)
 
     def runs(self):
         return Run.query.filter_by(project_id=self.id)
+
+    def surf_top_files(self):
+        return StructFile.query.filter_by(project_id=self.id, type=Struct.SURF_TOP)
+
+    def surf_bot_files(self):
+        return StructFile.query.filter_by(project_id=self.id, type=Struct.SURF_BOT)
+
+    def grid_files(self):
+        return StructFile.query.filter_by(project_id=self.id, type=Struct.GRID)
+
+    def grid_fes_files(self):
+        return StructFile.query.filter_by(project_id=self.id, type=Struct.GRID_FES)
 
     def __repr__(self):
         return 'Project {}'.format(self.name)
@@ -224,6 +239,7 @@ class Stratigraphy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    filepath = db.Column(db.String(128))
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     lingula_top = db.Column(db.Float)
     p2ss2_top = db.Column(db.Float)
@@ -249,6 +265,13 @@ class Service(Enum):
     FIRST = 1
     SECOND = 2
     THIRD = 3
+
+
+class Struct(Enum):
+    SURF_TOP = 'SURF_TOP'
+    SURF_BOT = 'SURF_BOT'
+    GRID = 'GRID'
+    GRID_FES = 'GRID_FES'
 
 
 class Task(db.Model):
@@ -279,3 +302,18 @@ class Notification(db.Model):
 
     def get_data(self):
         return json.loads(str(self.payload_json))
+
+
+class Result(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
+    service = db.Column(db.Integer)
+    filepath = db.Column(db.String(255))
+
+
+class StructFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    type = db.Column(db.Enum(Struct))
+    filepath = db.Column(db.String(255))
+

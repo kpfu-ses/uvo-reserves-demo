@@ -8,7 +8,7 @@ from flask_login import current_user
 from app import db
 from app.helpers.parser import read_coords, read_lasio
 from app.helpers.util import save_file, well_name_re
-from app.models import User, Project, Coords, Core, Logs, Well, Run, Curve
+from app.models import User, Project, Coords, Core, Logs, Well, Run, Curve, StructFile, Struct
 from app.models import projects_users
 
 
@@ -58,6 +58,52 @@ def edit_project(form, project):
                               .format(file.filename))
             else:
                 db.session.add(log)
+    for surf_top_file in form.surf_top_file.data:
+        if surf_top_file.filename != '':
+            file = surf_top_file
+            filename = str(project.id) + '_surf_top_' + str(datetime.now()) + surf_top_file.filename
+            save_file(file, filename, current_app)
+            struct = StructFile(project_id=project.id, filepath=filename, type=Struct.SURF_TOP)
+            if struct is None:
+                errors.append("Не удалось обработать файл с поверхностью сетки с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(struct)
+    for surf_bot_file in form.surf_bot_file.data:
+        if surf_bot_file.filename != '':
+            file = surf_bot_file
+            filename = str(project.id) + '_surf_bot_' + str(datetime.now()) + surf_bot_file.filename
+            save_file(file, filename, current_app)
+            struct = StructFile(project_id=project.id, filepath=filename, type=Struct.SURF_BOT)
+            if struct is None:
+                errors.append("Не удалось обработать файл с поверхностью сетки с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(struct)
+    for grid_file in form.grid_file.data:
+        if grid_file.filename != '':
+            file = grid_file
+            filename = str(project.id) + '_grid_' + str(datetime.now()) + grid_file.filename
+            save_file(file, filename, current_app)
+            struct = StructFile(project_id=project.id, filepath=filename, type=Struct.GRID)
+            if struct is None:
+                errors.append("Не удалось обработать файл сетки с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(struct)
+    for grid_fes_file in form.grid_fes_file.data:
+        if grid_fes_file.filename != '':
+            file = grid_fes_file
+            filename = str(project.id) + '_grid_fes_' + str(datetime.now()) + grid_fes_file.filename
+            save_file(file, filename, current_app)
+            struct = StructFile(project_id=project.id, filepath=filename, type=Struct.GRID_FES)
+            if struct is None:
+                errors.append("Не удалось обработать файл сетки с таким названием: {}"
+                              .format(file.filename))
+            else:
+                db.session.add(struct)
+
+
     db.session.commit()
     return errors
 

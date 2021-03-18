@@ -15,6 +15,12 @@ class ProjectEditForm(FlaskForm):
     coords_file = MultipleFileField('Загрузить координаты')
     core_file = MultipleFileField('Загрузить керн')
     logs_file = MultipleFileField('Загрузить кривые')
+    strat_file = MultipleFileField('Загрузить стратиграфию')
+    surf_top_file = MultipleFileField('Загрузить верхнюю поверхность сетки')
+    surf_bot_file = MultipleFileField('Загрузить нижнюю поверхность сетки')
+    grid_file = MultipleFileField('Загрузить пустую сетку')
+    grid_fes_file = MultipleFileField('Загрузить сетку с показателями')
+
     submit = SubmitField('Редактировать проект')
 
 

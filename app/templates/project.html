@@ -101,6 +101,81 @@
         </td>
         </tr>
         </table>
+        <table>
+        <tr>
+        <td>
+            {{ form.strat_file.label }}<br>
+            {{ form.strat_file(class_='btn btn-default') }}<br>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+                <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
+            {% for strat in  project.strats() %}
+                <div><p><span>{{ strat.filepath }}</span></p></div>
+            {% endfor %}
+            </div>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 40rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+            <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
+            {% for well in project.wells() %}
+                <div><span>{{ well.name }}</span></div>
+                <ul>{% for strat in well.strats() %}
+                    <li>
+{#                        <a href="{{ url_for('main.coords', coords_id=coords.id) }}">{{ strat.id }}</a>#}
+                    </li>
+                {% endfor %}</ul>
+            {% endfor %}
+            </div>
+        </td>
+        <td>
+            {{ form.surf_top_file.label }}<br>
+            {{ form.surf_top_file(class_='btn btn-default') }}<br>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+                <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
+            {% for surf_top_file in  project.surf_top_files() %}
+                <div><p><span>{{ surf_top_file.filepath }}</span></p></div>
+            {% endfor %}
+            </div>
+        </td>
+        <td>
+            {{ form.surf_bot_file.label }}<br>
+            {{ form.surf_bot_file(class_='btn btn-default') }}<br>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+                <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
+            {% for surf_bot_file in  project.surf_bot_files() %}
+                <div><p><span>{{ surf_bot_file.filepath }}</span></p></div>
+            {% endfor %}
+            </div>
+        </td>
+        </tr>
+        </table>
+        <table>
+        <tr>
+        <td>
+            {{ form.grid_file.label }}<br>
+            {{ form.grid_file(class_='btn btn-default') }}<br>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+                <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
+            {% for grid_file in  project.grid_files() %}
+                <div><p><span>{{ grid_file.filepath }}</span></p></div>
+            {% endfor %}
+            </div>
+        </td>
+        <td>
+            {{ form.grid_fes_file.label }}<br>
+            {{ form.grid_fes_file(class_='btn btn-default') }}<br>
+            <div class="list-group"
+             style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+                <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
+            {% for grid_fes_file in  project.grid_fes_files() %}
+                <div><p><span>{{ grid_fes_file.filepath }}</span></p></div>
+            {% endfor %}
+            </div>
+        </td>
+        </tr>
+        </table>
          <div class="progress">
           <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar"
             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%</div>

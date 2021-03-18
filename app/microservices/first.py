@@ -18,7 +18,7 @@ def save_strat(wells, run_id):
             wells_done.append(well)
 
             strat_data = read_strat(filepath)
-            strat = Stratigraphy(run_id=run_id, project_id=well.project_id, well_id=well.id,
+            strat = Stratigraphy(run_id=run_id, well_id=well.id,
                                  lingula_top=strat_data['Lingula_top'], p2ss2_top=strat_data['P2ss2_top'],
                                  p2ss2_bot=strat_data['P2ss2_bot'])
             db.session.add(strat)
