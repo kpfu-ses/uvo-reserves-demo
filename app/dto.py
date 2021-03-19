@@ -1,2 +1,3 @@
 class StructFilesDto:
     surface = []
+    grid = ''

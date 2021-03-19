@@ -3,7 +3,8 @@ from app.microservices.first import run_first
 from app.microservices.second import run_second
 from app.microservices.third import run_third
 from app.microservices.fifth import run_fifth
-from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User
+from app.microservices.sixth import run_sixth
+from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User, StructFile, Struct
 from app.models import run_well
 from flask import current_app
 import shutil
@@ -38,6 +39,16 @@ def run_services(user_id, wells_ids_str, services, run_id):
         if rep_serv == '':
             rep_serv = 'fifth/'
 
+    if '6' in services:
+        run_sixth(run_id)
+        if rep_serv == '':
+            rep_serv = 'sixth/'
+
+    if '7' in services:
+        run_sixth(run_id)
+        if rep_serv == '':
+            rep_serv = 'seventh/'
+
     user = User.query.get(user_id)
     user.add_notification('done', len(user.new_runs()))
     db.session.commit()
@@ -55,7 +66,7 @@ def run_services(user_id, wells_ids_str, services, run_id):
 
 
 def get_wells_list(services_str, run_id):
-    run = Run.query.filter_by(id=run_id).first()
+    run = Run.query.get(run_id)
     result = []
     services = services_str.split(',')
     if '1' in services:
@@ -89,5 +100,34 @@ def get_wells_list(services_str, run_id):
             .filter(Stratigraphy.well_id == Well.id) \
             .filter(Coords.well_id == Well.id).distinct(Well.id).all()
         result = [well for well, strat, coords in result]
+
+    if '6' in services:
+        surf_top = StructFile.query.filter_by(project_id=run.project_id, type=Struct.SURF_TOP).first()
+        if surf_top is None:
+            return []
+        else:
+            surf_bot = StructFile.query.filter_by(project_id=run.project_id, type=Struct.SURF_BOT).first()
+            if surf_bot is None:
+                return []
+            elif len(services) == 1:
+                result = Well.query.filter_by(project_id=run.project_id).all()
+                return [(well.id, well.name) for well in result]
+        if '7' in services:
+            result2 = db.session.query(Well, Logs, Coords) \
+                .filter(Well.project_id == run.project_id) \
+                .filter(Logs.well_id == Well.id) \
+                .filter(Coords.well_id == Well.id).distinct(Well.id).all()
+            result2 = [well for well, core in result2]
+            result = list(set(result2).intersection(result))
+    elif '7' in services:
+        grid = StructFile.query.filter_by(project_id=run.project_id, type=Struct.GRID).first()
+        if grid is None:
+            return []
+        result2 = db.session.query(Well, Logs, Coords) \
+            .filter(Well.project_id == run.project_id) \
+            .filter(Logs.well_id == Well.id) \
+            .filter(Coords.well_id == Well.id).distinct(Well.id).all()
+        result2 = [well for well, core in result2]
+        result = list(set(result2).intersection(result))
     result_wells = [(well.id, well.name) for well in result]
     return result_wells

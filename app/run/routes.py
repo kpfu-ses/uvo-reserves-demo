@@ -49,8 +49,11 @@ def run_view(run_id):
     logs_res = Logs.query.filter_by(run_id=this_run.id).all()
     surface = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
         .filter((StructFile.type == Struct.SURF_TOP) | (StructFile.type == Struct.SURF_BOT)).all()
+    grid = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
+        .filter(StructFile.type == Struct.GRID).first()
     struct_files = StructFilesDto()
     struct_files.surface = surface
+    struct_files.grid = grid
     return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res,
                            logs_res=logs_res, run=this_run, struct_files=struct_files)
 

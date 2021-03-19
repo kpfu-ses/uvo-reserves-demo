@@ -747,12 +747,7 @@ def get_surfaces(run_id):
                         filemode='w')
     Err_count = 0
     pattern_text_log = '   %s   :   %s'
-    # if len(sys.argv) <= 1:
-    #    logging.error( pattern_text_log, "", "Необходимо задать список скважин" )
-    #    sys.exit()
-
     Err_count = 0
-    # wells_list = sys.argv[1].split()
 
     outfolder = run_path + 'output_data'
     wells_list_coord = [str(val).replace(" ", "") for val in os.listdir(replaceSlash(run_path + "input_data\\coords"))]

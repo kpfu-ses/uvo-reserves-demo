@@ -40,11 +40,16 @@
         {% endfor %}
         <br>
     {% endif %}
-        {% if struct_files.surface|length > 0 %}
+    {% if struct_files.surface|length > 0 %}
         <h3>Результаты построения поверхностей</h3>
         {% for struct_file in struct_files.surface %}
         <p><div><a href="{{ url_for('static', filename=struct_file.filepath) }}">{{ struct_file.type }}</a></div>
         {% endfor %}
+        <br>
+    {% endif %}
+    {% if struct_files.grid %}
+        <h3>Результаты построения 3D сетки</h3>
+        <p><div><a href="{{ url_for('static', filename=struct_files.grid.filepath) }}">{{ struct_files.grid.type }}</a></div>
         <br>
     {% endif %}
 {% endblock %}
