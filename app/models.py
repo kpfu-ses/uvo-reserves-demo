@@ -314,6 +314,8 @@ class Result(db.Model):
 class StructFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
     type = db.Column(db.Enum(Struct))
     filepath = db.Column(db.String(255))
+
 

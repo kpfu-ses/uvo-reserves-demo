@@ -31,15 +31,20 @@
    height="250">
         {% endfor %}
         <br>
-{#        <p><div><a href="{{ url_for('static', filename=run.report_2) }}">Отчет</a></div>#}
     {% endif %}
     {% if logs_res|length > 0 %}
-        <h3>Результаты увязки</h3>
+        <h3>Результаты РИГИС</h3>
         {% for log in logs_res %}
         <img src="{{url_for('static', filename =log.res_filepath) }}" alt="{{ log.well_id }}" width="350"
    height="250">
         {% endfor %}
         <br>
-{#        <p><div><a href="{{ url_for('static', filename=run.report_3) }}">Отчет</a></div>#}
+    {% endif %}
+        {% if struct_files.surface|length > 0 %}
+        <h3>Результаты построения поверхностей</h3>
+        {% for struct_file in struct_files.surface %}
+        <p><div><a href="{{ url_for('static', filename=struct_file.filepath) }}">{{ struct_file.type }}</a></div>
+        {% endfor %}
+        <br>
     {% endif %}
 {% endblock %}

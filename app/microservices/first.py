@@ -4,7 +4,7 @@ from flask import current_app
 
 from app import db
 from app.helpers.parser import read_strat
-from app.models import Stratigraphy, Run
+from app.models import Stratigraphy
 from app.modules.first.Strat_P2ss2 import get_strat
 from app.microservices.util import create_coords_files, create_log_files
 

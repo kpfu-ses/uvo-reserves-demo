@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request, jsonify
+from flask import render_template, flash, redirect, url_for, request, jsonify, current_app
 from flask_login import current_user, login_required
 
 from app import db
@@ -57,6 +57,20 @@ def work_project(project_id):
             return render_template('load_errors.html', title='Load Problems',
                                    errors=errors, project_id=project_id)
     return render_template('project.html', title='Edit Project', project=project, form=form)
+
+
+@bp.route('/project/upload', methods=['POST'])
+@login_required
+def services_run():
+    print("im here")
+    if current_user.get_task_in_progress('upload_files_task'):
+        flash('An export task is currently in progress')
+    else:
+        project = Project.query.get(request.form['project_id'])
+        current_user.launch_task('upload_files_task', 'Uploading files...', request.form['form'],
+                                 project, current_app)
+        db.session.commit()
+    return jsonify({'okay': 'okay'})
 
 
 @bp.route('/coords/<coords_id>', methods=['GET'])

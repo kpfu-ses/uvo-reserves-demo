@@ -5,11 +5,12 @@ from flask_login import current_user, login_required
 from flask import send_file
 
 from app import db
+from app.dto import StructFilesDto
 from app.helpers.services import save_run
 from app.run import bp
 from app.run.forms import RunForm
 from app.microservices.main import get_wells_list
-from app.models import Project, Run, Stratigraphy, Core, Logs
+from app.models import Project, Run, Stratigraphy, Core, Logs, StructFile, Struct
 
 
 @bp.route('/runs/services', methods=['POST'])
@@ -30,7 +31,7 @@ def run(run_id):
 @bp.route('/runs/wells', methods=['POST'])
 @login_required
 def services_run():
-    if current_user.get_task_in_progress('run_services'):
+    if current_user.get_task_in_progress('run_services_task'):
         flash('An export task is currently in progress')
     else:
         current_user.launch_task('run_services_task', 'Running services...', current_user.id, request.form['wells'],
@@ -43,10 +44,15 @@ def services_run():
 @login_required
 def run_view(run_id):
     this_run = Run.query.filter_by(id=run_id).first()
-    strats = list(Stratigraphy.query.filter_by(run_id=this_run.id))
-    core_res = list(Core.query.filter_by(run_id=this_run.id))
-    logs_res = list(Logs.query.filter_by(run_id=this_run.id))
-    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res, logs_res=logs_res, run=this_run)
+    strats = Stratigraphy.query.filter_by(run_id=this_run.id).all()
+    core_res = Core.query.filter_by(run_id=this_run.id).all()
+    logs_res = Logs.query.filter_by(run_id=this_run.id).all()
+    surface = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
+        .filter((StructFile.type == Struct.SURF_TOP) | (StructFile.type == Struct.SURF_BOT)).all()
+    struct_files = StructFilesDto()
+    struct_files.surface = surface
+    return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res,
+                           logs_res=logs_res, run=this_run, struct_files=struct_files)
 
 
 @bp.route('/download/<filename>')

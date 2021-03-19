@@ -2,6 +2,7 @@ from app import db
 from app.microservices.first import run_first
 from app.microservices.second import run_second
 from app.microservices.third import run_third
+from app.microservices.fifth import run_fifth
 from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User
 from app.models import run_well
 from flask import current_app
@@ -28,9 +29,14 @@ def run_services(user_id, wells_ids_str, services, run_id):
             rep_serv = 'second/'
 
     if '3' in services:
-        run_third(wells, run_id)
+        wells = run_third(wells, run_id)
         if rep_serv == '':
             rep_serv = 'third/'
+
+    if '5' in services:
+        run_fifth(wells, run_id)
+        if rep_serv == '':
+            rep_serv = 'fifth/'
 
     user = User.query.get(user_id)
     user.add_notification('done', len(user.new_runs()))
@@ -77,5 +83,11 @@ def get_wells_list(services_str, run_id):
             .filter(Logs.well_id == Well.id) \
             .filter(Coords.well_id == Well.id).distinct(Well.id).all()
         result = [well for well, log, coords in result]
+    elif '5' in services:
+        result = db.session.query(Well, Stratigraphy, Coords) \
+            .filter(Well.project_id == run.project_id) \
+            .filter(Stratigraphy.well_id == Well.id) \
+            .filter(Coords.well_id == Well.id).distinct(Well.id).all()
+        result = [well for well, strat, coords in result]
     result_wells = [(well.id, well.name) for well in result]
     return result_wells
