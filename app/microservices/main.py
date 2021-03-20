@@ -4,6 +4,7 @@ from app.microservices.second import run_second
 from app.microservices.third import run_third
 from app.microservices.fifth import run_fifth
 from app.microservices.sixth import run_sixth
+from app.microservices.seventh import run_seventh
 from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User, StructFile, Struct
 from app.models import run_well
 from flask import current_app
@@ -45,7 +46,7 @@ def run_services(user_id, wells_ids_str, services, run_id):
             rep_serv = 'sixth/'
 
     if '7' in services:
-        run_sixth(run_id)
+        run_seventh(wells, run_id)
         if rep_serv == '':
             rep_serv = 'seventh/'
 
@@ -111,13 +112,12 @@ def get_wells_list(services_str, run_id):
                 return []
             elif len(services) == 1:
                 result = Well.query.filter_by(project_id=run.project_id).all()
-                return [(well.id, well.name) for well in result]
         if '7' in services:
             result2 = db.session.query(Well, Logs, Coords) \
                 .filter(Well.project_id == run.project_id) \
                 .filter(Logs.well_id == Well.id) \
                 .filter(Coords.well_id == Well.id).distinct(Well.id).all()
-            result2 = [well for well, core in result2]
+            result2 = [well for well, log, coords in result2]
             result = list(set(result2).intersection(result))
     elif '7' in services:
         grid = StructFile.query.filter_by(project_id=run.project_id, type=Struct.GRID).first()
@@ -127,7 +127,13 @@ def get_wells_list(services_str, run_id):
             .filter(Well.project_id == run.project_id) \
             .filter(Logs.well_id == Well.id) \
             .filter(Coords.well_id == Well.id).distinct(Well.id).all()
-        result2 = [well for well, core in result2]
-        result = list(set(result2).intersection(result))
+        result2 = [well for well, log, coords in result2]
+        result = list(set(result2).intersection(result)) if len(result) > 0 else result2
+    elif '8' in services:
+        grid = StructFile.query.filter_by(project_id=run.project_id, type=Struct.GRID_FES).first()
+        if grid is None:
+            return []
+        elif len(services) == 1:
+            result = Well.query.filter_by(project_id=run.project_id).all()
     result_wells = [(well.id, well.name) for well in result]
     return result_wells

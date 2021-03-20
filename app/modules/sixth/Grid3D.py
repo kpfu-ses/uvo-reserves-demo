@@ -5,7 +5,6 @@ from tqdm import tqdm
 import logging
 import os
 import sys
-import json
 
 from sys import exit as sys_exit
 import json
@@ -15,7 +14,7 @@ import os
 import pickle
 import sys
 from sys import exit as sys_exit
-
+import json
 import numpy as np
 from tqdm import tqdm
 
