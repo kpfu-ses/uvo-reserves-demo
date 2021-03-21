@@ -53,10 +53,13 @@ def run_view(run_id):
         .filter(StructFile.type == Struct.GRID).first()
     grid_fes = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
         .filter(StructFile.type == Struct.GRID_FES).first()
+    reserves = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
+        .filter(StructFile.type == Struct.RESERVES).first()
     struct_files = StructFilesDto()
     struct_files.surface = surface
     struct_files.grid = grid
     struct_files.grid_fes = grid_fes
+    struct_files.reserves = reserves
 
     return render_template('run/run_view.html', title='Run', strats=strats, core_res=core_res,
                            logs_res=logs_res, run=this_run, struct_files=struct_files)

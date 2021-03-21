@@ -268,6 +268,7 @@ class Service(Enum):
 
 
 class Struct(Enum):
+    RESERVES = 'RESERVES'
     SURF_TOP = 'SURF_TOP'
     SURF_BOT = 'SURF_BOT'
     GRID = 'GRID'

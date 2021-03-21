@@ -5,6 +5,7 @@ from app.microservices.third import run_third
 from app.microservices.fifth import run_fifth
 from app.microservices.sixth import run_sixth
 from app.microservices.seventh import run_seventh
+from app.microservices.eighth import run_eighth
 from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User, StructFile, Struct
 from app.models import run_well
 from flask import current_app
@@ -49,6 +50,11 @@ def run_services(user_id, wells_ids_str, services, run_id):
         run_seventh(wells, run_id)
         if rep_serv == '':
             rep_serv = 'seventh/'
+
+    if '8' in services:
+        run_eighth(run_id)
+        if rep_serv == '':
+            rep_serv = 'eighth/'
 
     user = User.query.get(user_id)
     user.add_notification('done', len(user.new_runs()))

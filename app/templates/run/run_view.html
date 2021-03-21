@@ -52,9 +52,14 @@
         <p><div><a href="{{ url_for('static', filename=struct_files.grid.filepath) }}">{{ struct_files.grid.type }}</a></div>
         <br>
     {% endif %}
-        {% if struct_files.grid_fes %}
+    {% if struct_files.grid_fes %}
         <h3>Результаты распределения</h3>
         <p><div><a href="{{ url_for('static', filename=struct_files.grid_fes.filepath) }}">{{ struct_files.grid_fes.type }}</a></div>
+        <br>
+    {% endif %}
+    {% if struct_files.reserves %}
+        <h3>Результаты распределения</h3>
+        <p><div><a href="{{ url_for('static', filename=struct_files.reserves.filepath) }}">{{ struct_files.reserves.type }}</a></div>
         <br>
     {% endif %}
 {% endblock %}

@@ -1,12 +1,10 @@
+import logging
+import pickle
+import sys
+
 from app.modules.seventh.data_load_module import data_load_module
 from app.modules.seventh.fes_interpolation import fes_interpolation
 from app.modules.seventh.to_save_GRDECL import to_save_GRDECL
-import numpy as np
-import pickle
-from sys import exit as sys_exit
-import os
-import sys
-import logging
 
 
 # конвертация путей файлов в зависимости от системы

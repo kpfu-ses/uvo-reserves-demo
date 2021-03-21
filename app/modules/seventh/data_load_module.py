@@ -1,15 +1,13 @@
-import numpy as np
-from matplotlib import path
-import cloudpickle as pickle
-import lasio
-from tqdm import tqdm
-from os import listdir
-from os.path import join as joinpath
+import json
+import logging
 import os
 import sys
-import logging
-import json
-from app.modules.sixth.Grid3D import Cell, Point
+
+import cloudpickle as pickle
+import lasio
+import numpy as np
+from matplotlib import path
+from tqdm import tqdm
 
 
 class well_class(object):
@@ -133,22 +131,19 @@ class data_load_module(object):
         self.XYA = XYA_incl
 
     def load_pickle(self):
-        # try:
-        with open(self.replaceSlash(self.Geo_model_Path), 'rb') as f:
-            tmp = pickle.load(f)
+        try:
+            with open(self.replaceSlash(self.Geo_model_Path), 'rb') as f:
+                tmp = pickle.load(f)
 
-            self.masPoint = tmp["masPoint"]
-            self.newCell = tmp["newCell"]
-            self.masN = tmp["masN"]
-            self.layerZ = tmp["layerZ"]
-            self.angle = tmp["angle"]
-        print('masN', self.masN)
-        print('angle', self.angle)
+                self.masPoint = tmp["masPoint"]
+                self.newCell = tmp["newCell"]
+                self.masN = tmp["masN"]
+                self.layerZ = tmp["layerZ"]
+                self.angle = tmp["angle"]
 
-        # f.close()
-        # except BaseException as e:
-        #     logging.error(self.pattern_text_log, "", "load_pickle. " + str(e))
-        #     self.Err_count += 1
+        except BaseException as e:
+            logging.error(self.pattern_text_log, "", "load_pickle. " + str(e))
+            self.Err_count += 1
 
     def Get_wells_inf(self, well, index):
         w_name = str(well.well["WELL"].value)
