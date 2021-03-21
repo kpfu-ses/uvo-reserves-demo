@@ -6,7 +6,7 @@ from app.microservices.fifth import run_fifth
 from app.microservices.sixth import run_sixth
 from app.microservices.seventh import run_seventh
 from app.microservices.eighth import run_eighth
-from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User, StructFile, Struct
+from app.models import Well, Logs, Coords, Run, Stratigraphy, Core, User, StructFile
 from app.models import run_well
 from flask import current_app
 import shutil
@@ -109,11 +109,11 @@ def get_wells_list(services_str, run_id):
         result = [well for well, strat, coords in result]
 
     if '6' in services:
-        surf_top = StructFile.query.filter_by(project_id=run.project_id, type=Struct.SURF_TOP).first()
+        surf_top = StructFile.query.filter_by(project_id=run.project_id, type='SURF_TOP').first()
         if surf_top is None:
             return []
         else:
-            surf_bot = StructFile.query.filter_by(project_id=run.project_id, type=Struct.SURF_BOT).first()
+            surf_bot = StructFile.query.filter_by(project_id=run.project_id, type='SURF_BOT').first()
             if surf_bot is None:
                 return []
             elif len(services) == 1:
@@ -126,7 +126,7 @@ def get_wells_list(services_str, run_id):
             result2 = [well for well, log, coords in result2]
             result = list(set(result2).intersection(result))
     elif '7' in services:
-        grid = StructFile.query.filter_by(project_id=run.project_id, type=Struct.GRID).first()
+        grid = StructFile.query.filter_by(project_id=run.project_id, type='GRID').first()
         if grid is None:
             return []
         result2 = db.session.query(Well, Logs, Coords) \
@@ -136,7 +136,7 @@ def get_wells_list(services_str, run_id):
         result2 = [well for well, log, coords in result2]
         result = list(set(result2).intersection(result)) if len(result) > 0 else result2
     elif '8' in services:
-        grid = StructFile.query.filter_by(project_id=run.project_id, type=Struct.GRID_FES).first()
+        grid = StructFile.query.filter_by(project_id=run.project_id, type='GRID_FES').first()
         if grid is None:
             return []
         elif len(services) == 1:

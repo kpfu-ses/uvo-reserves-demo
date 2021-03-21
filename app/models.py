@@ -128,16 +128,16 @@ class Project(db.Model):
         return Run.query.filter_by(project_id=self.id)
 
     def surf_top_files(self):
-        return StructFile.query.filter_by(project_id=self.id, type=Struct.SURF_TOP)
+        return StructFile.query.filter_by(project_id=self.id, type='SURF_TOP')
 
     def surf_bot_files(self):
-        return StructFile.query.filter_by(project_id=self.id, type=Struct.SURF_BOT)
+        return StructFile.query.filter_by(project_id=self.id, type='SURF_BOT')
 
     def grid_files(self):
-        return StructFile.query.filter_by(project_id=self.id, type=Struct.GRID)
+        return StructFile.query.filter_by(project_id=self.id, type='GRID')
 
     def grid_fes_files(self):
-        return StructFile.query.filter_by(project_id=self.id, type=Struct.GRID_FES)
+        return StructFile.query.filter_by(project_id=self.id, type='GRID_FES')
 
     def __repr__(self):
         return 'Project {}'.format(self.name)
@@ -268,7 +268,7 @@ class Service(Enum):
 
 
 class Struct(Enum):
-    RESERVES = 'RESERVES'
+    UVO_RESERVES = 'UVO_RESERVES'
     SURF_TOP = 'SURF_TOP'
     SURF_BOT = 'SURF_BOT'
     GRID = 'GRID'
@@ -316,7 +316,8 @@ class StructFile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
-    type = db.Column(db.Enum(Struct))
+    type = db.Column(db.String(128))
     filepath = db.Column(db.String(255))
+
 
 

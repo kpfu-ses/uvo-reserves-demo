@@ -3,7 +3,7 @@ import shutil
 from flask import current_app
 from datetime import datetime
 from app import db
-from app.models import StructFile, Run, Struct
+from app.models import StructFile, Run
 from app.modules.fifth.surface import get_surfaces
 from app.microservices.util import create_coords_files, create_strat_files
 
@@ -16,11 +16,11 @@ def save_res(run_id):
     filename_bot = f"{run.project_id}_surf_top_{datetime.now()}_SurfaceBOT.txt"
     if Path(filepath_top).is_file():
         shutil.copyfile(filepath_top, 'app/static/' + filename_top)
-        struct = StructFile(project_id=run.project_id, filepath=filename_top, type=Struct.SURF_TOP, run_id=run_id)
+        struct = StructFile(project_id=run.project_id, filepath=filename_top, type='SURF_TOP', run_id=run_id)
         db.session.add(struct)
     if Path(filepath_bot).is_file():
         shutil.copyfile(filepath_bot, 'app/static/' + filename_bot)
-        struct = StructFile(project_id=run.project_id, filepath=filename_bot, type=Struct.SURF_BOT, run_id=run_id)
+        struct = StructFile(project_id=run.project_id, filepath=filename_bot, type='SURF_BOT', run_id=run_id)
         db.session.add(struct)
     db.session.commit()
 

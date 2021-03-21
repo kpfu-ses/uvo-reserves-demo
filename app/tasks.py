@@ -4,7 +4,7 @@ from app import create_app
 from rq import get_current_job
 from app import db
 from app.microservices.main import run_services
-from app.models import  Task, User, Project, Coords, Core, Logs, Well, Run, Curve, StructFile, Struct
+from app.models import  Task, User, Project, Coords, Core, Logs, Well, Run, Curve, StructFile
 from app.helpers.util import save_file, well_name_re
 from app.helpers.services import add_coords, add_log
 import sys
@@ -88,7 +88,7 @@ def upload_files_task(form, project, current_app):
                 file = surf_top_file
                 filename = str(project.id) + '_surf_top_' + str(datetime.now()) + surf_top_file.filename
                 save_file(file, filename, current_app)
-                struct = StructFile(project_id=project.id, filepath=filename, type=Struct.SURF_TOP)
+                struct = StructFile(project_id=project.id, filepath=filename, type='SURF_TOP')
                 if struct is None:
                     errors.append("Не удалось обработать файл с поверхностью сетки с таким названием: {}"
                                   .format(file.filename))
