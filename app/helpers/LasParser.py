@@ -360,10 +360,10 @@ class ImportLasFiles:
                 well_name = well_name_re(well_name)
                 if well_name == "":
                     if self.unnamed_well:
-                        well_name = file_name.split('.')[0].replace(" ", "")
+                        well_name = file_name.split('.las')[0].split("_file_")[1].replace(" ", "")
                         well_name = well_name_re(well_name)
                     else:
-                        well_name = "empty_well"
+                        well_name = "000"
 
 
                 this_md_key = None

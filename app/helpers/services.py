@@ -54,7 +54,7 @@ def edit_project(form, project):
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':
             file = logs_file
-            filename = str(project.id) + '_logs_' + str(datetime.now()) + file.filename
+            filename = str(project.id) + '_logs_' + str(datetime.now()) + '_file_' + file.filename
             save_file(file, filename, current_app)
             log_files.append(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             # log = add_log(os.path.join(current_app.config['UPLOAD_FOLDER'], filename), project.id)
