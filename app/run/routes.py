@@ -34,7 +34,7 @@ def services_run():
     if current_user.get_task_in_progress('run_services_task'):
         flash('An export task is currently in progress')
     else:
-        current_user.launch_task('run_services_task', 'Running services...', current_user.id, request.form['wells'],
+        current_user.launch_task('run_services_task_bar', 'Running services...', current_user.id, request.form['wells'],
                                  request.form['services'], request.form['run_id'])
         db.session.commit()
     return jsonify({'okay': 'okay'})

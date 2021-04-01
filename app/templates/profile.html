@@ -8,7 +8,7 @@
         <h1>Hello, {{ current_user.username }}!</h1>
     <br>
     <div class="list-group"
-             style="display: inline-block; margin-left: 2%; height: 20rem; width: 20rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
+             style="display: inline-block; margin-left: 2%; height: 40rem; width: 25rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
     {% for project in projects %}
         <div><p><a href="{{ url_for('main.work_project', project_id=project.id) }}">{{ project.name }}</a></p></div>
     {% endfor %}

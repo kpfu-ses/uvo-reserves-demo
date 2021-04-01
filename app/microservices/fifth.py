@@ -23,6 +23,8 @@ def save_res(run_id):
         struct = StructFile(project_id=run.project_id, filepath=filename_bot, type='SURF_BOT', run_id=run_id)
         db.session.add(struct)
     db.session.commit()
+    shutil.rmtree(f"{current_app.config['SERVICES_PATH']}fifth/{str(run_id)}/")
+
 
 
 def run_fifth(wells, run_id):

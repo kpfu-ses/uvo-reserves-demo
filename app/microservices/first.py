@@ -7,6 +7,7 @@ from app.helpers.parser import read_strat
 from app.models import Stratigraphy
 from app.modules.first.Strat_P2ss2 import get_strat
 from app.microservices.util import create_coords_files, create_log_files
+import shutil
 
 
 def save_strat(wells, run_id):
@@ -23,6 +24,7 @@ def save_strat(wells, run_id):
                                  p2ss2_bot=strat_data['P2ss2_bot'])
             db.session.add(strat)
     db.session.commit()
+    # shutil.rmtree(f'{current_app.config["SERVICES_PATH"]}first/{str(run_id)}/')
     return wells_done
 
 

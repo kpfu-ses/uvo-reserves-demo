@@ -18,6 +18,8 @@ def save_res(run_id):
         db.session.add(struct)
 
     db.session.commit()
+    shutil.rmtree(f'{current_app.config["SERVICES_PATH"]}sixth/{str(run_id)}/')
+
 
 
 def run_sixth(run_id):

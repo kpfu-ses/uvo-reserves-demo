@@ -1,10 +1,10 @@
 import os
 import re
 import shutil
-from datetime import datetime
 from pathlib import Path
 from app import db
 from flask import current_app
+import uuid
 
 from app.helpers.LasParser import ImportLasFiles
 from app.models import Core, Run, Logs
@@ -37,10 +37,12 @@ def save_results(wells, run_id):
             # importer.import_data()
             add_log(filepath + ".las", project_id=run.project_id)
             log = Logs.query.filter_by(well_id=core_from.well_id, project_id=run.project_id).first()
-            las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"
+            las_path = f"{str(run.project_id)}_logs_{str(uuid.uuid4())}{well_name}.las"
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
     db.session.commit()
+    # shutil.rmtree(f'{current_app.config["SERVICES_PATH"]}second/{str(run_id)}/')
+
     return wells_done
 
 

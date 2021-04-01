@@ -1,5 +1,5 @@
 import shutil
-from datetime import datetime
+import uuid
 from pathlib import Path
 import re
 from flask import current_app
@@ -33,14 +33,15 @@ def save_results(wells, run_id):
             shutil.copyfile(filepath + ".png", 'app/static/' + res_filepath)
 
             # change las-path
-            importer = ImportLasFiles(filepath + ".las", project_id=run.project_id)
-            importer.import_data()
-            # add_log(filepath + ".las", project_id=run.project_id)
-            las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"
+            # importer = ImportLasFiles(filepath + ".las", project_id=run.project_id)
+            # importer.import_data()
+            add_log(filepath + ".las", project_id=run.project_id)
+            las_path = f"{str(run.project_id)}_logs_{str(uuid.uuid4())}{well_name}.las"
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
             db.session.add(log)
     db.session.commit()
+    # shutil.rmtree(f'{current_app.config["SERVICES_PATH"]}third/{str(run_id)}/')
     return wells_done
 
 

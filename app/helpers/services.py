@@ -1,6 +1,7 @@
 from datetime import datetime
 import numpy as np
 import os
+import uuid
 
 from flask import flash, current_app
 from flask_login import current_user
@@ -44,17 +45,23 @@ def edit_project(form, project):
     for core_file in form.core_file.data:
         if core_file.filename != '':
             file = core_file
-            filename = str(project.id) + '_core_' + str(datetime.now()) + file.filename
+            filename = str(project.id) + '_core_' + str(uuid.uuid4())
             well_name = save_core_file(file, filename, current_app)
             well = Well.query.filter_by(project_id=project.id, name=well_name).first()
-            core = Core(project_id=project.id, filepath=filename, well_data_id=file.filename.split('.')[0], well_id=well.id)
+            if well is None:
+                well = Well(project_id=project.id, name=well_name)
+                db.session.add(well)
+                db.session.flush()
+            well.well_id = file.filename.split('.')[0]
+
+            core = Core(project_id=project.id, filepath=filename, well_data_id=well.well_id, well_id=well.id)
             db.session.add(core)
     unnamed_well = form.unnamed_well.data
     log_files = []
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':
             file = logs_file
-            filename = str(project.id) + '_logs_' + str(datetime.now()) + '_file_' + file.filename
+            filename = str(project.id) + '_logs_' + str(uuid.uuid4()) + '_file_' + file.filename
             save_file(file, filename, current_app)
             log_files.append(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             # log = add_log(os.path.join(current_app.config['UPLOAD_FOLDER'], filename), project.id)
