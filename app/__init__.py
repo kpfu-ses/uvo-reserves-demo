@@ -18,7 +18,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 # login
 login = LoginManager()
-login.login_view = 'login'
+login.login_view = 'auth.login'
 mail = Mail()
 bootstrap = Bootstrap()
 

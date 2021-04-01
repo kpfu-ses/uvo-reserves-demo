@@ -5,6 +5,7 @@ import re
 from flask import current_app
 
 from app import db
+from app.helpers.LasParser import ImportLasFiles
 from app.helpers.services import add_log
 from app.models import Logs, Run
 from app.modules.third.core_log import get_interpolation
@@ -32,7 +33,9 @@ def save_results(wells, run_id):
             shutil.copyfile(filepath + ".png", 'app/static/' + res_filepath)
 
             # change las-path
-            add_log(filepath + ".las", project_id=run.project_id)
+            importer = ImportLasFiles(filepath + ".las", project_id=run.project_id)
+            importer.import_data()
+            # add_log(filepath + ".las", project_id=run.project_id)
             las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path

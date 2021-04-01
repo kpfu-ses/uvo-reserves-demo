@@ -5,6 +5,8 @@ from datetime import datetime
 from pathlib import Path
 from app import db
 from flask import current_app
+
+from app.helpers.LasParser import ImportLasFiles
 from app.models import Core, Run, Logs
 from app.modules.second.core_shift import get_linking
 from app.microservices.util import create_strat_files, create_log_files
@@ -31,6 +33,8 @@ def save_results(wells, run_id):
             db.session.add(core)
 
             # change las-path
+            # importer = ImportLasFiles(filepath + ".las", project_id=run.project_id)
+            # importer.import_data()
             add_log(filepath + ".las", project_id=run.project_id)
             log = Logs.query.filter_by(well_id=core_from.well_id, project_id=run.project_id).first()
             las_path = f"{str(run.project_id)}_logs_{str(datetime.now())}{well_name}.las"

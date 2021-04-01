@@ -2,6 +2,7 @@ from threading import Thread
 import os
 import codecs
 import re
+import json
 
 
 def save_async_file(file, filename, app):
@@ -59,3 +60,12 @@ def guess_enc(file):
 def well_name_re(well_name):
     reg_well_name = r"[^0-9]"
     return re.sub(reg_well_name, '', well_name.replace(' ', ''))
+
+
+def save_core_file(file, filename, app):
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r') as f:
+        data = f.read().replace('\n', '')
+    # TODO: deal with the array
+    json_data = json.loads(data)[0]
+    return well_name_re(json_data['well_name'])

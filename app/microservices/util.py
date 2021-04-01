@@ -50,7 +50,7 @@ def create_log_files(wells, run_id, serv_num,  well_id_name=False):
 
         las = copy.deepcopy(lasio.LASFile())
         las.well['WELL'].value = well.name
-
+        las.add_curve("DEPT", data=list(well.depth), descr='')
         for crv in well.curves():
             las.add_curve(crv.name, data=list(crv.data), descr='')
 

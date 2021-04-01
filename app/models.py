@@ -6,6 +6,7 @@ from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects import postgresql
 
 from time import time
 import json
@@ -79,7 +80,7 @@ class User(UserMixin, db.Model):
             .all()
 
     def launch_task(self, name, description, *args, **kwargs):
-        rq_job = current_app.task_queue.enqueue('app.tasks.' + name, *args, **kwargs)
+        rq_job = current_app.task_queue.enqueue('app.tasks.' + name, *args, **kwargs, job_timeout=3000)
         task = Task(id=rq_job.get_id(), name=name, description=description,
                     user_id=self.id)
         db.session.add(task)
@@ -148,6 +149,8 @@ class Well(db.Model):
     well_id = db.Column(db.String(128), index=True)
     name = db.Column(db.String(128), index=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    # depth = db.Column(postgresql.ARRAY(db.Float))
+    depth = db.Column(db.PickleType)
 
     def coords(self):
         return Coords.query.filter_by(well_id=self.id)
@@ -232,6 +235,8 @@ class Curve(db.Model):
     data = db.Column(db.PickleType)
     top = db.Column(db.Float)
     bottom = db.Column(db.Float)
+    unit = db.Column(db.String(128))
+    filename = db.Column(db.String(255))
 
 
 # стратиграфия

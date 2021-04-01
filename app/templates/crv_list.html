@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block app_content %}
+     <h1>Curves</h1>
+    <table class="table table-hover">
+    <caption>Данные для скважины {{ well_name }}</caption>
+    <tr>
+        {% for crv in crvs %}
+            <th>{{ crv.name }}</th>
+        {% endfor %}
+    </tr>
+    </table>
+{% endblock %}

@@ -48,7 +48,7 @@ def run_view(run_id):
     core_res = Core.query.filter_by(run_id=this_run.id).all()
     logs_res = Logs.query.filter_by(run_id=this_run.id).all()
     surface = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
-        .filter((StructFile.type == '`SURF_TOP`') | (StructFile.type == 'SURF_BOT')).all()
+        .filter((StructFile.type == 'SURF_TOP') | (StructFile.type == 'SURF_BOT')).all()
     grid = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\
         .filter(StructFile.type == 'GRID').first()
     grid_fes = db.session.query(StructFile).filter(StructFile.run_id == this_run.id)\

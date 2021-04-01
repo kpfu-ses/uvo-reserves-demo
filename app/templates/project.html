@@ -68,34 +68,32 @@
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
                 <div><span>{{ well.name }}</span></div>
-                <ul>{% for core in well.core() %}
-                    <li>
-                        <a href="{{ url_for('main.coords', coords_id=core.id) }}">{{ core.id }}</a>
-                    </li>
-                {% endfor %}</ul>
+{#                <ul>{% for core in well.core() %}#}
+{#                    <li>#}
+{#                        <a href="{{ url_for('main.coords', coords_id=core.id) }}">{{ core.id }}</a>#}
+{#                    </li>#}
+{#                {% endfor %}</ul>#}
             {% endfor %}
             </div>
         </td>
         <td>
             {{ form.logs_file.label }}<br>
             {{ form.logs_file(class_='btn btn-default') }}<br>
+            {{ form.unnamed_well.label }}
+            {{ form.unnamed_well }}
+            <br>
             <div class="list-group"
              style="display: inline-block; margin-left: 2%; height: 10rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
              <h4 class="text-center"><strong>Загруженные файлы</strong></h4>
             {% for logs in  project.logs() %}
-                <div><p><span>{{ logs.filepath }}</span></p></div>
+{#                <div><p><span>{{ logs.filepath }}</span></p></div>#}
             {% endfor %}
             </div>
             <div class="list-group"
              style="display: inline-block; margin-left: 2%; height: 40rem; width: 35rem; border: 2px grey solid; border-radius: 6px 0 0 6px; overflow-y: scroll">
             <h4 class="text-center"><strong>Данные по скважинам</strong></h4>
             {% for well in project.wells() %}
-                <div><span>{{ well.name }}</span></div>
-                <ul>{% for logs in well.logs() %}
-                    <li>
-                        <a href="{{ url_for('main.coords', coords_id=logs.id) }}">{{ logs.id }}</a>
-                    </li>
-                {% endfor %}</ul>
+                <div><span><a href="{{ url_for('main.logs', well_id=well.id) }}">{{ well.name }}</a></span></div>
             {% endfor %}
             </div>
         </td>
@@ -182,9 +180,6 @@
         </div>
 
         <div id="alertMsg" style="color: red;font-size: 18px;"></div>
-{#        <p><button class='btn btn-default' onclick="#}
-{#              var form = document.getElementsByTagName('form')[0];#}
-{#              upload_files(form, {{ project.id }});">Редактировать проект</button></p>#}
         <p>{{ form.submit(class_='btn btn-default') }}</p>
     </form>
        </div>

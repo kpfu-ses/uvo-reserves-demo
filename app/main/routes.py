@@ -2,11 +2,12 @@ from flask import render_template, flash, redirect, url_for, request, jsonify, c
 from flask_login import current_user, login_required
 
 from app import db
-from app.helpers.services import save_project, edit_project
+from app.helpers.services import save_project, edit_project, get_crvs
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm
-from app.models import User, Project, Coords, Notification
+from app.models import User, Project, Coords, Notification, Well
+
 
 
 @bp.route('/')
@@ -77,6 +78,14 @@ def services_run():
 @login_required
 def coords(coords_id):
     return render_template('coords.html', title='Coords', coords=Coords.query.get(coords_id))
+
+
+@bp.route('/logs/<well_id>', methods=['GET'])
+@login_required
+def logs(well_id):
+    crvs = get_crvs(well_id)
+    well_name = Well.query.get(well_id).name
+    return render_template('crv_list.html', title='Curves', crvs=crvs, well_name=well_name)
 
 
 @bp.route('/notifications')

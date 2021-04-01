@@ -7,9 +7,10 @@ from flask_login import current_user
 
 from app import db
 from app.helpers.parser import read_coords, read_lasio
-from app.helpers.util import save_file, well_name_re
+from app.helpers.util import save_file, well_name_re, save_core_file
 from app.models import User, Project, Coords, Core, Logs, Well, Run, Curve, StructFile
 from app.models import projects_users
+from app.helpers.LasParser import ImportLasFiles
 
 
 def save_project(project_name):
@@ -44,20 +45,27 @@ def edit_project(form, project):
         if core_file.filename != '':
             file = core_file
             filename = str(project.id) + '_core_' + str(datetime.now()) + file.filename
-            save_file(file, filename, current_app)
-            core = Core(project_id=project.id, filepath=filename, well_data_id=file.filename.split('.')[0])
+            well_name = save_core_file(file, filename, current_app)
+            well = Well.query.filter_by(project_id=project.id, name=well_name).first()
+            core = Core(project_id=project.id, filepath=filename, well_data_id=file.filename.split('.')[0], well_id=well.id)
             db.session.add(core)
+    unnamed_well = form.unnamed_well.data
+    log_files = []
     for logs_file in form.logs_file.data:
         if logs_file.filename != '':
             file = logs_file
             filename = str(project.id) + '_logs_' + str(datetime.now()) + file.filename
             save_file(file, filename, current_app)
-            log = add_log(os.path.join(current_app.config['UPLOAD_FOLDER'], filename), project.id)
-            if log is None:
-                errors.append("Не удалось обработать las-файл с таким названием: {}"
-                              .format(file.filename))
-            else:
-                db.session.add(log)
+            log_files.append(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            # log = add_log(os.path.join(current_app.config['UPLOAD_FOLDER'], filename), project.id)
+            # if log is None:
+            #     errors.append("Не удалось обработать las-файл с таким названием: {}"
+            #                   .format(file.filename))
+            # else:
+            #     db.session.add(log)
+    importer = ImportLasFiles(log_files, project_id=project.id, unnamed_well=unnamed_well)
+    incorrect_files = importer.import_data()
+    errors.extend(incorrect_files)
     for surf_top_file in form.surf_top_file.data:
         if surf_top_file.filename != '':
             file = surf_top_file
@@ -122,6 +130,7 @@ def add_coords(filepath, project_id):
     except:
         return None
     well_name = well_name_re(data['Well'])
+    # well_name = data['Well']
     well = check_well(well_name, project_id)
     coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
                     y=data['Y'], rkb=data['RKB'], well_id=well.id)
@@ -130,26 +139,28 @@ def add_coords(filepath, project_id):
 
 def add_log(filepath, project_id):
     try:
-     data = read_lasio(filepath)
+        data = read_lasio(filepath)
     except:
         return None
     well = check_well(data['name'], project_id)
 
     for crv_name in data.keys():
-        if crv_name == 'name':
+        if (crv_name == 'name') or (crv_name == 'DEPT'):
             continue
         else:
             bottom = np.nanmin(data[crv_name])
-            top = np.nanmax(data[crv_name])
-            crv = db.session.query(Curve)\
-                .filter(Curve.well_id == well.id)\
-                .filter(Curve.name == crv_name)\
-                .first()
-            if crv is None:
-                crv = Curve(project_id=project_id, well_id=well.id, name=crv_name,
-                        top=top, bottom=bottom, data=data[crv_name])
-            crv.data = data[crv_name]
-            db.session.add(crv)
+            if bottom is not None:
+                top = np.nanmax(data[crv_name])
+
+                crv = db.session.query(Curve)\
+                    .filter(Curve.well_id == well.id)\
+                    .filter(Curve.name == crv_name)\
+                    .first()
+                if crv is None:
+                    crv = Curve(project_id=project_id, well_id=well.id, name=crv_name,
+                            top=top, bottom=bottom, data=data[crv_name])
+                crv.data = data[crv_name]
+                db.session.add(crv)
 
     db.session.commit()
 
@@ -174,3 +185,7 @@ def save_run(project_id):
     db.session.add(run)
     db.session.commit()
     return run
+
+
+def get_crvs(well_id):
+    return list(Curve.query.filter_by(well_id=well_id).all())
