@@ -64,8 +64,11 @@ def well_name_re(well_name):
 
 def save_core_file(file, filename, app):
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r') as f:
+    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename),  'r', encoding='utf-8') as f:
         data = f.read().replace('\n', '')
     # TODO: deal with the array
-    json_data = json.loads(data)[0]
+    try:
+        json_data = json.loads(data)[0]
+    except:
+        return None
     return well_name_re(json_data['well_name'])
