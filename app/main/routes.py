@@ -1,8 +1,13 @@
+import os
+import uuid
+
 from flask import render_template, flash, redirect, url_for, request, jsonify, current_app
 from flask_login import current_user, login_required
 
 from app import db
-from app.helpers.services import save_project, edit_project, get_crvs
+from app.helpers.parser import read_lasio
+from app.helpers.services import save_project, edit_project, get_crvs, add_log
+from app.helpers.util import save_file
 from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm
@@ -99,3 +104,13 @@ def notifications():
         'data': n.get_data(),
         'timestamp': n.timestamp
     } for n in notifications])
+
+
+@bp.route('/las_uploader', methods=['POST'])
+def las_uploader():
+    las_file = request.files['file']
+    filename = str(1) + '_logs_' + str(uuid.uuid4()) + '_file_' + las_file.filename
+    save_file(las_file, filename, current_app)
+    well_info = read_lasio(filename)
+    return well_info
+
