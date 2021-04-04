@@ -1,0 +1,90 @@
+2021-04-03 13:42:04,441 ERROR: Exception on /runs/wells [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\connection.py", line 559, in connect
+    sock = self._connect()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\connection.py", line 615, in _connect
+    raise err
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\connection.py", line 603, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\run\routes.py", line 38, in services_run
+    request.form['services'], request.form['run_id'])
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\models.py", line 83, in launch_task
+    rq_job = current_app.task_queue.enqueue('app.tasks.' + name, *args, **kwargs, job_timeout=3000)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\queue.py", line 423, in enqueue
+    at_front=at_front, meta=meta, retry=retry
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\queue.py", line 366, in enqueue_call
+    job = self.enqueue_job(job, at_front=at_front)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\queue.py", line 474, in enqueue_job
+    job.save(pipeline=pipe)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\job.py", line 597, in save
+    if self.get_redis_server_version() >= StrictVersion("4.0.0"):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\job.py", line 605, in get_redis_server_version
+    self.redis_server_version = get_version(self.connection)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\rq\utils.py", line 260, in get_version
+    version_string = connection.info("server")["redis_version"]
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\client.py", line 1306, in info
+    return self.execute_command('INFO', section)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\client.py", line 898, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\connection.py", line 1192, in get_connection
+    connection.connect()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\redis\connection.py", line 563, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to None:6379. Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение.
+2021-04-04 15:39:33,009 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:72]
+2021-04-04 17:06:28,656 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:74]
+2021-04-04 17:11:01,615 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:74]
+2021-04-04 17:11:22,887 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:74]
+2021-04-04 17:12:07,605 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:74]
+2021-04-04 17:13:23,498 ERROR: Exception on /las_uploader [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\main\routes.py", line 116, in las_uploader
+    well_info = read_lasio(filename)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\parser.py", line 34, in read_lasio
+    W_i = lasio.read(path_lasio, encoding=enc)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\lasio\__init__.py", line 45, in read
+    return LASFile(file_ref, **kwargs)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\lasio\las.py", line 81, in __init__
+    self.read(file_ref, **read_kwargs)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\lasio\las.py", line 131, in read
+    file_obj, self.encoding = reader.open_file(file_ref, **kwargs)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\lasio\reader.py", line 126, in open_file
+    file_ref, encoding = open_with_codecs(first_line, **encoding_kwargs)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\lasio\reader.py", line 171, in open_with_codecs
+    nbytes_test = min(32, os.path.getsize(filename))
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\genericpath.py", line 50, in getsize
+    return os.stat(filename).st_size
+FileNotFoundError: [WinError 2] Не удается найти указанный файл: '1_logs_de14773a-3662-4c5c-8746-6877d3b818e7_file_Моя подпись.jpg'

@@ -1,5 +1,7 @@
 import os
 import uuid
+import json
+import numpy as np
 
 from flask import render_template, flash, redirect, url_for, request, jsonify, current_app
 from flask_login import current_user, login_required
@@ -12,7 +14,6 @@ from app.main import bp
 from app.main.forms import ProjectForm, ProjectEditForm, \
     EditProfileForm
 from app.models import User, Project, Coords, Notification, Well
-
 
 
 @bp.route('/')
@@ -106,11 +107,19 @@ def notifications():
     } for n in notifications])
 
 
+def default(obj):
+    if type(obj).__module__ == np.__name__:
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return obj.item()
+    raise TypeError('Unknown type:', type(obj))
+
+
 @bp.route('/las_uploader', methods=['POST'])
 def las_uploader():
     las_file = request.files['file']
-    filename = str(1) + '_logs_' + str(uuid.uuid4()) + '_file_' + las_file.filename
+    filename = str(1) + '_logs_' + str(uuid.uuid4()) + '_file_' + las_file.filename.replace(' ', '_')
     save_file(las_file, filename, current_app)
-    well_info = read_lasio(filename)
-    return well_info
-
+    well_info = read_lasio(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+    return json.dumps(well_info, default=default)

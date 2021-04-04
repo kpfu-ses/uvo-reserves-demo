@@ -11,6 +11,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from redis import Redis
 import rq
+from flask_cors import CORS
 
 
 # db
@@ -31,6 +32,7 @@ def create_app(config_class=Config):
     login.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
+    CORS(app)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

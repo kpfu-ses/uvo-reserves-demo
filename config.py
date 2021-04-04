@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:7c056266@localhost:5432/uvo_reserves'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = 'uploads'
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.googlemail.com'
@@ -14,4 +14,3 @@ class Config(object):
     ADMINS = ['sumbel.enikeeva@gmail.com']
     SERVICES_PATH = 'app/modules/'
     REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
-
