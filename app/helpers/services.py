@@ -139,14 +139,13 @@ def add_user(form):
 def add_coords(filepath, project_id):
     try:
         data = read_coords(filepath)
+        well_name = well_name_re(data['Well'])
+        well = check_well(well_name, project_id)
+        coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
+                        y=data['Y'], rkb=data['RKB'], well_id=well.id)
+        return coords
     except:
         return None
-    well_name = well_name_re(data['Well'])
-    # well_name = data['Well']
-    well = check_well(well_name, project_id)
-    coords = Coords(project_id=project_id, filepath=filepath, x=data['X'],
-                    y=data['Y'], rkb=data['RKB'], well_id=well.id)
-    return coords
 
 
 def add_log(filepath, project_id):
@@ -201,3 +200,28 @@ def save_run(project_id):
 
 def get_crvs(well_id):
     return list(Curve.query.filter_by(well_id=well_id).all())
+
+
+def get_files_dict(form, project):
+    files = {"coords": [], "logs": [], "core": []}
+    for coords_file in form.coords_file.data:
+        if coords_file.filename != '':
+            file = coords_file
+            filename = str(project.id) + '_coords_' + str(
+                datetime.now()) + file.filename
+            save_file(file, filename, current_app)
+            files['coords'].append(filename)
+    for core_file in form.core_file.data:
+        if core_file.filename != '':
+            file = core_file
+            filename = str(project.id) + '_core_' + str(uuid.uuid4())
+            well_name = save_core_file(file, filename, current_app)
+            files['core'].append({'file': filename, 'well_name': well_name})
+    for logs_file in form.logs_file.data:
+        if logs_file.filename != '':
+            file = logs_file
+            filename = str(project.id) + '_logs_' + str(
+                uuid.uuid4()) + '_file_' + file.filename
+            save_file(file, filename, current_app)
+            files['logs'].append(filename)
+    return files

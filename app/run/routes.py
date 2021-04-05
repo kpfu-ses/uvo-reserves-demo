@@ -31,7 +31,7 @@ def run(run_id):
 @bp.route('/runs/wells', methods=['POST'])
 @login_required
 def services_run():
-    if current_user.get_task_in_progress('run_services_task'):
+    if current_user.get_task_in_progress('run_services_task_bar'):
         flash('An export task is currently in progress')
     else:
         current_user.launch_task('run_services_task_bar', 'Running services...', current_user.id, request.form['wells'],

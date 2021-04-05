@@ -160,16 +160,5 @@
       });
     }
 
-    function upload_files(form, project_id) {
-        alert(project_id)
-        $.post('/project/upload', {
-            project_id: project_id,
-            form: form.serialize(),
-        }).done(function (response) {
-            {#alert('well done!')#}
-        }).fail(function() {
-            alert('error');
-        });
-    }
     </script>
 {% endblock %}

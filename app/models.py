@@ -325,4 +325,8 @@ class StructFile(db.Model):
     filepath = db.Column(db.String(255))
 
 
-
+class ErrorFile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(128))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    comment = db.Column(db.String(128))
