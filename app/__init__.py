@@ -12,6 +12,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from redis import Redis
 import rq
+from flask_cors import CORS
 
 
 # db

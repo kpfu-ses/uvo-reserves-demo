@@ -1,8 +1,9 @@
 import os
 import uuid
+import json
+import numpy as np
 
-from flask import render_template, flash, redirect, url_for, request, jsonify, \
-    current_app
+from flask import render_template, flash, redirect, url_for, request, jsonify, current_app
 from flask_login import current_user, login_required
 
 from app import db
@@ -65,31 +66,24 @@ def work_project(project_id):
     return render_template('project.html', title='Edit Project', project=project, form=form)
 
 
-# @bp.route('/project/<project_id>', methods=['GET', 'POST'])
-# @login_required
-# def work_project(project_id):
-#     form = ProjectEditForm()
-#     project = Project.query.get(project_id)
-#     if form.validate_on_submit():
-#         files = get_files_dict(form, project)
-#         print(files)
-#         unnamed_well = form.unnamed_well.data
-#         if current_user.get_task_in_progress('upload_files_task'):
-#             flash('An export task is currently in progress')
-#         else:
-#             current_user.launch_task('upload_files_task', 'Uploading files...',
-#                                  files, unnamed_well,
-#                                  project, current_app)
-#             db.session.commit()
-#     return render_template('project.html', title='Edit Project',
-#                            project=project, form=form)
+@bp.route('/project/upload', methods=['POST'])
+@login_required
+def services_run():
+    print("im here")
+    if current_user.get_task_in_progress('upload_files_task'):
+        flash('An export task is currently in progress')
+    else:
+        project = Project.query.get(request.form['project_id'])
+        current_user.launch_task('upload_files_task', 'Uploading files...', request.form['form'],
+                                 project, current_app)
+        db.session.commit()
+    return jsonify({'okay': 'okay'})
 
 
 @bp.route('/coords/<coords_id>', methods=['GET'])
 @login_required
 def coords(coords_id):
-    return render_template('coords.html', title='Coords',
-                           coords=Coords.query.get(coords_id))
+    return render_template('coords.html', title='Coords', coords=Coords.query.get(coords_id))
 
 
 @bp.route('/logs/<well_id>', methods=['GET'])
@@ -97,8 +91,7 @@ def coords(coords_id):
 def logs(well_id):
     crvs = get_crvs(well_id)
     well_name = Well.query.get(well_id).name
-    return render_template('crv_list.html', title='Curves', crvs=crvs,
-                           well_name=well_name)
+    return render_template('crv_list.html', title='Curves', crvs=crvs, well_name=well_name)
 
 
 @bp.route('/notifications')
@@ -114,11 +107,19 @@ def notifications():
     } for n in notifications])
 
 
+def default(obj):
+    if type(obj).__module__ == np.__name__:
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return obj.item()
+    raise TypeError('Unknown type:', type(obj))
+
+
 @bp.route('/las_uploader', methods=['POST'])
 def las_uploader():
     las_file = request.files['file']
-    filename = str(1) + '_logs_' + str(
-        uuid.uuid4()) + '_file_' + las_file.filename
+    filename = str(1) + '_logs_' + str(uuid.uuid4()) + '_file_' + las_file.filename.replace(' ', '_')
     save_file(las_file, filename, current_app)
-    well_info = read_lasio(filename)
-    return well_info
+    well_info = read_lasio(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+    return json.dumps(well_info, default=default)
