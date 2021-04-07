@@ -1,1 +1,1 @@
-web: flask db upgrade;
+web: flask db upgrade; gunicorn uvo-reserves-demo:app
