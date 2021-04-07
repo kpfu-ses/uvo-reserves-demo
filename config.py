@@ -14,3 +14,4 @@ class Config(object):
     ADMINS = ['sumbel.enikeeva@gmail.com']
     SERVICES_PATH = 'app/modules/'
     REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
