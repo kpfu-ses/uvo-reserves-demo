@@ -1,0 +1,72 @@
+2021-04-03 13:33:42,367 ERROR: Exception on /auth/register [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\default.py", line 609, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\auth\routes.py", line 42, in register
+    if form.validate_on_submit():
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\auth\forms.py", line 23, in validate_username
+    user = User.query.filter_by(username=username.data).first()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3429, in first
+    ret = list(self[0:1])
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3203, in __getitem__
+    return list(res)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3535, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3560, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1011, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1130, in _execute_clauseelement
+    distilled_params,
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1317, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1511, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
+    raise exception
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\default.py", line 609, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: user
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password AS user_password, user.confirmcode AS user_confirmcode, user.state AS user_state, user.last_run_see_time AS user_last_run_see_time 
+FROM user 
+WHERE user.username = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('Ainur', 1, 0)]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+2021-04-03 13:34:26,083 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:72]
+2021-04-03 13:35:52,757 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:72]
+2021-04-03 13:36:10,352 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:72]
+2021-04-03 13:36:14,201 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:72]
