@@ -10,11 +10,14 @@ from app.modules.sixth.Grid3D import get_3D
 
 def save_res(run_id):
     run = Run.query.get(run_id)
-    grid_struct = f"{current_app.config['SERVICES_PATH']}sixth/{str(run_id)}/output_data/grid_struct.pickle"
-    filename_grid = f"{run.project_id}_grid_{datetime.now()}_grid_struct.pickle"
+    grid_struct = f"{current_app.config['SERVICES_PATH']}sixth/{str(run_id)}" \
+                  f"/output_data/grid_struct.pickle"
+    filename_grid = f"{run.project_id}_grid_{datetime.now()}" \
+                    f"_grid_struct.pickle"
     if Path(grid_struct).is_file():
         shutil.copyfile(grid_struct, 'app/static/' + filename_grid)
-        struct = StructFile(project_id=run.project_id, filepath=filename_grid, type='GRID', run_id=run_id)
+        struct = StructFile(project_id=run.project_id, filepath=filename_grid,
+                            type='GRID', run_id=run_id)
         db.session.add(struct)
 
     db.session.commit()

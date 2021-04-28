@@ -63,7 +63,8 @@ def work_project(project_id):
         if len(errors) > 0:
             return render_template('load_errors.html', title='Load Problems',
                                    errors=errors, project_id=project_id)
-    return render_template('project.html', title='Edit Project', project=project, form=form)
+    return render_template('project.html', title='Edit Project',
+                           project=project, form=form)
 
 
 @bp.route('/project/upload', methods=['POST'])
@@ -74,7 +75,8 @@ def services_run():
         flash('An export task is currently in progress')
     else:
         project = Project.query.get(request.form['project_id'])
-        current_user.launch_task('upload_files_task', 'Uploading files...', request.form['form'],
+        current_user.launch_task('upload_files_task', 'Uploading files...',
+                                 request.form['form'],
                                  project, current_app)
         db.session.commit()
     return jsonify({'okay': 'okay'})
@@ -83,7 +85,8 @@ def services_run():
 @bp.route('/coords/<coords_id>', methods=['GET'])
 @login_required
 def coords(coords_id):
-    return render_template('coords.html', title='Coords', coords=Coords.query.get(coords_id))
+    return render_template('coords.html', title='Coords',
+                           coords=Coords.query.get(coords_id))
 
 
 @bp.route('/logs/<well_id>', methods=['GET'])
@@ -91,7 +94,8 @@ def coords(coords_id):
 def logs(well_id):
     crvs = get_crvs(well_id)
     well_name = Well.query.get(well_id).name
-    return render_template('crv_list.html', title='Curves', crvs=crvs, well_name=well_name)
+    return render_template('crv_list.html', title='Curves',
+                           crvs=crvs, well_name=well_name)
 
 
 @bp.route('/notifications')
