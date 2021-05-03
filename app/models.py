@@ -110,6 +110,9 @@ class Project(db.Model):
                             backref=db.backref('projects_users', lazy='dynamic'), lazy='dynamic'
                             )
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
     def coords(self):
         return Coords.query.filter_by(project_id=self.id)
 
