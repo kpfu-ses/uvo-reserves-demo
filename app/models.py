@@ -40,6 +40,15 @@ class User(UserMixin, db.Model):
 
     last_run_see_time = db.Column(db.DateTime)
 
+    def as_dict(self, include_email=False):
+        data = {
+            'id': self.id,
+            'username': self.username,
+        }
+        if include_email:
+            data['email'] = self.email
+        return data
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
