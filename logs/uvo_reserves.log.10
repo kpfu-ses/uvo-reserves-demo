@@ -1,4 +1,4 @@
-2021-04-03 13:27:58,311 ERROR: Exception on /auth/register [POST] [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+2021-04-03 13:28:40,549 ERROR: Exception on /auth/register [POST] [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
   File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2336, in _wrap_pool_connect
     return fn()
