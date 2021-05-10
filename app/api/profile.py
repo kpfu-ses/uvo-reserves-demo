@@ -1,19 +1,20 @@
 import json
 
-from flask_login import current_user, login_required
+from flask import request, make_response
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app.api import bp
-from app.models import User
-from app.helpers.services import save_project
 from app.helpers.util import default
-from flask import request, make_response
+from app.models import User
+from app.services.project import save_project
 
 
 # profile
 @bp.route('/profile', methods=['GET'])
-@login_required
+@jwt_required(locations=['cookies'])
 def get_profile():
-    user = User.query.get(current_user.id)
+    username = get_jwt_identity()['username']
+    user = User.query.filter_by(username=username).first()
     projects = user.projects()
     profile_info = {'user': user.as_dict(), 'projects': [p.as_dict() for p in projects]}
     return json.dumps(profile_info, default=default)
@@ -21,9 +22,11 @@ def get_profile():
 
 # adding new project
 @bp.route('/project', methods=['POST'])
-@login_required
+@jwt_required(locations=['cookies'])
 def post_profile():
-    save_project(request.args.get('name'))
+    username = get_jwt_identity()['username']
+    user = User.query.filter_by(username=username).first()
+    save_project(user, request.args.get('name'))
     return make_response('', 204)
 
 
