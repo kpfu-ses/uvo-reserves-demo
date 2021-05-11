@@ -1,141 +1,87 @@
-2021-04-03 13:28:40,549 ERROR: Exception on /auth/register [POST] [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+2021-05-03 13:53:47,296 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 13:53:47,299 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 13:53:47,299 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 13:54:40,311 ERROR: Exception on /api/users/1 [GET] [in /home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2336, in _wrap_pool_connect
-    return fn()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 364, in connect
-    return _ConnectionFairy._checkout(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 778, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 495, in checkout
-    rec = pool._do_get()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 140, in _do_get
-    self._dec_overflow()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
-    with_traceback=exc_tb,
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
-    raise exception
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 137, in _do_get
-    return self._create_connection()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 309, in _create_connection
-    return _ConnectionRecord(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 440, in __init__
-    self.__connect(first_connect_check=True)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 661, in __connect
-    pool.logger.debug("Error on connect(): %s", e)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
-    with_traceback=exc_tb,
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
-    raise exception
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 656, in __connect
-    connection = pool._invoke_creator(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\strategies.py", line 114, in connect
-    return dialect.connect(*cargs, **cparams)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\default.py", line 509, in connect
-    return self.dbapi.connect(*cargs, **cparams)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\psycopg2\__init__.py", line 127, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-psycopg2.OperationalError: could not connect to server: Connection refused (0x0000274D/10061)
-	Is the server running on host "localhost" (::1) and accepting
-	TCP/IP connections on port 5432?
-could not connect to server: Connection refused (0x0000274D/10061)
-	Is the server running on host "localhost" (127.0.0.1) and accepting
-	TCP/IP connections on port 5432?
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
     raise value
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\auth\routes.py", line 42, in register
-    if form.validate_on_submit():
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
-    return self.is_submitted() and self.validate()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\form.py", line 318, in validate
-    return super(Form, self).validate(extra)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\form.py", line 150, in validate
-    if not field.validate(self, extra):
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
-    stop_validation = self._run_validation_chain(form, chain)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
-    validator(form, self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\auth\forms.py", line 23, in validate_username
-    user = User.query.filter_by(username=username.data).first()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3429, in first
-    ret = list(self[0:1])
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3203, in __getitem__
-    return list(res)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3535, in __iter__
-    return self._execute_and_instances(context)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3557, in _execute_and_instances
-    querycontext, self._connection_from_session, close_with_result=True
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3572, in _get_bind_args
-    mapper=self._bind_mapper(), clause=querycontext.statement, **kw
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3550, in _connection_from_session
-    conn = self.session.connection(**kw)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\session.py", line 1145, in connection
-    execution_options=execution_options,
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\session.py", line 1151, in _connection_for_bind
-    engine, execution_options
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\orm\session.py", line 433, in _connection_for_bind
-    conn = bind._contextual_connect()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2302, in _contextual_connect
-    self._wrap_pool_connect(self.pool.connect, None),
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2340, in _wrap_pool_connect
-    e, dialect, self
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1584, in _handle_dbapi_exception_noconnection
-    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
-    raise exception
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2336, in _wrap_pool_connect
-    return fn()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 364, in connect
-    return _ConnectionFairy._checkout(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 778, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 495, in checkout
-    rec = pool._do_get()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 140, in _do_get
-    self._dec_overflow()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
-    with_traceback=exc_tb,
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
-    raise exception
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\impl.py", line 137, in _do_get
-    return self._create_connection()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 309, in _create_connection
-    return _ConnectionRecord(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 440, in __init__
-    self.__connect(first_connect_check=True)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 661, in __connect
-    pool.logger.debug("Error on connect(): %s", e)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
-    with_traceback=exc_tb,
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\util\compat.py", line 182, in raise_
-    raise exception
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\pool\base.py", line 656, in __connect
-    connection = pool._invoke_creator(self)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\strategies.py", line 114, in connect
-    return dialect.connect(*cargs, **cparams)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\sqlalchemy\engine\default.py", line 509, in connect
-    return self.dbapi.connect(*cargs, **cparams)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\venv\lib\site-packages\psycopg2\__init__.py", line 127, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not connect to server: Connection refused (0x0000274D/10061)
-	Is the server running on host "localhost" (::1) and accepting
-	TCP/IP connections on port 5432?
-could not connect to server: Connection refused (0x0000274D/10061)
-	Is the server running on host "localhost" (127.0.0.1) and accepting
-	TCP/IP connections on port 5432?
-
-(Background on this error at: http://sqlalche.me/e/13/e3q8)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+TypeError: decorated_function() got an unexpected keyword argument 'id'
+2021-05-03 13:54:40,311 ERROR: Exception on /api/users/1 [GET] [in /home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+TypeError: decorated_function() got an unexpected keyword argument 'id'
+2021-05-03 13:57:16,214 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 13:57:16,214 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 13:57:16,214 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 13:59:30,728 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 13:59:30,729 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 13:59:30,729 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:00:10,388 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 14:00:10,388 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:00:10,388 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:00:58,559 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 14:00:58,561 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:00:58,561 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:02:08,925 INFO: uvo-reserves [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:77]
+2021-05-03 14:02:08,925 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:02:08,925 INFO: uvo-reserves startup [in /home/sumbel/PycharmProjects/uvo-reserves-demo/app/__init__.py:98]
+2021-05-03 14:02:11,673 ERROR: Exception on /api/users/1 [GET] [in /home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/app/helpers/decorators.py", line 12, in decorated_function
+    return f(user_id)
+  File "/home/sumbel/PycharmProjects/uvo-reserves-demo/app/api/profile.py", line 16, in get_profile
+    return json.dumps([p.__dict__ for p in projects])
+  File "/usr/lib/python3.6/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'InstanceState' is not JSON serializable
