@@ -27,7 +27,7 @@ def get_profile():
 def post_profile():
     username = get_jwt_identity()['username']
     user = User.query.filter_by(username=username).first()
-    save_project(user, request.args.get('name'))
+    save_project(user, request.json.get('name'))
     return make_response('', 204)
 
 
