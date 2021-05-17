@@ -34,7 +34,7 @@ def edit_project(form, project):
     for coords_file in form.coords_file.data:
         if coords_file.filename != '':
             file = coords_file
-            filename = str(project.id) + '_coords_' + str(datetime.now()) + file.filename
+            filename = str(project.id) + '_coords_' + str(uuid.uuid4()) + file.filename
             save_file(file, filename, current_app)
             coords = add_coords(filename, project.id)
             if coords is None:

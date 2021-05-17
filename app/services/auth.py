@@ -32,6 +32,7 @@ def register_user(username, email, password):
             return bad_request('Missing password')
         if not email:
             return bad_request('Missing email')
+
         user = User(username=username, email=email)
         user.set_password(password)
         db.session.add(user)

@@ -11,7 +11,7 @@ class Config(object):
     JWT_COOKIE_CSRF_PROTECT = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = 'uploads'
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.googlemail.com'
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 587)
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None or 1

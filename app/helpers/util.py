@@ -14,8 +14,6 @@ def save_async_file(file, filename, app):
 def save_file(file, filename, app):
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    # Thread(target=save_async_file, args=(file, filename, app)).start()
-
 
 def guess_enc(file):
     encodincs = ['ascii', 'utf_8', 'cp1251', 'cp866', 'utf_8_sig', 'cp1252', 'big5',
@@ -65,7 +63,7 @@ def well_name_re(well_name):
 
 def save_core_file(file, filename, app):
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename),  'r', encoding='utf-8') as f:
+    with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r', encoding='utf-8') as f:
         data = f.read().replace('\n', '')
     # TODO: deal with the array
     try:

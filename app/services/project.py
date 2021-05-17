@@ -1,6 +1,6 @@
 import os
 import uuid
-from datetime import datetime
+import time
 import numpy as np
 
 from flask import current_app
@@ -27,12 +27,14 @@ def save_project(user, project_name):
 
 def edit_project(form, project):
     errors = []
-    if form.name.data != '':
+    if form.name != '':
         project.name = form.name.data
-    for coords_file in form.coords_file.data:
+    print(form.coords_file)
+    for coords_file in form.coords_file:
+        print(coords_file)
         if coords_file.filename != '':
             file = coords_file
-            filename = str(project.id) + '_coords_' + str(datetime.now()) + file.filename
+            filename = str(project.id) + '_coords_' + str(round(time.time() * 1000)) + file.filename
             save_file(file, filename, current_app)
             coords = add_coords(filename, project.id)
             if coords is None:
@@ -40,7 +42,7 @@ def edit_project(form, project):
                               .format(file.filename))
             else:
                 db.session.add(coords)
-    for core_file in form.core_file.data:
+    for core_file in form.core_file:
         if core_file.filename != '':
             file = core_file
             filename = str(project.id) + '_core_' + str(uuid.uuid4())
@@ -59,9 +61,9 @@ def edit_project(form, project):
 
                 core = Core(project_id=project.id, filepath=filename, well_data_id=well.well_id, well_id=well.id)
                 db.session.add(core)
-    unnamed_well = form.unnamed_well.data
+    unnamed_well = ''
     log_files = []
-    for logs_file in form.logs_file.data:
+    for logs_file in form.logs_file:
         if logs_file.filename != '':
             file = logs_file
             filename = str(project.id) + '_logs_' + str(uuid.uuid4()) + '_file_' + file.filename

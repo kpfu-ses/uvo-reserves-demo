@@ -10,30 +10,30 @@ from app.models import User
 from app.helpers.services import add_user
 
 
-# @bp.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('main.profile'))
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(username=form.username.data).first()
-#         if user is None or not user.check_password(form.password.data):
-#             flash('Invalid username or password')
-#             return redirect(url_for('auth.login'))
-#         login_user(user, remember=form.remember_me.data)
-#         next_page = request.args.get('next')
-#         if not next_page or url_parse(next_page).netloc != '':
-#             next_page = url_for('main.profile')
-#         return redirect(next_page)
-#     return render_template('auth/login.html', title='Log In', form=form)
-
-
-@bp.route('/login', methods=['GET'])
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
-    access_token = request.cookies.get('access_token', None)
-    if access_token is not None:
-        return redirect(url_for('api.get_profile'), 302)
-    return render_template('auth/login.html', title='Log In', form=LoginForm())
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('auth.login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('main.profile')
+        return redirect(next_page)
+    return render_template('auth/login.html', title='Log In', form=form)
+
+
+# @bp.route('/login', methods=['GET'])
+# def login():
+#     access_token = request.cookies.get('access_token', None)
+#     if access_token is not None:
+#         return redirect(url_for('api.get_profile'), 302)
+#     return render_template('auth/login.html', title='Log In', form=LoginForm())
 
 
 @bp.route('/logout')
@@ -42,23 +42,23 @@ def logout():
     return redirect(url_for('main.index'))
 
 
-# @bp.route('/register', methods=['GET', 'POST'])
-# def register():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('main.index'))
-#     form = RegistrationForm()
-#     if form.validate_on_submit():
-#         add_user(form)
-#         return redirect(url_for('auth.login'))
-#     return render_template('auth/register.html', title='Register', form=form)
-
-
-@bp.route('/register', methods=['GET'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
-    access_token = request.cookies.get('access_token', None)
-    if access_token is not None:
-        return redirect(url_for('api.get_profile'), 302)
-    return render_template('auth/register.html', title='Register', form=RegistrationForm())
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        add_user(form)
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html', title='Register', form=form)
+
+
+# @bp.route('/register', methods=['GET'])
+# def register():
+#     access_token = request.cookies.get('access_token', None)
+#     if access_token is not None:
+#         return redirect(url_for('api.get_profile'), 302)
+#     return render_template('auth/register.html', title='Register', form=RegistrationForm())
 
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])

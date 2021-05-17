@@ -1,0 +1,102 @@
+2021-05-17 12:45:04,928 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 
+2021-05-17 12:45:04,928 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 
+2021-05-17 12:47:16,703 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 

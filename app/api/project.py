@@ -19,10 +19,8 @@ def work_project(project_id):
     core_files = request.files.getlist("core_files")
     coords_files = request.files.getlist("coords_files")
     # для редактирования имени
-    name = request.args.get('name')
     project = Project.query.get(project_id)
-    project_form = ProjectForm(name, logs_files, core_files, coords_files)
+    project_form = ProjectForm('', logs_files, core_files, coords_files)
     # список ошибок, которые нужно отобразить пользователю
     errors = edit_project(project_form, project)
     return json.dumps(errors, default=default)
-
