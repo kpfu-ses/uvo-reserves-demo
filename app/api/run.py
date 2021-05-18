@@ -4,7 +4,33 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import db
 from app.api import bp
 from app.microservices.main import get_wells_list
-from app.models import User
+from app.models import User, Project
+from app.helpers.services import save_run
+
+
+# создание запуска
+@bp.route('/<project_id>/runs', methods=['GET'])
+@jwt_required(locations=['cookies'])
+def get_runs(project_id):
+    print('this is runs')
+    print(Project.query.get(project_id).runs())
+    return jsonify(
+        {
+            'runs': Project.query.get(project_id).runs()
+        }
+    )
+
+
+# создание запуска
+@bp.route('/<project_id>/run', methods=['POST'])
+@jwt_required(locations=['cookies'])
+def create_run(project_id):
+    run = save_run(project_id=project_id)
+    return {
+        'run': {
+            'id': run.id
+        }
+    }
 
 
 # выбор программных модулей
@@ -25,9 +51,9 @@ def services_run():
         flash('An export task is currently in progress')
     else:
         user.launch_task('run_services_task_bar',
-                                 'Running services...',
-                                 user.id, request.form['wells'],
-                                 request.form['services'],
-                                 request.form['run_id'])
+                         'Running services...',
+                         user.id, request.form['wells'],
+                         request.form['services'],
+                         request.form['run_id'])
         db.session.commit()
     return make_response('', 204)

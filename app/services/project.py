@@ -23,6 +23,7 @@ def save_project(user, project_name):
                                                access='r')
     db.session.execute(statement)
     db.session.commit()
+    return project
 
 
 def edit_project(form, project):

@@ -1,90 +1,102 @@
-2021-05-15 19:44:21,919 ERROR: Exception on /project/6 [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+2021-05-17 12:45:04,928 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
     return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\main\routes.py", line 62, in work_project
-    errors = edit_project(form, project)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\services.py", line 38, in edit_project
-    save_file(file, filename, current_app)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\util.py", line 16, in save_file
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename[-7:-1]).replace(' ', '_'))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\werkzeug\datastructures.py", line 3066, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\lolip\\Desktop\\Git_projects\\uvo-reserves-demo\\uploads\\64.jso'
-2021-05-15 19:45:04,644 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-15 19:45:04,645 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-15 19:45:04,645 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-15 19:45:10,138 ERROR: Exception on /project/6 [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 
+2021-05-17 12:45:04,928 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
     return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\main\routes.py", line 62, in work_project
-    errors = edit_project(form, project)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\services.py", line 38, in edit_project
-    save_file(file, filename, current_app)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\util.py", line 16, in save_file
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename[-7:]).replace(' ', '_'))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\werkzeug\datastructures.py", line 3066, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\lolip\\Desktop\\Git_projects\\uvo-reserves-demo\\uploads\\64.json'
-2021-05-15 19:45:10,138 ERROR: Exception on /project/6 [POST] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 
+2021-05-17 12:47:16,703 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
     return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\main\routes.py", line 62, in work_project
-    errors = edit_project(form, project)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\services.py", line 38, in edit_project
-    save_file(file, filename, current_app)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\util.py", line 16, in save_file
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename[-7:]).replace(' ', '_'))
-  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\werkzeug\datastructures.py", line 3066, in save
-    dst = open(dst, "wb")
-FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\lolip\\Desktop\\Git_projects\\uvo-reserves-demo\\uploads\\64.json'
-2021-05-15 19:45:37,563 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-15 19:45:37,564 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-15 19:45:37,564 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-15 19:48:41,257 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-15 19:48:41,258 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-15 19:48:41,258 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
+    return f(project_id)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 28, in work_project
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
+    incorrect_files = importer.import_data()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
+    self.start_las_reader(file_names)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
+    self._prepare_data_from_files()
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
+    wells = list(self.wells_info_struct())
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
+    dept = self.get_global_dept(w_name)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
+    crv.data = left_crv + crv.data + right_crv
+ValueError: operands could not be broadcast together with shapes (1476,) (0,) 

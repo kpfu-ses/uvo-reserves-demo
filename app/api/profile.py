@@ -27,8 +27,8 @@ def get_profile():
 def post_profile():
     username = get_jwt_identity()['username']
     user = User.query.filter_by(username=username).first()
-    save_project(user, request.json.get('name'))
-    return make_response('', 204)
+    project = save_project(user, request.json.get('name'))
+    return {'projectId': project.id}
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
