@@ -8,17 +8,14 @@ from app.models import User, Project
 from app.helpers.services import save_run
 
 
-# создание запуска
+# получение списка запусков проекта
 @bp.route('/<project_id>/runs', methods=['GET'])
 @jwt_required(locations=['cookies'])
 def get_runs(project_id):
-    print('this is runs')
-    print(Project.query.get(project_id).runs())
-    return jsonify(
-        {
-            'runs': Project.query.get(project_id).runs()
-        }
-    )
+    project_runs = Project.query.get(project_id).runs().all()
+    return {
+        'runs': [run.serialize for run in project_runs]
+    }
 
 
 # создание запуска
@@ -26,19 +23,20 @@ def get_runs(project_id):
 @jwt_required(locations=['cookies'])
 def create_run(project_id):
     run = save_run(project_id=project_id)
-    return {
-        'run': {
-            'id': run.id
-        }
-    }
+    return run.serialize
 
 
 # выбор программных модулей
 @bp.route('/runs/services', methods=['POST'])
 @jwt_required(locations=['cookies'])
 def choose_services():
-    return jsonify({'wells': get_wells_list(request.form['services'],
-                                            request.form['run_id'])})
+    print(dict(request.json))
+    return jsonify({
+        'wells': get_wells_list(
+            request.json['services'],
+            request.json['run_id']
+        )
+    })
 
 
 # выбор скважин

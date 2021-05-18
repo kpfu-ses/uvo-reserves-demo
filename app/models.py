@@ -63,7 +63,7 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'], algorithm='HS256')\
+            current_app.config['SECRET_KEY'], algorithm='HS256') \
             # .decode('utf-8')
 
     @staticmethod
@@ -84,8 +84,8 @@ class User(UserMixin, db.Model):
     def new_runs(self):
         last_read_time = self.last_run_see_time or datetime(1900, 1, 1)
         project_ids = [project.id for project in self.projects()]
-        return db.session.query(Run)\
-            .filter(Run.project_id.in_(project_ids), Run.date > last_read_time)\
+        return db.session.query(Run) \
+            .filter(Run.project_id.in_(project_ids), Run.date > last_read_time) \
             .all()
 
     def launch_task(self, name, description, *args, **kwargs):
@@ -180,8 +180,6 @@ class Well(db.Model):
         return Stratigraphy.query.filter_by(well_id=self.id)
 
 
-
-
 # координаты
 class Coords(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -272,6 +270,15 @@ class Run(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     date = db.Column(db.DateTime)
     report_1 = db.Column(db.String(255))
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'project_id': self.project_id,
+            'date': str(self.date),
+            'report_1': self.report_1
+        }
 
     def exist(self):
         stmt = db.select([run_well]).where(run_well.c.run_id == self.id)

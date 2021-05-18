@@ -1,82 +1,29 @@
-2021-05-18 12:03:42,760 ERROR: Exception on /api/project/5 [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
+2021-05-18 18:35:10,070 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
+2021-05-18 18:35:10,076 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+2021-05-18 18:35:10,076 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+2021-05-18 18:35:11,488 ERROR: Exception on /api/5/runs [GET] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
     return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
     return fn(*args, **kwargs)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\decorators.py", line 34, in decorated_function
-    return f(project_id)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\project.py", line 25, in work_project
-    errors = edit_project(project_form, project)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\services\project.py", line 73, in edit_project
-    incorrect_files = importer.import_data()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 165, in import_data
-    self.start_las_reader(file_names)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 345, in start_las_reader
-    self._prepare_data_from_files()
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 449, in _prepare_data_from_files
-    wells = list(self.wells_info_struct())
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 177, in wells_info_struct
-    dept = self.get_global_dept(w_name)
-  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\helpers\LasParser.py", line 326, in get_global_dept
-    crv.data = left_crv + crv.data + right_crv
-ValueError: operands could not be broadcast together with shapes (1476,) (0,) 
-2021-05-18 12:17:38,703 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-18 12:17:38,704 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:17:38,704 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:30:38,119 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-18 12:30:38,120 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:30:38,120 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:30:46,926 ERROR: Exception on /api/project [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
-Traceback (most recent call last):
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1968, in finalize_request
-    response = self.make_response(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2131, in make_response
-    " {rv.__class__.__name__}.".format(rv=rv)
-TypeError: The view function did not return a valid response. The return type must be a string, dict, tuple, Response instance, or WSGI callable, but it was a Project.
-2021-05-18 12:30:46,926 ERROR: Exception on /api/project [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
-Traceback (most recent call last):
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1968, in finalize_request
-    response = self.make_response(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2131, in make_response
-    " {rv.__class__.__name__}.".format(rv=rv)
-TypeError: The view function did not return a valid response. The return type must be a string, dict, tuple, Response instance, or WSGI callable, but it was a Project.
-2021-05-18 12:31:36,144 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
-2021-05-18 12:31:36,145 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:31:36,145 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
-2021-05-18 12:34:35,539 ERROR: Exception on /api/undefined/run [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
-Traceback (most recent call last):
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1968, in finalize_request
-    response = self.make_response(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2112, in make_response
-    rv = jsonify(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 370, in jsonify
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\run.py", line 17, in get_runs
+    'runs': jsonify(Project.query.get(project_id).runs().all())
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 370, in jsonify
     dumps(data, indent=indent, separators=separators) + "\n",
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 211, in dumps
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 211, in dumps
     rv = _json.dumps(obj, **kwargs)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\__init__.py", line 238, in dumps
     **kw).encode(obj)
@@ -84,24 +31,34 @@ Traceback (most recent call last):
     chunks = self.iterencode(o, _one_shot=True)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\encoder.py", line 257, in iterencode
     return _iterencode(o, 0)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 100, in default
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 100, in default
     return _json.JSONEncoder.default(self, o)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\encoder.py", line 180, in default
     o.__class__.__name__)
 TypeError: Object of type 'Run' is not JSON serializable
-2021-05-18 12:34:35,539 ERROR: Exception on /api/undefined/run [POST] [in c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py:1892]
+2021-05-18 18:35:11,488 ERROR: Exception on /api/5/runs [GET] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
 Traceback (most recent call last):
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1953, in full_dispatch_request
-    return self.finalize_request(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 1968, in finalize_request
-    response = self.make_response(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\app.py", line 2112, in make_response
-    rv = jsonify(rv)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 370, in jsonify
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\run.py", line 17, in get_runs
+    'runs': jsonify(Project.query.get(project_id).runs().all())
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 370, in jsonify
     dumps(data, indent=indent, separators=separators) + "\n",
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 211, in dumps
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 211, in dumps
     rv = _json.dumps(obj, **kwargs)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\__init__.py", line 238, in dumps
     **kw).encode(obj)
@@ -109,8 +66,37 @@ Traceback (most recent call last):
     chunks = self.iterencode(o, _one_shot=True)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\encoder.py", line 257, in iterencode
     return _iterencode(o, 0)
-  File "c:\users\lolip\appdata\local\programs\python\python36\lib\site-packages\flask\json\__init__.py", line 100, in default
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\json\__init__.py", line 100, in default
     return _json.JSONEncoder.default(self, o)
   File "c:\users\lolip\appdata\local\programs\python\python36\lib\json\encoder.py", line 180, in default
     o.__class__.__name__)
 TypeError: Object of type 'Run' is not JSON serializable
+2021-05-18 18:36:02,166 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
+2021-05-18 18:36:02,167 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+2021-05-18 18:36:02,167 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+2021-05-18 18:36:10,972 ERROR: Exception on /api/5/runs [GET] [in c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py:1892]
+Traceback (most recent call last):
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_cors\extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\users\lolip\desktop\git projects\uvo-reserves-demo\venv\lib\site-packages\flask_jwt_extended\view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\run.py", line 18, in get_runs
+    'runs': [run.serialize() for run in project_runs]
+  File "C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\api\run.py", line 18, in <listcomp>
+    'runs': [run.serialize() for run in project_runs]
+TypeError: 'dict' object is not callable
+2021-05-18 18:36:44,999 INFO: uvo-reserves [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:80]
+2021-05-18 18:36:45,000 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
+2021-05-18 18:36:45,000 INFO: uvo-reserves startup [in C:\Users\lolip\Desktop\Git projects\uvo-reserves-demo\app\__init__.py:101]
