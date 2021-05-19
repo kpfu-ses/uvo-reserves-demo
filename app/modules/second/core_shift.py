@@ -549,6 +549,8 @@ def get_linking(run_id, wells_list):
     progress = Bar('   Core shifting', max=len(wells) + 1, fill='*', suffix='%(percent)d%%')
     progress.next()
 
+    wells_crvs = {}
+
     Warns = ''
     for well in wells:
         try:
@@ -790,6 +792,17 @@ def get_linking(run_id, wells_list):
                 print(exc)
             pass
 
+            wells_crvs[well.name] = {'params': {'tops': [well.tops[0], well.tops[1], well.tops[2]], 'zone': zone},
+                                     'x': {
+                                         'GK': well.curves['GK'],
+                                         'NGK': well.curves['NGK'],
+                                         'IK': well.curves['IK'],
+                                         'MASS.SOIL': [kbit, kbit1],
+                                         'VOL.DENSITY': [kden, kden1],
+                                         'Lithotype': well.curves['Lithotype']
+                                     }, 'y': well.curves["DEPT"]}
+
+
             outPath = replaceSlash(run_path + 'output_data/' + well.index)
             if not os.path.exists(outPath): os.makedirs(outPath)
             plt.savefig(replaceSlash(outPath + '/' + str(well.name) + ".png"))
@@ -831,4 +844,6 @@ def get_linking(run_id, wells_list):
     print()
     print("Interpretation successfully finished")
     print()
+
+    return wells_crvs
 
