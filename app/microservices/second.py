@@ -5,6 +5,7 @@ from pathlib import Path
 from app import db
 from flask import current_app
 import uuid
+import simplejson
 
 from app.helpers.LasParser import ImportLasFiles
 from app.models import Core, Run, Logs, CoreResults
@@ -22,7 +23,7 @@ def save_results(wells, run_id, well_crvs):
         well_id = well.core()[0].well_data_id
         # well name without letters
         well_name = re.sub(regWellName, '', well.name.replace(' ', ''))
-        well_data = well_crvs.get(well_name)
+        well_data = simplejson.dumps(well_crvs.get(well_name), ignore_nan=True)
         # save core
         core_res = CoreResults(well_id=well.id, run_id=run.id, data=well_data)
         db.session.add(core_res)

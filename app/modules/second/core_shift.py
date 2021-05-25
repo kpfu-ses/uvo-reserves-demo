@@ -792,15 +792,15 @@ def get_linking(run_id, wells_list):
                 print(exc)
             pass
 
-            wells_crvs[well.name] = {'params': {'tops': [well.tops[0], well.tops[1], well.tops[2]], 'zone': zone},
+            wells_crvs[well.name] = {'params': {'tops': [well.tops[0], well.tops[1], well.tops[2]], 'zone': zone.tolist()},
                                      'x': {
-                                         'GK': well.curves['GK'],
-                                         'NGK': well.curves['NGK'],
-                                         'IK': well.curves['IK'],
-                                         'MASS.SOIL': [kbit, kbit1],
-                                         'VOL.DENSITY': [kden, kden1],
-                                         'Lithotype': well.curves['Lithotype']
-                                     }, 'y': well.curves["DEPT"]}
+                                         'GK': well.curves['GK'].tolist(),
+                                         'NGK': well.curves['NGK'].tolist(),
+                                         'IK': well.curves['IK'].tolist(),
+                                         'MASS.SOIL': [kbit.tolist(), kbit1.tolist()],
+                                         'VOL.DENSITY': [kden.tolist(), kden1.tolist()],
+                                         'Lithotype': well.curves['Lithotype'].tolist()
+                                     }, 'y': well.curves["DEPT"].tolist()}
 
 
             outPath = replaceSlash(run_path + 'output_data/' + well.index)
