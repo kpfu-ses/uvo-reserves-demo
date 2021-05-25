@@ -3,14 +3,17 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from app import db
 from app.api import bp
+from app.helpers.decorators import user_project_access, user_run_access
 from app.microservices.main import get_wells_list
-from app.models import User, Project
+from app.models import User, Project, Run
 from app.helpers.services import save_run
+from app.services.run import get_data
 
 
 # получение списка запусков проекта
 @bp.route('/<project_id>/runs', methods=['GET'])
 @jwt_required(locations=['cookies'])
+@user_project_access()
 def get_runs(project_id):
     project_runs = Project.query.get(project_id).runs().all()
     return {
@@ -21,6 +24,7 @@ def get_runs(project_id):
 # создание запуска
 @bp.route('/<project_id>/run', methods=['POST'])
 @jwt_required(locations=['cookies'])
+@user_project_access()
 def create_run(project_id):
     run = save_run(project_id=project_id)
     return run.serialize
@@ -55,3 +59,16 @@ def services_run():
                          request.form['run_id'])
         db.session.commit()
     return make_response('', 204)
+
+
+# результаты запуска
+@bp.route('/runs/<run_id>', methods=['GET'])
+@jwt_required(locations=['cookies'])
+@user_run_access()
+def run_view(run_id):
+    run = Run.query.get(run_id)
+    if run.exist():
+        data = get_data(run)
+        return jsonify(data)
+    else:
+        return make_response('In progress', 200)

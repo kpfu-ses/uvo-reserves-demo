@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.dialects.postgresql import JSONB
 
 from time import time
 import json
@@ -223,6 +224,14 @@ class Core(db.Model):
     filepath = db.Column(db.String(128))
 
     res_filepath = db.Column(db.String(255))
+
+
+# керн
+class CoreResults(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    well_id = db.Column(db.Integer, db.ForeignKey('well.id'))
+    run_id = db.Column(db.Integer, db.ForeignKey('run.id'))
+    data = db.Column(JSONB)
 
 
 # las

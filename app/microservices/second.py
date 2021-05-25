@@ -7,7 +7,7 @@ from flask import current_app
 import uuid
 
 from app.helpers.LasParser import ImportLasFiles
-from app.models import Core, Run, Logs
+from app.models import Core, Run, Logs, CoreResults
 from app.modules.second.core_shift import get_linking
 from app.microservices.util import create_strat_files, create_log_files
 from app.helpers.services import add_log
@@ -15,14 +15,17 @@ from app.helpers.services import add_log
 regWellName = r"[^0-9]"
 
 
-def save_results(wells, run_id):
+def save_results(wells, run_id, well_crvs):
     run = Run.query.get(run_id)
     wells_done = []
     for well in wells:
         well_id = well.core()[0].well_data_id
         # well name without letters
         well_name = re.sub(regWellName, '', well.name.replace(' ', ''))
+        well_data = well_crvs.get(well_name)
         # save core
+        core_res = CoreResults(well_id=well.id, run_id=run.id, data=well_data)
+        db.session.add(core_res)
         filepath = f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}/output_data/{well_id}/{well_name}"
         if Path(filepath + ".png").is_file():
             wells_done.append(well)
@@ -40,6 +43,7 @@ def save_results(wells, run_id):
             las_path = f"{str(run.project_id)}_logs_{str(uuid.uuid4())}{well_name}.las"
             shutil.copyfile(filepath + ".las", 'uploads/' + las_path)
             log.filepath = las_path
+
     db.session.commit()
     # shutil.rmtree(f'{current_app.config["SERVICES_PATH"]}second/{str(run_id)}/')
 
@@ -62,5 +66,5 @@ def run_second(wells, run_id):
                             f"{current_app.config['SERVICES_PATH']}second/{str(run_id)}"
                             f"/input_data/wellCore/{core.well_data_id}/{core.well_data_id}.json")
 
-    get_linking(run_id, wells_list)
-    return save_results(wells, run_id)
+    well_crvs = get_linking(run_id, wells_list)
+    return save_results(wells, run_id, well_crvs)

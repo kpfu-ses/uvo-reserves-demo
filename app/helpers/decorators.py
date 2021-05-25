@@ -42,12 +42,13 @@ def user_run_access():
     """
     def decorator(f):
         @wraps(f)
-        def decorated_function(project_id):
+        def decorated_function(run_id):
             username = get_jwt_identity()['username']
             user = User.query.filter_by(username=username).first()
-            project = Project.query.get(project_id)
+            run = Project.query.get(run_id)
+            project = Project.query.get(run.project_id)
             if project not in user.projects():
                 return bad_request('this is not your project')
-            return f(project_id)
+            return f(run)
         return decorated_function
     return decorator
