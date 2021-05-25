@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint('api', __name__)
 
-from app.api import profile, errors, login, registration, project, run
+from app.api import profile, errors, login, registration, project, run, crvs
