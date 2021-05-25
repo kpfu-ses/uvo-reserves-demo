@@ -41,6 +41,7 @@ def _set_task_progress(progress):
 
 
 def run_services_task(user_id, wells_ids_str, services, run_id):
+    print(wells_ids_str)
     try:
         _set_task_progress(0)
         run_services(user_id, wells_ids_str, services, run_id)
@@ -51,6 +52,7 @@ def run_services_task(user_id, wells_ids_str, services, run_id):
 
 
 def run_services_task_bar(user_id, wells_ids_str, services, run_id):
+    print(wells_ids_str)
     try:
         gemeinsam_score = len(services.split(','))
         part = 100 // gemeinsam_score

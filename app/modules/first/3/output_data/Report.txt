@@ -1,0 +1,6 @@
+ERROR    :    143   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    144   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    141   :   BOT: 'SVC' object has no attribute '_n_support'
+INFO     :       :   No errors in data
+INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (2cbdc1ce-6a65-4960-8e59-17284258b431)
+INFO     : Result is kept for 500 seconds

@@ -1,0 +1,4 @@
+WARNING  :    145   :   TOP:  недостаточная длина кривой ГИС для определения спириферового известняка или неверный формат кривой ГИС. 
+ERROR    :    145   :   BOT: Found array with 0 sample(s) (shape=(0, 5)) while a minimum of 1 is required by StandardScaler.
+ERROR    :    141   :   BOT: 'SVC' object has no attribute '_n_support'
+INFO     :       :   No errors in data

@@ -1,0 +1,118 @@
+2021-05-25 19:02:05,943 ERROR: Exception on /api/runs/1 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1705, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 691, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.ProgrammingError: can't adapt type 'Run'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/helpers/decorators.py", line 52, in decorated_function
+    return f(run)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/api/run.py", line 70, in run_view
+    run = Run.query.get(run_id)
+  File "<string>", line 2, in get
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/util/deprecations.py", line 390, in warned
+    return fn(*args, **kwargs)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 934, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 938, in _get_impl
+    return self.session._get_impl(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2774, in _get_impl
+    return db_load_fn(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/loading.py", line 522, in load_on_pk_identity
+    session.execute(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1662, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1520, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 313, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1389, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1748, in _execute_context
+    self._handle_dbapi_exception(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1929, in _handle_dbapi_exception
+    util.raise_(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1705, in _execute_context
+    self.dialect.do_execute(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 691, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.ProgrammingError) can't adapt type 'Run'
+[SQL: SELECT run.id AS run_id, run.project_id AS run_project_id, run.date AS run_date, run.report_1 AS run_report_1 
+FROM run 
+WHERE run.id = %(pk_1)s]
+[parameters: {'pk_1': <Run 1>}]
+(Background on this error at: http://sqlalche.me/e/14/f405)
+2021-05-25 19:05:02,632 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:05:02,633 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:05:02,633 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:05:11,496 ERROR: Exception on /api/runs/1 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/api/run.py", line 72, in run_view
+    data = get_data(run)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/services/run.py", line 17, in get_data
+    res_data['2'].append({'well': {'well_name': well.name, 'well_id': well.id}})
+KeyError: '2'
+2021-05-25 19:05:11,496 ERROR: Exception on /api/runs/1 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/api/run.py", line 72, in run_view
+    data = get_data(run)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/services/run.py", line 17, in get_data
+    res_data['2'].append({'well': {'well_name': well.name, 'well_id': well.id}})
+KeyError: '2'
+2021-05-25 19:05:44,098 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:05:44,098 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:05:44,098 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]

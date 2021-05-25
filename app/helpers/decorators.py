@@ -4,7 +4,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_login import current_user
 
 from app.api.errors import bad_request
-from app.models import User, Project
+from app.models import User, Project, Run
 
 
 def current_user_access():
@@ -45,7 +45,7 @@ def user_run_access():
         def decorated_function(run_id):
             username = get_jwt_identity()['username']
             user = User.query.filter_by(username=username).first()
-            run = Project.query.get(run_id)
+            run = Run.query.get(run_id)
             project = Project.query.get(run.project_id)
             if project not in user.projects():
                 return bad_request('this is not your project')

@@ -1,0 +1,10 @@
+ERROR    :    143   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    141   :   no GK data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+WARNING  :       :   load_contour. app/modules/eighth/6/input_data/Контур.txt not found.
+INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (125c216b-c16e-4a97-8b50-ea8fa1532115)
+INFO     : Result is kept for 500 seconds

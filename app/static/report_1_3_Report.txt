@@ -1,0 +1,4 @@
+ERROR    :    143   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    144   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    141   :   BOT: 'SVC' object has no attribute '_n_support'
+INFO     :       :   No errors in data

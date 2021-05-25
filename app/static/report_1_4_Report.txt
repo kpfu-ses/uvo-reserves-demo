@@ -1,0 +1,2 @@
+ERROR    :    144   :   BOT: local variable 'sv2' referenced before assignment
+INFO     :       :   No errors in data

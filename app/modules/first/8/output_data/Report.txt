@@ -1,0 +1,30 @@
+WARNING  :    145   :   TOP:  недостаточная длина кривой ГИС для определения спириферового известняка или неверный формат кривой ГИС. 
+ERROR    :    145   :   BOT: Found array with 0 sample(s) (shape=(0, 5)) while a minimum of 1 is required by StandardScaler.
+ERROR    :    143   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    144   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    141   :   BOT: 'SVC' object has no attribute '_n_support'
+ERROR    :    10200_000000000110104   :   необходима проверка стратиграфии, интервал отбора выходит за пределы песчаной пачки
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+ERROR    :       :   fes_interpolation. list indices must be integers or slices, not float
+ERROR    : Unhandled exception
+Traceback (most recent call last):
+  File "./app/modules/seventh/Interpolation_main.py", line 60, in get_interpolation
+    FI.Cell_FES(LD)
+  File "./app/modules/seventh/fes_interpolation.py", line 26, in Cell_FES
+    if LD.inPolygonXY(LD.masPoint[LD.newCell[Ind0].point_num[0]],
+TypeError: list indices must be integers or slices, not float
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "./app/tasks.py", line 100, in run_services_task_bar
+    run_seventh(wells, run_id)
+  File "./app/microservices/seventh.py", line 49, in run_seventh
+    get_interpolation(run_id, wells_list)
+  File "./app/modules/seventh/Interpolation_main.py", line 65, in get_interpolation
+    sys.exit()
+SystemExit
+INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (d01812df-e9b2-4644-999a-244a0881051b)
+INFO     : Result is kept for 500 seconds

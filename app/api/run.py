@@ -47,6 +47,7 @@ def choose_services():
 @bp.route('/runs/wells', methods=['POST'])
 @jwt_required(locations=['cookies'])
 def services_run():
+    print(request.json['wells'])
     username = get_jwt_identity()['username']
     user = User.query.filter_by(username=username).first()
     if user.get_task_in_progress('run_services_task_bar'):
@@ -54,9 +55,9 @@ def services_run():
     else:
         user.launch_task('run_services_task_bar',
                          'Running services...',
-                         user.id, request.form['wells'],
-                         request.form['services'],
-                         request.form['run_id'])
+                         user.id, request.json['wells'],
+                         request.json['services'],
+                         request.json['run_id'])
         db.session.commit()
     return make_response('', 204)
 
@@ -64,7 +65,7 @@ def services_run():
 # результаты запуска
 @bp.route('/runs/<run_id>', methods=['GET'])
 @jwt_required(locations=['cookies'])
-@user_run_access()
+# @user_run_access()
 def run_view(run_id):
     run = Run.query.get(run_id)
     if run.exist():

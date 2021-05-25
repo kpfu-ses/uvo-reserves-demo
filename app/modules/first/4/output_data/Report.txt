@@ -1,0 +1,4 @@
+ERROR    :    144   :   BOT: local variable 'sv2' referenced before assignment
+INFO     :       :   No errors in data
+INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (58b9d0b2-0ebc-431d-9784-ef5629c40baf)
+INFO     : Result is kept for 500 seconds

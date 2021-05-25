@@ -9,8 +9,8 @@ class Config(object):
     JWT_SECRET_KEY = 'asgdhasgdhagsdhjkkdlkcl'
     JWT_TOKEN_LOCATION = ['headers', 'cookies']
     JWT_COOKIE_CSRF_PROTECT = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite.db'
-    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:7c056266@localhost:5432/uvo_reserves'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///sqlite.db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:1@localhost:5432/uvo_reserves'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.googlemail.com'
