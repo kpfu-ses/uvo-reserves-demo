@@ -286,7 +286,8 @@ class Run(db.Model):
             'id': self.id,
             'project_id': self.project_id,
             'date': str(self.date),
-            'report_1': self.report_1
+            'report_1': self.report_1,
+            'done': True if self.exist() else False
         }
 
     def exist(self):
