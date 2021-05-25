@@ -2,5 +2,10 @@ ERROR    :    143   :   BOT: 'SVC' object has no attribute '_n_support'
 ERROR    :    144   :   BOT: 'SVC' object has no attribute '_n_support'
 ERROR    :    141   :   BOT: 'SVC' object has no attribute '_n_support'
 INFO     :       :   No errors in data
-INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (2cbdc1ce-6a65-4960-8e59-17284258b431)
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+INFO     :       :   No errors in data
+WARNING  :       :   load_contour. app/modules/eighth/3/input_data/Контур.txt not found.
+INFO     : [32mmicroservices-tasks[39;49;00m: [34mJob OK[39;49;00m (ee159057-a17f-4de5-b9d9-88249069545a)
 INFO     : Result is kept for 500 seconds

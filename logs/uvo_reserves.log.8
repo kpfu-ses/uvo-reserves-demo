@@ -1,83 +1,4 @@
-2021-05-25 18:45:29,946 ERROR: Exception on /api/login [POST] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
-Traceback (most recent call last):
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1705, in _execute_context
-    self.dialect.do_execute(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 691, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.errors.UndefinedTable: relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
-    return cors_after_request(app.make_response(f(*args, **kwargs)))
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
-    raise value
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/api/login.py", line 13, in login
-    return login_user(username, password)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/services/auth.py", line 15, in login_user
-    user = User.query.filter_by(username=username).first()
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2716, in first
-    return self.limit(1)._iter().first()
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/query.py", line 2800, in _iter
-    result = self.session.execute(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1662, in execute
-    result = conn._execute_20(statement, params or {}, execution_options)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1520, in _execute_20
-    return meth(self, args_10style, kwargs_10style, execution_options)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 313, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1389, in _execute_clauseelement
-    ret = self._execute_context(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1748, in _execute_context
-    self._handle_dbapi_exception(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1929, in _handle_dbapi_exception
-    util.raise_(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
-    raise exception
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1705, in _execute_context
-    self.dialect.do_execute(
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 691, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
-LINE 2: FROM "user" 
-             ^
-
-[SQL: SELECT "user".id AS user_id, "user".username AS user_username, "user".email AS user_email, "user".password AS user_password, "user".confirmcode AS user_confirmcode, "user".state AS user_state, "user".last_run_see_time AS user_last_run_see_time 
-FROM "user" 
-WHERE "user".username = %(username_1)s 
- LIMIT %(param_1)s]
-[parameters: {'username_1': 'test', 'param_1': 1}]
-(Background on this error at: http://sqlalche.me/e/14/f405)
-2021-05-25 18:45:46,929 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
-2021-05-25 18:45:46,930 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:45:46,930 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:45:56,032 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
-2021-05-25 18:45:56,032 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:45:56,032 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:46:02,222 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
-2021-05-25 18:46:02,223 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:46:02,223 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:46:50,047 INFO: uvo-reserves [in ./app/__init__.py:80]
-2021-05-25 18:46:50,047 INFO: uvo-reserves startup [in ./app/__init__.py:101]
-2021-05-25 18:46:50,047 INFO: uvo-reserves startup [in ./app/__init__.py:101]
-2021-05-25 18:48:05,591 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
-2021-05-25 18:48:05,591 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:48:05,591 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
-2021-05-25 18:58:24,239 ERROR: Exception on /api/runs/1 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+2021-05-25 19:08:20,286 ERROR: Exception on /api/runs/1 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
 Traceback (most recent call last):
   File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -95,6 +16,82 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
     return fn(*args, **kwargs)
-  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/helpers/decorators.py", line 49, in decorated_function
-    project = Project.query.get(run.project_id)
-AttributeError: 'Project' object has no attribute 'project_id'
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/api/run.py", line 73, in run_view
+    return jsonify(data)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/json/__init__.py", line 370, in jsonify
+    dumps(data, indent=indent, separators=separators) + "\n",
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/json/__init__.py", line 211, in dumps
+    rv = _json.dumps(obj, **kwargs)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/simplejson/__init__.py", line 398, in dumps
+    return cls(
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/simplejson/encoder.py", line 296, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/simplejson/encoder.py", line 378, in iterencode
+    return _iterencode(o, 0)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/json/__init__.py", line 100, in default
+    return _json.JSONEncoder.default(self, o)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/simplejson/encoder.py", line 272, in default
+    raise TypeError('Object of type %s is not JSON serializable' %
+TypeError: Object of type CoreResults is not JSON serializable
+2021-05-25 19:08:39,623 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:08:39,624 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:08:39,624 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:17:03,174 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:17:03,175 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:17:03,175 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:18:40,140 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:18:40,140 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:18:40,140 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:19:20,554 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:19:20,555 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:19:20,555 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:24:21,976 INFO: uvo-reserves [in ./app/__init__.py:80]
+2021-05-25 19:24:21,977 INFO: uvo-reserves startup [in ./app/__init__.py:101]
+2021-05-25 19:24:21,977 INFO: uvo-reserves startup [in ./app/__init__.py:101]
+2021-05-25 19:29:17,336 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:29:17,336 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:29:17,336 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:32:20,690 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:32:20,690 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:32:20,690 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:43:33,323 ERROR: Exception on /api/runs/1/141 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+TypeError: decorated_function() got an unexpected keyword argument 'well_id'
+2021-05-25 19:43:33,323 ERROR: Exception on /api/runs/1/141 [GET] [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/inuur/Desktop/Git Projects/uvo-reserves-demo/venv/lib/python3.9/site-packages/flask_jwt_extended/view_decorators.py", line 121, in decorator
+    return fn(*args, **kwargs)
+TypeError: decorated_function() got an unexpected keyword argument 'well_id'
+2021-05-25 19:44:02,166 INFO: uvo-reserves [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:80]
+2021-05-25 19:44:02,166 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
+2021-05-25 19:44:02,166 INFO: uvo-reserves startup [in /Users/inuur/Desktop/Git Projects/uvo-reserves-demo/app/__init__.py:101]
